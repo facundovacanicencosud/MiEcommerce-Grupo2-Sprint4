@@ -1,44 +1,48 @@
-
-:root{
-  --negro: rgb(34,34,34);
-  --negro-claro: rgb(51,51,51);
-  --blanco: rgb(242,241,241);
-  --btn-oscuro: rgb(75,89,91);
+:root {
+  --negro: rgb(34, 34, 34);
+  --negro-claro: rgb(51, 51, 51);
+  --blanco: rgb(242, 241, 241);
+  --btn-oscuro: rgb(75, 89, 91);
 }
 
-
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
-.main{
+a {
+  text-decoration: none;
+  color: var(--blanco);
+}
+
+.main {
   width: 100%;
   display: flex;
   background-color: var(--negro);
   color: var(--blanco);
+  padding: 1rem;
 }
 
-.main-area{
+.main-area {
   width: 100%;
   display: flex;
   flex-direction: column;
 }
 
-aside{
+aside {
   width: 296px;
   position: fixed;
   left: -296px;
   height: 100vh;
 }
 
-@media (min-width:1024px) {
-  .main-area{
+@media (min-width: 1024px) {
+  .main-area {
     width: calc(100% - 296px);
   }
 
-  aside{
+  aside {
     left: 0;
     position: relative;
   }
