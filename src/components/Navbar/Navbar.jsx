@@ -1,18 +1,25 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
-import style from './navbar.module.css';
+import React from "react";
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import style from "./navbar.module.css";
+import NavItemSearch from "./NavItems/NavItemSearch";
 
 const Navbar = () => {
+  const [searchBox, setSearchBox] = useState(false);
   return (
-    <header>
-        <nav>
-            <Link to="/">Home</Link>
-            <Link to="/products">products</Link>
-            <Link to="/products/1">productsId</Link>
-            <Link to="/products/new">productsNew</Link>
-        </nav>
+    <header className={style.header}>
+      <nav className={style.navbar}>
+        <div>
+          <Link to={`/${"product"}`}>
+            <span>{"Product"}</span>
+          </Link>
+        </div>
+        <div>
+          <NavItemSearch open={searchBox}/>
+        </div>
+      </nav>
     </header>
-  )
-}
+  );
+};
 
-export default Navbar
+export default Navbar;
