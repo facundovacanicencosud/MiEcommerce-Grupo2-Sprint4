@@ -9,14 +9,24 @@ const Navbar = () => {
   return (
     <header className={style.header}>
       <nav className={style.navbar}>
-        <div>
-          <Link to={`/${"product"}`}>
-            <span>{"Product"}</span>
-          </Link>
-        </div>
-        <div>
-          <NavItemSearch open={searchBox}/>
-        </div>
+        {(!searchBox)?
+            <>
+                <div>
+                    <Link to={`/${"product"}`}>
+                        <span>{"Product"}</span>
+                    </Link>
+                </div>
+                <div className={style.search_box_and_add}>
+                    <NavItemSearch setOpen={setSearchBox} open={searchBox}/>
+                </div>
+            </>
+        :
+            <>
+                <div  className={style.navbar_search_box} >
+                    <NavItemSearch setOpen={setSearchBox} open={searchBox} />
+                </div>
+            </>
+        }
       </nav>
     </header>
   );
