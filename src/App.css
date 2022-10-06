@@ -23,7 +23,7 @@ a {
   display: flex;
   background-color: var(--negro);
   color: var(--blanco);
-  padding: 1rem;
+  padding: 0 1rem;
 }
 
 .main-area {

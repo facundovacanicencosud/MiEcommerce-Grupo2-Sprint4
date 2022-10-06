@@ -11,6 +11,23 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 0 15px;
+}
+
+
+.navbar_search_box{
+    width: 100%;
+}
+
+.search_box_and_add{
+    display: flex;
+
+}
+
+
+@media (min-width:468px) {
+    .search_box_and_add{
+        width: 60%;
+        justify-content: space-between;
+    }
 }
 
