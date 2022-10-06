@@ -26,7 +26,6 @@ const ProductsList = () => {
   useEffect(() => {
     const onSearch = async (searchQuery) => {
       const { data: products } = await getProducts();
-      console.log(products);
       const filteredProducts = products.filter((product) =>
         product.title.toLowerCase().includes(searchQuery.toLowerCase())
       );

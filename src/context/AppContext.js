@@ -13,6 +13,5 @@ export const Contexto = ({ children }) => {
     setSearchQuery,
   };
 
-
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
 };
