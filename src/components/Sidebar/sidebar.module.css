@@ -1,66 +1,86 @@
-.sidebar{
-    background-color: var(--negro);
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
+.sidebar {
+  background-color: var(--negro);
+  filter: opacity(0.9);
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  backdrop-filter: blur(4px);
 }
 
-
-
-.sidebar_top__logo, .sidebar_top__links{
-    width: 100%;
-    padding: 0.5rem;
+.sidebar_top__logo,
+.sidebar_top__links {
+  width: 100%;
+  padding: 0.5rem;
 }
-.sidebar_logo{
-    width: 180px;
-}
-
-.sidebar_top__links li{
-    list-style: none;
-    font-size: 0.7rem;
-    padding: 0.5rem 0;
-    display: flex;
-    border-radius: 10px;
-    height: 1.5rem;
-    align-items: center;
+.sidebar_logo {
+  width: 180px;
 }
 
-.sidebar_top__link_logo{
-    width: 10%;
-    padding: 0 1rem;
+.sidebar_top__links li {
+  list-style: none;
+  font-size: 0.7rem;
+  display: flex;
+  border-radius: 7px;
+  height: 1.5rem;
+  align-items: center;
+  margin: 1px 0;
 }
 
-.sidebar_top__links li img{
-    filter: invert(1);
-    width: 0.8rem;
+.sidebar_top__link_logo {
+  width: 10%;
+  padding: 0 1rem;
 }
 
-.sidebar_top__link_title{
-    width: 90%;
-    padding: 0 1rem;
+.sidebar_top__links li img {
+  filter: invert(1);
+  width: 0.8rem;
 }
 
-.sidebar_top__link_selected{
-    background-color: var(--gris);
-    transition: 0.8s;
+.sidebar_top__link_logo,
+.sidebar_top__links li img {
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
-.sidebar_footer{
-    padding: 0.5rem;
+.sidebar_top__link_title {
+  width: 90%;
+  padding: 0 1rem;
 }
 
-.sidebar_footer_user_card{
-    display: flex;
-    background-color: var(--btn-oscuro);
-    border-radius: 100px;
+.sidebar_top__link_selected {
+  background-color: var(--gris);
+  transition: 0.8s;
 }
 
-.sidebar_footer_user_card_img{
-    display: flex;
+.sidebar_footer {
+  padding: 0.5rem;
 }
 
-.sidebar_footer__link_title{
-    font-size: 0.7rem;
-    display: flex;
-    align-items: center;
+.sidebar_footer_user_card {
+  display: flex;
+  background-color: var(--btn-oscuro);
+  border-radius: 100px;
+}
+
+.sidebar_footer_user_card:hover {
+  background-color: var(--btn-claro);
+  transition: 0.5s;
+}
+
+.sidebar_footer_user_card_img {
+  display: flex;
+}
+
+.sidebar_footer__link_title {
+  font-size: 0.7rem;
+  display: flex;
+  align-items: center;
+}
+
+@media (min-width: 1024px) {
+  .sidebar {
+    filter: none;
+    backdrop-filter: inherit;
+  }
 }
