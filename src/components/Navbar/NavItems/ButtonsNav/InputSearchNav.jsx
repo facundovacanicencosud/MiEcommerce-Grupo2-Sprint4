@@ -25,7 +25,7 @@ const InputSearchNav = ({ logo }) => {
         type="submit"
         className={`${style.search_icon} ${style.search_form_search_icon}`}
       >
-        <img src={logo} alt="" />
+        <img src={logo} alt="Logo" />
       </button>
     </>
   );
