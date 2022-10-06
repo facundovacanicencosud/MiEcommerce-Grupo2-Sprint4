@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useForm from "../../../hooks/dataForm";
+import useForm from "../../../hooks/useForm";
 import { createProduct } from "../../../utils/apiConfig";
-import style from "../ProductView/createProduct.module.css";
+import style from "../ProductView/newProductView.module.css";
 
 const NewProductView = () => {
   const navigate = useNavigate();
