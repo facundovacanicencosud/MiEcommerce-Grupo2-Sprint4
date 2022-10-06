@@ -9,9 +9,12 @@ const ProductsList = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const { data } = await getProducts();
-      console.log(data);
-      setProducts(data);
+      try {
+        const { data } = await getProducts();
+        setProducts(data);
+      } catch (error) {
+        console.log(error);
+      }
     };
     fetchProducts();
   }, []);

@@ -6,10 +6,12 @@ const useForm = (initialValues) => {
     if (target.name === "rate" || target.name === "count") {
       setData({
         ...data,
-        rating: { ...data.rating, [target.name]: parseInt(target.value) },
+        rating: { ...data.rating, [target.name]: Number(target.value) },
       });
-    } else {
+    } else if (target.className === "asNum") {
       setData({ ...data, [target.name]: Number(target.value) });
+    } else {
+      setData({ ...data, [target.name]: target.value });
     }
   };
   return { data, handleChange };

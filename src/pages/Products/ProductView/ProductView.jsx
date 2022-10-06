@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useForm from "../../../hooks/dataForm";
-import axios from "axios";
+import { createProduct } from "../../../utils/apiConfig";
 
 const ProductView = () => {
   const navigate = useNavigate();
@@ -24,20 +24,15 @@ const ProductView = () => {
   const { data, handleChange } = useForm(initialValues);
 
   const handleSubmit = async (e) => {
-    console.log(data);
     e.preventDefault();
     try {
-      const response = await axios.post(
-        "http://localhost:5000/api/product",
-        data
-      );
-
-      if (response === 200) {
+      const response = await createProduct(data);
+      if (response.status === 201) {
         navigate("/products");
       }
     } catch (error) {
       console.log(error);
-      setWarning("ERRORR");
+      setWarning("Hay un error !!!");
     }
   };
 
@@ -62,6 +57,7 @@ const ProductView = () => {
         <label htmlFor="price">Price</label>
         <input
           type="number"
+          className="asNum"
           name="price"
           placeholder="Price"
           onChange={handleChange}
@@ -71,6 +67,7 @@ const ProductView = () => {
           <label htmlFor="rate">Rate</label>
           <input
             type="number"
+            className="asNum"
             name="rate"
             placeholder="Rate"
             onChange={handleChange}
@@ -78,6 +75,7 @@ const ProductView = () => {
           <label htmlFor="rate">Count</label>
           <input
             type="number"
+            className="asNum"
             name="count"
             placeholder="Count"
             onChange={handleChange}
@@ -87,6 +85,7 @@ const ProductView = () => {
         <label htmlFor="rate">Stock</label>
         <input
           type="number"
+          className="asNum"
           name="stock"
           placeholder="Stock"
           onChange={handleChange}
