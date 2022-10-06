@@ -9,7 +9,7 @@ export const Contexto = ({children}) => {
 
     const value = {
         activeSidebar,
-        setActiveSidebar
+        setActiveSidebar,
     }
 
     return(

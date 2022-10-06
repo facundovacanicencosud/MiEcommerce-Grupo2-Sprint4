@@ -5,7 +5,7 @@ import homeIcon from "../../assets/home.svg"
 import packageIcon from "../../assets/package-variant-closed.svg"
 import storeIcon from "../../assets/store.svg"
 import profileIcon from "../../assets/ProfileBtn.svg"
-import { Link } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { useContext } from 'react'
 import { AppContext } from '../../context/AppContext'
 
@@ -13,6 +13,8 @@ import { AppContext } from '../../context/AppContext'
 const Sidebar = () => {
 
   const {activeSidebar, setActiveSidebar} = useContext(AppContext);
+  const params = useLocation().pathname; 
+
   return (
     <aside className={`${styles.sidebar} ${activeSidebar? "sidebar_active": ""}`}>
       <div className={styles.sidebar_top}>
@@ -21,7 +23,7 @@ const Sidebar = () => {
       </div>
       <div className={styles.sidebar_top__links}>
         <ul>
-          <li className={styles.sidebar_top__link_selected}>
+          <li className={params == "/" ? styles.sidebar_top__link_selected : ""}>
             <div className={styles.sidebar_top__link_logo}>
             <img src={homeIcon} /> 
             </div>
@@ -31,7 +33,7 @@ const Sidebar = () => {
               </Link>
             </div>
           </li>
-          <li>
+          <li className={params == "/products" ? styles.sidebar_top__link_selected : ""}>          
             <div className={styles.sidebar_top__link_logo}>
             <img src={packageIcon} /> 
             </div>
@@ -41,7 +43,7 @@ const Sidebar = () => {
               </Link>
             </div>
           </li>
-          <li>
+          <li className={params == "/store" ? styles.sidebar_top__link_selected : ""}>          
             <div className={styles.sidebar_top__link_logo}>
             <img src={storeIcon} /> 
             </div>
