@@ -11,7 +11,7 @@ import NavItemLeft from "./NavItems/NavItemLeft";
 
 const Navbar = () => {
   const [searchBox, setSearchBox] = useState(false);
-  const { changeSidebarButton } = useContext(AppContext);
+  const { setActiveSidebar } = useContext(AppContext);
   const location = useLocation().pathname;
   const id = useParams().id;
   let navItemLeft;
@@ -38,10 +38,10 @@ const Navbar = () => {
       <nav className={style.navbar}>
         <div>
           <button
-            onClick={changeSidebarButton}
+            onClick={setActiveSidebar}
             className={style.navbar_menu_button}
           >
-            <img src={menuLogo} alt="" />
+            <img src={menuLogo} alt="" id="hamburguerMenu"/>
           </button>
 
           {navItemLeft}
