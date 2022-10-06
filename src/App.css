@@ -47,6 +47,7 @@ aside {
 
 .sidebar_active{
   left: 0;
+  transition: 0.5s
 }
 
 @media (min-width: 1024px) {
