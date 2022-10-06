@@ -6,11 +6,11 @@ import arrow from "../../../assets/chevron-right (1).svg";
 
 const ProductsList = () => {
   const [products, setProducts] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     const fetchProducts = async () => {
       const { data } = await getProducts();
-      console.log(data);
       setProducts(data);
     };
     fetchProducts();
