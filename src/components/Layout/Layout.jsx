@@ -1,6 +1,5 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
-import Navbar from '../Navbar/Navbar'
+import MainArea from '../MainArea/MainArea'
 import Sidebar from '../Sidebar/Sidebar'
 
 const Layout = () => {
@@ -8,12 +7,7 @@ const Layout = () => {
     <>
         <div className='main'>
             <Sidebar />
-            <div className='main-area'>
-                <Navbar />
-                <main>
-                    <Outlet />
-                </main>
-            </div>
+            <MainArea />
         </div>
     </>
   )
