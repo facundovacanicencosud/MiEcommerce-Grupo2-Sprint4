@@ -1,8 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useForm from "../../../hooks/dataForm";
+import useForm from "../../../hooks/useForm";
 import { createProduct } from "../../../utils/apiConfig";
-import style from "../ProductView/createProduct.module.css";
+import style from "../ProductView/newProductView.module.css";
 
 const NewProductView = () => {
   const navigate = useNavigate();
@@ -25,6 +25,7 @@ const NewProductView = () => {
   const { data, handleChange } = useForm(initialValues);
 
   const handleSubmit = async (e) => {
+    console.log(data);
     e.preventDefault();
     try {
       const response = await createProduct(data);
@@ -66,9 +67,8 @@ const NewProductView = () => {
             <div className={style.inputfield}>
               <label htmlFor="price">Price</label>
               <input
-                className={style.input}
+                className={`${style.input} asNum`}
                 type="number"
-                id="asNum"
                 name="price"
                 placeholder="Price"
                 onChange={handleChange}
@@ -100,9 +100,8 @@ const NewProductView = () => {
             <div className={style.inputfield}>
               <label htmlFor="rate">Stock</label>
               <input
-                className={style.input}
+                className={`${style.input} asNum`}
                 type="number"
-                id="asNum"
                 name="stock"
                 placeholder="Stock"
                 onChange={handleChange}
