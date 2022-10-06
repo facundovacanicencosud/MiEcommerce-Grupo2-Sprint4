@@ -6,6 +6,7 @@ import arrow from "../../../assets/chevron-right (1).svg";
 
 const ProductsList = () => {
   const [products, setProducts] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -15,14 +16,29 @@ const ProductsList = () => {
       } catch (error) {
         console.log(error);
       }
+
     };
     fetchProducts();
   }, []);
 
+  const onSearch = async ({ target }) => {
+    const products = await getProducts();
+    const filteredProducts = products.filter((product) =>
+      product.title.toLowerCase().includes(target.value.toLowerCase())
+    );
+    setProducts(filteredProducts);
+  };
+
   return (
     <div>
       <ul className={style.productList}>
-        {products.length &&
+        {isLoading ? (
+          <li className={style.loaderContainer}>
+            <span>Loading</span>
+            <div className={style.spinner}></div>
+          </li>
+        ) : (
+          products.length &&
           products.map((product) => (
             <Link key={product.id} to={`/products/${product.id}`}>
               <li className={style.product}>
@@ -36,7 +52,8 @@ const ProductsList = () => {
                 <img className={style.arrow} src={arrow} alt="" />
               </li>
             </Link>
-          ))}
+          ))
+        )}
       </ul>
     </div>
   );

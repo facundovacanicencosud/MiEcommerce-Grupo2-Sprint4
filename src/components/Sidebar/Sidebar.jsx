@@ -4,47 +4,61 @@ import logo from "../../assets/MiEcommerce.svg"
 import homeIcon from "../../assets/home.svg"
 import packageIcon from "../../assets/package-variant-closed.svg"
 import storeIcon from "../../assets/store.svg"
-
+import profileIcon from "../../assets/ProfileBtn.svg"
 
 const Sidebar = () => {
   return (
     <aside className={styles.sidebar}>
-      <div className={styles.aside__logo}>
-      <img className ={styles.logo} src={logo}/>
+      <div className={styles.sidebar_top}>
+      <div className={styles.sidebar_top__logo}>
+      <img className ={styles.sidebar_logo} src={logo}/>
       </div>
-      <div className={styles.aside__links}>
+      <div className={styles.sidebar_top__links}>
         <ul>
-          <li className={styles.aside__link_selected}>
-            <div className={styles.aside__link_logo}>
+          <li className={styles.sidebar_top__link_selected}>
+            <div className={styles.sidebar_top__link_logo}>
             <img src={homeIcon} /> 
             </div>
-            <div className={styles.aside__link_title}>
+            <div className={styles.sidebar_top__link_title}>
             <p>
             Inicio
             </p>
             </div>
           </li>
-          <li className>
-            <div className={styles.aside__link_logo}>
+          <li>
+            <div className={styles.sidebar_top__link_logo}>
             <img src={packageIcon} /> 
             </div>
-            <div className={styles.aside__link_title}>
+            <div className={styles.sidebar_top__link_title}>
             <p>
             Productos
             </p>
             </div>
           </li>
-          <li className>
-            <div className={styles.aside__link_logo}>
+          <li>
+            <div className={styles.sidebar_top__link_logo}>
             <img src={storeIcon} /> 
             </div>
-            <div className={styles.aside__link_title}>
+            <div className={styles.sidebar_top__link_title}>
             <p>
             Tiendas
             </p>
             </div>
           </li>          
         </ul>
+      </div>
+      </div>
+      <div className={styles.sidebar_footer}>
+      <div className={styles.sidebar_footer_user_card}>
+            <div className={styles.sidebar_footer_user_card_img}>
+            <img src={profileIcon} /> 
+            </div>
+            <div className={styles.sidebar_footer__link_title}>
+            <p>
+            Olivia
+            </p>
+            </div>
+          </div> 
       </div>
     </aside>
   )

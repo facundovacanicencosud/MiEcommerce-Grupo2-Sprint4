@@ -1,22 +1,25 @@
 .header{
     height: 72px;
+    position: sticky;
+    top: 0;
+    z-index: 100;
     width: 100%;
+    background-color: var(--negro);
+    display: flex;
+    align-items: center;
+    padding: 0 1rem;
 }
 
 .navbar{
     color: rgb(232, 223, 223);
     background-color: var(--rojo);
-    width: 100%;
     height: 100%;
     display: flex;
-    align-items: center;
-    justify-content: space-between;
-}
-
-
-.navbar_search_box{
     width: 100%;
+    justify-content: space-between;
+    align-items: center;
 }
+
 
 .search_box_and_add{
     display: flex;
@@ -26,8 +29,10 @@
 
 @media (min-width:468px) {
     .search_box_and_add{
-        width: 60%;
         justify-content: space-between;
     }
 }
 
+/* @media (min-width: 1024px){
+
+} */
