@@ -3,6 +3,7 @@ import { Route, BrowserRouter, Routes } from "react-router-dom";
 import Home from "./pages/Home/Home";
 import ProductsList from "./pages/Products/ProductsList/ProductsList";
 import ProductView from "./pages/Products/ProductView/ProductView";
+import NewProductView from "./pages/Products/ProductView/NewProductView";
 import Error from "./pages/Error/Error";
 import Layout from "./components/Layout/Layout";
 
@@ -15,7 +16,7 @@ function App() {
             <Route index element={<Home />} />
             <Route path="/products" element={<ProductsList />} />
             <Route path="/products/:id" element={<ProductView />} />
-            <Route path="/products/new" element={<ProductView />} />
+            <Route path="/products/new" element={<NewProductView />} />
             <Route path="/*" element={<Error />} />
           </Route>
         </Routes>

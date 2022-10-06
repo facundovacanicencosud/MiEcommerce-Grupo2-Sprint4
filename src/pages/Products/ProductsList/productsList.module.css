@@ -15,8 +15,20 @@
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
 }
 
-.product:hover {
-  box-shadow: 0px 7px 8px rgba(0, 0, 0, 0.24);
+@media (min-width: 1024px) {
+  .product:hover {
+    box-shadow: 0px 7px 8px rgba(0, 0, 0, 0.24);
+    animation: createBox 0.5s;
+  }
+
+  @keyframes createBox {
+    from {
+      transform: translateY(0);
+    }
+    to {
+      transform: translateY(-5px);
+    }
+  }
 }
 
 .product div {
@@ -48,4 +60,44 @@
   max-height: 20px;
   max-width: 20px;
   filter: invert(100%);
+}
+
+.loaderContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: auto;
+  margin-left: auto;
+  padding: 2rem 0;
+  margin-top: 8rem;
+  background: var(--negro-claro);
+  border-radius: 15px;
+  width: 30%;
+}
+
+.loaderContainer span {
+  font-size: 2rem;
+}
+
+.spinner {
+  margin-top: 2rem;
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  border: 3px solid rgba(253, 253, 253, 0.3);
+  border-radius: 50%;
+  border-top-color: var(--blanco);
+  animation: spin 1s ease-in-out infinite;
+  -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+@keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes spin {
+  to {
+    -webkit-transform: rotate(360deg);
+  }
 }

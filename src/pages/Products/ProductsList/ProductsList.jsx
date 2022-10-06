@@ -1,17 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getProducts } from "../../../utils/apiConfig";
 import style from "./productsList.module.css";
 import arrow from "../../../assets/chevron-right (1).svg";
+import { AppContext } from "../../../context/AppContext";
 
 const ProductsList = () => {
   const [products, setProducts] = useState({});
+  const [isLoading, setIsLoading] = useState(true);
+  const { searchQuery } = useContext(AppContext);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const { data } = await getProducts();
         setProducts(data);
+        setIsLoading(false);
       } catch (error) {
         console.log(error);
       }
@@ -19,10 +23,28 @@ const ProductsList = () => {
     fetchProducts();
   }, []);
 
+  useEffect(() => {
+    const onSearch = async (searchQuery) => {
+      const { data: products } = await getProducts();
+      console.log(products);
+      const filteredProducts = products.filter((product) =>
+        product.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setProducts(filteredProducts);
+    };
+    onSearch(searchQuery);
+  }, [searchQuery]);
+
   return (
     <div>
       <ul className={style.productList}>
-        {products.length &&
+        {isLoading ? (
+          <li className={style.loaderContainer}>
+            <span>Loading</span>
+            <div className={style.spinner}></div>
+          </li>
+        ) : (
+          products.length &&
           products.map((product) => (
             <Link key={product.id} to={`/products/${product.id}`}>
               <li className={style.product}>
@@ -36,7 +58,8 @@ const ProductsList = () => {
                 <img className={style.arrow} src={arrow} alt="" />
               </li>
             </Link>
-          ))}
+          ))
+        )}
       </ul>
     </div>
   );

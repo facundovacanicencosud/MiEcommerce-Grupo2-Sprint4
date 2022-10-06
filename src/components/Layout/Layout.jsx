@@ -1,19 +1,16 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
-import Navbar from '../Navbar/Navbar'
+import { Contexto } from '../../context/AppContext'
+import MainArea from '../MainArea/MainArea'
 import Sidebar from '../Sidebar/Sidebar'
 
 const Layout = () => {
   return (
     <>
         <div className='main'>
+          <Contexto>
             <Sidebar />
-            <div className='main-area'>
-                <Navbar />
-                <main>
-                    <Outlet />
-                </main>
-            </div>
+            <MainArea />
+          </Contexto>
         </div>
     </>
   )
