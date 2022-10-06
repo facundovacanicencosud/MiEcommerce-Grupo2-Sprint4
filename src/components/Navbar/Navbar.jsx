@@ -1,40 +1,57 @@
 import React from "react";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import style from "./navbar.module.css";
 import menuLogo from "../../assets/menu.svg";
 // import menuLogoWhite from "../../assets/menu-white.svg";
 import NavItemSearch from "./NavItems/NavItemSearch";
-import useScreen from "../../hooks/useScreen"
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
+import NavItemLeft from "./NavItems/NavItemLeft";
 
 const Navbar = () => {
   const [searchBox, setSearchBox] = useState(false);
-  const { setActiveSidebar } = useContext(AppContext);
-  const location = useLocation();
-  const {width} = useScreen();
-  const changeSidebarButton = () =>{
-    setActiveSidebar(x => !x)
+  const { changeSidebarButton } = useContext(AppContext);
+  const location = useLocation().pathname;
+  const id = useParams().id;
+  let navItemLeft;
+  if (location === "/") {
+    navItemLeft = <NavItemLeft url={"/"} text={"Hola Olivia!"} />;
+  } else if (location === "/products" || location === "/products/") {
+    navItemLeft = <NavItemLeft url={"/products"} text={"productos"} />;
+  } else if (location === "/products/new") {
+    navItemLeft = (
+      <NavItemLeft
+        url={"/products"}
+        text={"productos"}
+        seccion={"nuevo producto"}
+      />
+    );
+  } else if (location.includes("/products/")) {
+    navItemLeft = (
+      <NavItemLeft url={"/products"} text={"productos"} seccion={`#${id}`} />
+    );
   }
+
   return (
     <header className={style.header}>
       <nav className={style.navbar}>
-        
         <div>
-          {(width<1024) &&  
-            <button onClick={changeSidebarButton} className={style.navbar_menu_button}>
-              <img src={menuLogo} alt="" id="hamburguerMenu"/>
-            </button>
-          }
-           
-            <Link to={`/${"product"}`}>
-                <span>{"Product"}</span>
-            </Link>
+          <button
+            onClick={changeSidebarButton}
+            className={style.navbar_menu_button}
+          >
+            <img src={menuLogo} alt="" />
+          </button>
+
+          {navItemLeft}
+
         </div>
-        {(location.pathname === "/products")&& <div className={style.search_box_and_add}>
-            <NavItemSearch setOpen={setSearchBox} open={searchBox}/>
-        </div>}
+        {(location === "/products" || location === "/products/") && (
+          <div className={style.search_box_and_add}>
+            <NavItemSearch setOpen={setSearchBox} open={searchBox} />
+          </div>
+        )}
       </nav>
     </header>
   );
