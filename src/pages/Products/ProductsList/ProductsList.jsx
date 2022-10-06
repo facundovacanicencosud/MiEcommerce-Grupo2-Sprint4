@@ -10,9 +10,13 @@ const ProductsList = () => {
 
   useEffect(() => {
     const fetchProducts = async () => {
-      const { data } = await getProducts();
-      setProducts(data);
-      setIsLoading(false);
+      try {
+        const { data } = await getProducts();
+        setProducts(data);
+      } catch (error) {
+        console.log(error);
+      }
+
     };
     fetchProducts();
   }, []);

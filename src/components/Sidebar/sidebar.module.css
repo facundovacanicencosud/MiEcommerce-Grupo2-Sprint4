@@ -1,9 +1,14 @@
+
+
 .sidebar{
     background-color: var(--negro);
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
+
+
+
 .sidebar_top__logo, .sidebar_top__links{
     width: 100%;
     padding: 0.5rem;
