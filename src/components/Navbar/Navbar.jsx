@@ -45,6 +45,7 @@ const Navbar = () => {
           </button>
 
           {navItemLeft}
+
         </div>
         {(location === "/products" || location === "/products/") && (
           <div className={style.search_box_and_add}>
