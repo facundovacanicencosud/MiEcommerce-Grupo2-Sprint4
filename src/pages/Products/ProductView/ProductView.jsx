@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useForm from "../../../hooks/dataForm";
+import useForm from "../../../hooks/useForm";
 import axios from "axios";
 import style from "./productView.module.css";
 
