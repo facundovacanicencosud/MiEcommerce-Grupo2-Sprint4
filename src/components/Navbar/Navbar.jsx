@@ -24,7 +24,7 @@ const Navbar = () => {
         <div>
           {(width<1024) &&  
             <button onClick={changeSidebarButton} className={style.navbar_menu_button}>
-              <img src={menuLogo} alt="" />
+              <img src={menuLogo} alt="" id="hamburguerMenu"/>
             </button>
           }
            
