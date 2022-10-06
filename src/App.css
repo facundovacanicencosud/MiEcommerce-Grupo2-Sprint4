@@ -23,13 +23,17 @@ a {
   display: flex;
   background-color: var(--negro);
   color: var(--blanco);
-  padding: 0 1rem;
 }
 
 .main-area {
   width: 100%;
   display: flex;
   flex-direction: column;
+}
+
+.main-area > section{
+  padding: 0 1rem;
+  margin-top: 78px;
 }
 
 aside {
@@ -41,11 +45,12 @@ aside {
 
 @media (min-width: 1024px) {
   .main-area {
-    width: calc(100% - 296px);
+    width: 100%;
+    margin-left:296px;
+
   }
 
   aside {
     left: 0;
-    position: relative;
   }
 }
