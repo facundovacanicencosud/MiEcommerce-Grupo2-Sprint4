@@ -1,3 +1,39 @@
 .sidebar{
-    background-color: white;
+    background-color: var(--negro);
+}
+.aside__logo, .aside__links{
+    width: 100%;
+    padding: 0.5rem;
+}
+.logo{
+    width: 200px;
+}
+
+.aside__links li{
+    list-style: none;
+    font-size: 0.7rem;
+    padding: 0.5rem 0;
+    display: flex;
+    border-radius: 10px;
+    height: 1.5rem;
+    align-items: center;
+}
+
+.aside__link_logo{
+    width: 10%;
+    padding: 0 1rem;
+}
+
+.aside__links li img{
+    filter: invert(1);
+    width: 0.8rem;
+}
+
+.aside__link_title{
+    width: 90%;
+    padding: 0 1rem;
+}
+
+.aside__link_selected{
+    background-color: var(--gris);
 }
