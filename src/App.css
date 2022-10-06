@@ -7,39 +7,44 @@
   --gris: rgb(89,89,89);
 }
 
-
-*{
+* {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
 }
 
-.main{
+a {
+  text-decoration: none;
+  color: var(--blanco);
+}
+
+.main {
   width: 100%;
   display: flex;
   background-color: var(--negro);
   color: var(--blanco);
+  padding: 1rem;
 }
 
-.main-area{
+.main-area {
   width: 100%;
   display: flex;
   flex-direction: column;
 }
 
-aside{
+aside {
   width: 296px;
   position: fixed;
   left: -296px;
   height: 100vh;
 }
 
-@media (min-width:1024px) {
-  .main-area{
+@media (min-width: 1024px) {
+  .main-area {
     width: calc(100% - 296px);
   }
 
-  aside{
+  aside {
     left: 0;
     position: relative;
   }
