@@ -5,6 +5,7 @@ import homeIcon from "../../assets/home.svg"
 import packageIcon from "../../assets/package-variant-closed.svg"
 import storeIcon from "../../assets/store.svg"
 import profileIcon from "../../assets/ProfileBtn.svg"
+import { Link } from 'react-router-dom'
 
 const Sidebar = () => {
   return (
@@ -20,9 +21,9 @@ const Sidebar = () => {
             <img src={homeIcon} /> 
             </div>
             <div className={styles.sidebar_top__link_title}>
-            <p>
-            Inicio
-            </p>
+              <Link to="/">
+              Inicio
+              </Link>
             </div>
           </li>
           <li>
@@ -30,9 +31,9 @@ const Sidebar = () => {
             <img src={packageIcon} /> 
             </div>
             <div className={styles.sidebar_top__link_title}>
-            <p>
-            Productos
-            </p>
+            <Link to="/products">
+              Productos
+              </Link>
             </div>
           </li>
           <li>
@@ -40,9 +41,9 @@ const Sidebar = () => {
             <img src={storeIcon} /> 
             </div>
             <div className={styles.sidebar_top__link_title}>
-            <p>
-            Tiendas
-            </p>
+            <Link to="/store">
+              Tiendas
+              </Link>
             </div>
           </li>          
         </ul>
