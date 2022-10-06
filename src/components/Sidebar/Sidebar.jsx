@@ -5,10 +5,14 @@ import homeIcon from "../../assets/home.svg"
 import packageIcon from "../../assets/package-variant-closed.svg"
 import storeIcon from "../../assets/store.svg"
 import profileIcon from "../../assets/ProfileBtn.svg"
+import { useContext } from 'react'
+import { AppContext } from '../../context/AppContext'
 
 const Sidebar = () => {
+
+  const {activeSidebar, setActiveSidebar} = useContext(AppContext);
   return (
-    <aside className={styles.sidebar}>
+    <aside className={`${styles.sidebar} ${activeSidebar? "sidebar_active": ""}`}>
       <div className={styles.sidebar_top}>
       <div className={styles.sidebar_top__logo}>
       <img className ={styles.sidebar_logo} src={logo}/>

@@ -33,7 +33,7 @@ a {
 
 .main-area > section{
   padding: 0 1rem;
-  margin-top: 78px;
+  margin-top: 10px;
 }
 
 aside {
@@ -41,6 +41,11 @@ aside {
   position: fixed;
   left: -296px;
   height: 100vh;
+  z-index: 200;
+}
+
+.sidebar_active{
+  left: 0;
 }
 
 @media (min-width: 1024px) {
