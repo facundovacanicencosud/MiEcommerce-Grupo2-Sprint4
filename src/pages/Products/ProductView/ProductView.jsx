@@ -1,21 +1,33 @@
-
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import useForm from "../../../hooks/dataForm";
 import axios from "axios";
+import { getProducts } from "../../../utils/apiConfig";
 import style from "./productView.module.css";
 
 
 const ProductView = () => {
 
-  const useAxios = () => {
-    const url = 'http://localhost:5000/api/product/1';
-    axios.get(url, {
+  const id = useParams().id
+  const showProduct = () => {
+    return axios.get(`http://localhost:5000/api/product/${id}`, {
     })
-    .then(function (response) {
-      console.log(response);
+    .then(({data}) => {
+      console.log(data);
+      return JSON.stringify(data);
+    })
+    .catch(err => {
+      console.log(err)
     })
   }
+
+  const [productOnPage, setProductOnPage] = useState('');
+
+  useEffect(() => {
+    showProduct().then(randomData => {
+      setProductOnPage(randomData || 'No existe el producto.')
+    });
+  }, []);
 
   const navigate = useNavigate();
   const [image, setImage] = useState([]);
@@ -37,7 +49,6 @@ const ProductView = () => {
   const { data, handleChange } = useForm(initialValues);
 
   const handleSubmit = async (e) => {
-    console.log(data);
     e.preventDefault();
     try {
       const response = await axios.put(
@@ -48,13 +59,13 @@ const ProductView = () => {
         navigate("/products");
       }
     } catch (error) {
-      console.log(error);
       setWarning("ERR0R");
     }
   };
 
   return (
   <div className={style.container}>
+  <div>{productOnPage}</div>
     <div className={style.products}>
       <h2>Titulo</h2>
       <img alt="product"></img>
@@ -118,7 +129,7 @@ const ProductView = () => {
         </div>
         <div>
           <button type="submit">Guardar</button>
-          <button onClick={useAxios}>Cancelar</button>
+          <button>Cancelar</button>
           <div>{warning && <p>{warning}</p>}</div>
         </div>
       </form>
