@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import useForm from "../../../hooks/dataForm";
 import { createProduct } from "../../../utils/apiConfig";
+import style from "../ProductView/createProduct.module.css";
 
 const ProductView = () => {
   const navigate = useNavigate();
@@ -38,80 +39,105 @@ const ProductView = () => {
 
   return (
     <>
-      <div>CreateProduct</div>
-      <form onSubmit={handleSubmit}>
-        <label htmlFor="productName">Product title</label>
-        <input
-          type="text"
-          name="title"
-          placeholder="Product title"
-          onChange={handleChange}
-        />
-        <label htmlFor="description">Description</label>
-        <textarea
-          type="text"
-          name="description"
-          placeholder="Description"
-          onChange={handleChange}
-        />
-        <label htmlFor="price">Price</label>
-        <input
-          type="number"
-          className="asNum"
-          name="price"
-          placeholder="Price"
-          onChange={handleChange}
-        />
-        <div>
-          <label htmlFor="rating">Rating</label>
-          <label htmlFor="rate">Rate</label>
-          <input
-            type="number"
-            className="asNum"
-            name="rate"
-            placeholder="Rate"
-            onChange={handleChange}
-          />
-          <label htmlFor="rate">Count</label>
-          <input
-            type="number"
-            className="asNum"
-            name="count"
-            placeholder="Count"
-            onChange={handleChange}
-          />
-        </div>
+      <div className={style.wrapper}>
+        <div className={style.title}>Create Product</div>
+        <div className={style.form}>
+          <form onSubmit={handleSubmit}>
+            <div className={style.inputfield}>
+              <label htmlFor="productName">Product title</label>
+              <input
+                className={style.input}
+                type="text"
+                name="title"
+                placeholder="Product title"
+                onChange={handleChange}
+              />
+            </div>
+            <div className={style.inputfield}>
+              <label htmlFor="description">Description</label>
+              <textarea
+                className={style.textarea}
+                type="text"
+                name="description"
+                placeholder="Description"
+                onChange={handleChange}
+              />
+            </div>
+            <div className={style.inputfield}>
+              <label htmlFor="price">Price</label>
+              <input
+                className={style.input}
+                type="number"
+                id="asNum"
+                name="price"
+                placeholder="Price"
+                onChange={handleChange}
+              />
+            </div>
 
-        <label htmlFor="rate">Stock</label>
-        <input
-          type="number"
-          className="asNum"
-          name="stock"
-          placeholder="Stock"
-          onChange={handleChange}
-        />
-        <label htmlFor="rate">Category</label>
-        <input
-          type="text"
-          name="category"
-          placeholder="Category"
-          onChange={handleChange}
-        />
-        <div>
-          <label htmlFor="images">Images</label>
-          <input
-            type="file"
-            name="images"
-            accept="image/*"
-            value={image}
-            onChange={(e) => setImage(e.target.value)}
-          />
+            <div className={style.inputfield}>
+              <label htmlFor="rating">Rating:</label>
+              <div className={style.ratingComponents}>
+                <input
+                  className={style.input}
+                  type="number"
+                  id="asNum"
+                  name="rate"
+                  placeholder="Rate"
+                  onChange={handleChange}
+                />
+
+                <input
+                  className={style.input}
+                  type="number"
+                  id="asNum"
+                  name="count"
+                  placeholder="Count"
+                  onChange={handleChange}
+                />
+              </div>
+            </div>
+            <div className={style.inputfield}>
+              <label htmlFor="rate">Stock</label>
+              <input
+                className={style.input}
+                type="number"
+                id="asNum"
+                name="stock"
+                placeholder="Stock"
+                onChange={handleChange}
+              />
+            </div>
+            <div className={style.inputfield}>
+              <label htmlFor="rate">Category</label>
+              <input
+                className={style.input}
+                type="text"
+                name="category"
+                placeholder="Category"
+                onChange={handleChange}
+              />
+            </div>
+            <div className={style.inputfield}>
+              <label htmlFor="images">Images</label>
+              <input
+                className={style.input}
+                type="text"
+                name="images"
+                accept="image/*"
+                value={image}
+                onChange={(e) => setImage(e.target.value)}
+              />
+            </div>
+            <div>
+              <button type="submit" className={style.btnCreateProduct}>
+                <span>Guardar Producto</span>
+              </button>
+              <div>{warning && <p>{warning}</p>}</div>
+            </div>
+          </form>
         </div>
-        <div>
-          <button type="submit">Guardar Producto</button>
-          <div>{warning && <p>{warning}</p>}</div>
-        </div>
-      </form>
+      </div>
     </>
   );
 };
