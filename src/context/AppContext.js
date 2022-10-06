@@ -4,13 +4,19 @@ import { createContext, useState } from "react";
 export const AppContext = createContext();
 
 
-export const Contexto = ({children}) => {
+export const Contexto = ({ children }) => {
     const [activeSidebar, setActiveSidebar] = useState(false);
-
-    const value = {
-        activeSidebar,
-        setActiveSidebar,
+    const [searchQuery, setSearchQuery] = useState("");
+  
+    const changeSidebarButton = () =>{
+        setActiveSidebar(x => !x)
     }
+    const value = {
+      activeSidebar,
+      changeSidebarButton,
+      searchQuery,
+      setSearchQuery,
+    };
 
     return(
         <AppContext.Provider value={value} >
