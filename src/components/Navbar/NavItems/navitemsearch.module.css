@@ -2,7 +2,7 @@
     width: 100%;
     display: flex;
     align-items: center;
-    justify-content: space-evenly;
+    justify-content: space-between;
     position: relative;
 }
 .search_input{
@@ -12,10 +12,10 @@
     border: 2px solid var(--btn-oscuro);
     border-radius: 16px;
     height: 36px;
-}
-.search_input::placeholder{
+    color: var(--blanco);
     padding-left: 15px;
 }
+
 .search_input:focus{
     outline: 1px solid var(--blanco);
     border: none;
@@ -48,15 +48,17 @@
     position: absolute;
     right: 2%;
     top: 2px;
+    cursor: pointer;
     height: 32px;
     width: auto;
-    background-color: none;
+    background-color: transparent;
     border: none;
 }
 
 .add_icon{
     background-color: var(--btn-oscuro);
     display: flex;
+    cursor: pointer;
     border-radius: 20px;
     border: none;
     width: 36px;
@@ -78,6 +80,7 @@
     height: 36px;
     width: 30%;
     min-width: 110px;
+    cursor: pointer;
     max-width: 130px;
     border-radius: 16px;
 }
@@ -86,7 +89,7 @@
 
     .search_form{
         width: 100%;
-        justify-content: space-between;
+        justify-content: space-evenly;
     }
 
     .search_form_search_icon{
