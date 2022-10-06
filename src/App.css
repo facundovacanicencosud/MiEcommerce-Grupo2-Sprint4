@@ -1,8 +1,10 @@
-:root {
-  --negro: rgb(34, 34, 34);
-  --negro-claro: rgb(51, 51, 51);
-  --blanco: rgb(242, 241, 241);
-  --btn-oscuro: rgb(75, 89, 91);
+
+:root{
+  --negro: rgb(34,34,34);
+  --negro-claro: rgb(51,51,51);
+  --blanco: rgb(242,241,241);
+  --btn-oscuro: rgb(75,89,91);
+  --gris: rgb(89,89,89);
 }
 
 * {
