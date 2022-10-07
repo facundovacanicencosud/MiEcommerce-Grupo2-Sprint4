@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import useForm from "../../../hooks/useForm";
 import { createProduct } from "../../../utils/apiConfig";
@@ -6,7 +6,8 @@ import style from "../ProductView/newProductView.module.css";
 
 const NewProductView = () => {
   const navigate = useNavigate();
-  const [image, setImage] = useState([]);
+  const [images, setImages] = useState([]);
+  const [imageURLs, setImageURLs] = useState([]);
   const [warning, setWarning] = useState(null);
 
   const initialValues = {
@@ -23,6 +24,17 @@ const NewProductView = () => {
   };
 
   const { data, handleChange } = useForm(initialValues);
+
+  useEffect(() => {
+    if (images.length < 1) return;
+    const newImageUrls = [];
+    images.forEach((image) => newImageUrls.push(URL.createObjectURL(image)));
+    setImageURLs(newImageUrls);
+  }, [images]);
+
+  const handleImageUpload = (e) => {
+    setImages([...e.target.files]);
+  };
 
   const handleSubmit = async (e) => {
     console.log(data);
@@ -121,13 +133,20 @@ const NewProductView = () => {
               <label htmlFor="images">Images</label>
               <input
                 className={style.input}
-                type="text"
+                type="file"
                 name="images"
+                multi
                 accept="image/*"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
+                onChange={handleImageUpload}
               />
             </div>
+            <div>
+              {" "}
+              {imageURLs.map((x) => (
+                <span> {imageURLs}</span>
+              ))}
+            </div>
+
             <div>
               <button type="submit" className={style.btnCreateProduct}>
                 <span>Guardar Producto</span>
