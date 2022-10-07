@@ -5,8 +5,9 @@ import InputSearchNav from "./ButtonsNav/InputSearchNav";
 import { useContext } from "react";
 import { AppContext } from "../../../context/AppContext";
 
-const NavItemSearch = () => {
+const NavItemSearch = ({setOpen,open}) => {
   const { setSearchQuery } = useContext(AppContext);
+
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,53 +16,22 @@ const NavItemSearch = () => {
   return (
     <>
       <form onSubmit={handleSubmit} className={style.search_form}>
+        <div className={style.search_form_exit } style={(!open)? {display:"none"}: {}} onClick={()=> setOpen(false)}>
+          <i className="fa-solid fa-xmark"></i>
+        </div>
         <div className={style.search_form_div}>
-          <InputSearchNav logo={searchLogo} />
+          <InputSearchNav logo={searchLogo} setOpen={setOpen} open={open}/>
         </div>
 
         <ButtonNavAddProd
           classCss={style.add_span}
           spanText="Agregar Producto"
         />
+        <ButtonNavAddProd classCss={style.add_icon} spanText="+" />
+      
       </form>
     </>
   );
-  // return (
-  //   <>
-  //     <form
-
-  //       className={style.search_form}
-  //     >
-  //       <div className={style.search_form_exit} onClick={changeWidthSearch}>
-  //         <i className="fa-solid fa-xmark"></i>
-  //       </div>
-
-  //       <input
-  //         name="search"
-  //         className={style.search_input}
-  //         type="text"
-  //         placeholder="Buscar productos"
-  //       />
-  //       <button
-  //         type="submit"
-  //         className={`${style.search_icon} ${style.search_form_search_icon}`}
-  //       >
-  //         <img src={searchLogo} alt="" />
-  //       </button>
-  //     </form>
-  //   </>
-  // );
-  // return (
-  //   <>
-  //     <button className={style.search_icon} onClick={changeWidthSearch}>
-  //       <img src={searchLogo} alt="" />
-  //     </button>
-
-  //     <>
-  //       <ButtonNavAddProd classCss={style.add_icon} spanText="+" />
-  //     </>
-  //   </>
-  // );
 };
 
 export default NavItemSearch;

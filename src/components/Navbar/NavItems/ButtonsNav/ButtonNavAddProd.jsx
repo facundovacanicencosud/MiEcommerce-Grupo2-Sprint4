@@ -1,8 +1,10 @@
+import { Link } from "react-router-dom"
+
 const ButtonNavAddProd = ({classCss, spanText}) => {
   return (
-    <button className={classCss}>
-        <span>{spanText}</span>
-    </button>
+    <Link to={"/products/new"} className={classCss}>
+        {spanText}
+    </Link>
   )
 }
 
