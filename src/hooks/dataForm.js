@@ -8,7 +8,7 @@ const useForm = (initialValues) => {
         ...data,
         rating: { ...data.rating, [target.name]: Number(target.value) },
       });
-    } else if (target.className === "asNum") {
+    } else if (target.classList[1]) {
       setData({ ...data, [target.name]: Number(target.value) });
     } else {
       setData({ ...data, [target.name]: target.value });

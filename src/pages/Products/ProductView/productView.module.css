@@ -5,6 +5,11 @@
 
 .products {
     display: flex;
+    flex-direction: column;
+}
+
+.products img {
+    width: 20%;
 }
 
 .headings {

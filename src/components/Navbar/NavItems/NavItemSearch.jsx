@@ -2,10 +2,19 @@ import style from "./navitemsearch.module.css";
 import searchLogo from "../../../assets/magnify.svg";
 import ButtonNavAddProd from "./ButtonsNav/ButtonNavAddProd";
 import InputSearchNav from "./ButtonsNav/InputSearchNav";
+import { useContext } from "react";
+import { AppContext } from "../../../context/AppContext";
+
 const NavItemSearch = () => {
+  const { setSearchQuery } = useContext(AppContext);
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setSearchQuery(e.target[0].value);
+  };
   return (
     <>
-      <form className={style.search_form}>
+      <form onSubmit={handleSubmit} className={style.search_form}>
         <div className={style.search_form_div}>
           <InputSearchNav logo={searchLogo} />
         </div>

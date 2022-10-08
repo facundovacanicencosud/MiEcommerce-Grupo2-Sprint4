@@ -1,12 +1,14 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getProducts } from "../../../utils/apiConfig";
 import style from "./productsList.module.css";
 import arrow from "../../../assets/chevron-right (1).svg";
+import { AppContext } from "../../../context/AppContext";
 
 const ProductsList = () => {
   const [products, setProducts] = useState({});
   const [isLoading, setIsLoading] = useState(true);
+  const { searchQuery } = useContext(AppContext);
 
   useEffect(() => {
     const fetchProducts = async () => {
@@ -21,13 +23,17 @@ const ProductsList = () => {
     fetchProducts();
   }, []);
 
-  const onSearch = async ({ target }) => {
-    const products = await getProducts();
-    const filteredProducts = products.filter((product) =>
-      product.title.toLowerCase().includes(target.value.toLowerCase())
-    );
-    setProducts(filteredProducts);
-  };
+  useEffect(() => {
+    const onSearch = async (searchQuery) => {
+      const { data: products } = await getProducts();
+      console.log(products);
+      const filteredProducts = products.filter((product) =>
+        product.title.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+      setProducts(filteredProducts);
+    };
+    onSearch(searchQuery);
+  }, [searchQuery]);
 
   return (
     <div>
