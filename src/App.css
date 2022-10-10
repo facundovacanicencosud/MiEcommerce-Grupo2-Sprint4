@@ -1,11 +1,10 @@
-
-:root{
-  --negro: rgb(34,34,34);
-  --negro-claro: rgb(51,51,51);
-  --blanco: rgb(242,241,241);
-  --btn-oscuro: rgb(75,89,91);
+:root {
+  --negro: rgb(34, 34, 34);
+  --negro-claro: rgb(51, 51, 51);
+  --blanco: rgb(242, 241, 241);
+  --btn-oscuro: rgb(75, 89, 91);
   --btn-claro: rgb(89, 120, 125);
-  --gris: rgb(89,89,89);
+  --gris: rgb(89, 89, 89);
 }
 
 * {
@@ -26,13 +25,27 @@ a {
   color: var(--blanco);
 }
 
+.product-list-container,
+.home-container {
+  animation: fade-in 0.7s ease-in;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
 .main-area {
   width: 100%;
   display: flex;
   flex-direction: column;
 }
 
-.main-area > section{
+.main-area > section {
   padding: 0 1rem;
   margin-top: 10px;
 }
@@ -45,16 +58,15 @@ aside {
   z-index: 200;
 }
 
-.sidebar_active{
+.sidebar_active {
   left: 0;
-  transition: 0.5s
+  transition: 0.5s;
 }
 
 @media (min-width: 1024px) {
   .main-area {
     width: 100%;
-    margin-left:296px;
-
+    margin-left: 296px;
   }
 
   aside {

@@ -17,17 +17,9 @@
 
 @media (min-width: 1024px) {
   .product:hover {
+    transform: translateY(-5px);
     box-shadow: 0px 7px 8px rgba(0, 0, 0, 0.24);
-    animation: createBox 0.5s;
-  }
-
-  @keyframes createBox {
-    from {
-      transform: translateY(0);
-    }
-    to {
-      transform: translateY(-5px);
-    }
+    transition: all 0.5s;
   }
 }
 

@@ -35,7 +35,7 @@ const ProductsList = () => {
   }, [searchQuery]);
 
   return (
-    <div>
+    <div className="product-list-container">
       <ul className={style.productList}>
         {isLoading ? (
           <li className={style.loaderContainer}>

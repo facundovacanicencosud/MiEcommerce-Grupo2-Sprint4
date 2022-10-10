@@ -22,19 +22,18 @@ const Home = () => {
   }, []);
 
   return (
-    <div>
+    <div className="home-container">
       <ul className={style.home_list}>
         {isLoading ? (
           <li className={style.loaderContainer}>
             <span>Loading</span>
             <div className={style.spinner}></div>
           </li>
-        ) : 
-          ((products)? 
-            <Categorys products={products} />:
+        ) : products ? (
+          <Categorys products={products} />
+        ) : (
           <h3>No existen productos</h3>
-          )
-        }
+        )}
       </ul>
     </div>
   );
