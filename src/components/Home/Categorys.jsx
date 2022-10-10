@@ -23,7 +23,7 @@ const Categorys = ({ products }) => {
   return (
     <>
       {categorys.map((elem) => (
-        <Category {...elem} />
+        <Category key={elem.title} {...elem} />
       ))}
     </>
   );

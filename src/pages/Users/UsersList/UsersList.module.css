@@ -46,6 +46,7 @@
 .user div {
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .user img {
@@ -88,6 +89,18 @@
   border-top-color: var(--blanco);
   animation: spin 1s ease-in-out infinite;
   -webkit-animation: spin 1s ease-in-out infinite;
+}
+
+.deleteButton {
+  background-color: var(--gris);
+  border-radius: 16px;
+  height: 34px;
+  padding: 0 16px;
+  border: none;
+  color: var(--blanco);
+  cursor: pointer;
+  position: relative;
+  z-index: 100;
 }
 
 @keyframes spin {

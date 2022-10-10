@@ -3,14 +3,12 @@ import { Link } from "react-router-dom";
 import style from "./UsersList.module.css";
 import arrow from "../../../assets/chevron-right (1).svg";
 import { AppContext } from "../../../context/AppContext";
-import FilterOptions from "../../../components/FilterOptions/FilterOptions";
-import { getUsers } from "../../../utils/apiConfig";
+import { /* deleteUser,*/ getUsers } from "../../../utils/apiConfig";
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { searchQuery } = useContext(AppContext);
-  const [selectedFilter, setSelectedFilter] = useState("");
   const fetchUsers = async () => {
     const { data } = await getUsers();
     setUsers(data);
@@ -27,7 +25,7 @@ const UsersList = () => {
     }
   }, []);
 
-  //Search products
+  //Search users
   useEffect(() => {
     const onSearch = async (searchQuery) => {
       try {
@@ -45,23 +43,16 @@ const UsersList = () => {
     onSearch(searchQuery);
   }, [searchQuery]);
 
-  //Order products
-  useEffect(() => {
-    if (selectedFilter) {
-      const filteredUsers = [...users].sort((a, b) => {
-        if (selectedFilter === "menorPrecio") return a.price - b.price;
-        return null;
-      });
-      setUsers(filteredUsers);
-    } else {
-      try {
-        fetchUsers();
-      } catch (error) {
-        console.log(error);
-      }
+  /*   const handleDelete = async (e, id) => {
+    e.stopPropagation();
+    try {
+      const deletedUser = await deleteUser(parseInt(id));
+      console.log(deletedUser);
+      fetchUsers();
+    } catch (error) {
+      console.log(error);
     }
-    // eslint-disable-next-line
-  }, [selectedFilter]);
+  }; */
 
   return (
     <div className="lists-container">
@@ -80,13 +71,21 @@ const UsersList = () => {
               users.map((user) => (
                 <Link key={user.id} to={`/users/${user.id}`}>
                   <li className={style.user}>
-                    <div>
+                    <div className={style.userDetails}>
                       <img src={user.profilePicture} alt="" />
                       <div>
                         <p>{`${user.firstname} ${user.lastname}`}</p>
                       </div>
                     </div>
-                    <img className={style.arrow} src={arrow} alt="" />
+                    <div>
+                      {/*  <button
+                        onClick={(e) => handleDelete(e, user.id)}
+                        className={style.deleteButton}
+                      >
+                        Eliminar
+                      </button> */}
+                      <img className={style.arrow} src={arrow} alt="" />
+                    </div>
                   </li>
                 </Link>
               ))

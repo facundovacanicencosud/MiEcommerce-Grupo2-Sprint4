@@ -27,6 +27,7 @@ const Sidebar = () => {
 
   useEffect(() => {
     return document.addEventListener("click", handleClickOutside);
+    // eslint-disable-next-line
   }, []);
 
   return (

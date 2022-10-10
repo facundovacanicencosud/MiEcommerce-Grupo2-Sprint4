@@ -18,3 +18,7 @@ export const deleteProduct = (id) => {
 export const getUsers = async () => {
   return axios.get(`${baseUrl}/user`);
 };
+
+export const deleteUser = (id) => {
+  return axios.delete(`${baseUrl}/user?id=${id}`);
+};

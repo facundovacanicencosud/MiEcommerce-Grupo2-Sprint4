@@ -10,6 +10,7 @@ const InputSearchNav = ({ logo, setOpen, open }) => {
     if (!controlInput) {
       setSearchQuery(controlInput);
     }
+    // eslint-disable-next-line
   }, [controlInput]);
 
   return (
