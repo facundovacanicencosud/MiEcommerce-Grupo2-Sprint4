@@ -66,6 +66,18 @@ const Sidebar = () => {
             </li>
             <li
               className={
+                params === "/users" ? styles.sidebar_top__link_selected : ""
+              }
+            >
+              <div className={styles.sidebar_top__link_logo}>
+                <img src={storeIcon} alt="Stores icon" />
+              </div>
+              <div className={styles.sidebar_top__link_title}>
+                <Link to="/users">Usuarios</Link>
+              </div>
+            </li>
+            <li
+              className={
                 params === "/store" ? styles.sidebar_top__link_selected : ""
               }
             >

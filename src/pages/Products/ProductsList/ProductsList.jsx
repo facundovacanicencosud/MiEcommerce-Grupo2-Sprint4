@@ -66,8 +66,8 @@ const ProductsList = () => {
   }, [selectedFilter]);
 
   return (
-    <div className="product-list-container">
-      {products.length ? (
+    <div className="lists-container">
+      {products.length && !isLoading ? (
         <>
           <div className={style.productsListHeader}>
             <span>{products.length} productos |</span>

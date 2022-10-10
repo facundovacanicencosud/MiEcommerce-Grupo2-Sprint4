@@ -25,7 +25,7 @@ a {
   color: var(--blanco);
 }
 
-.product-list-container,
+.lists-container,
 .home-container {
   animation: fade-in 0.7s ease-in;
 }
