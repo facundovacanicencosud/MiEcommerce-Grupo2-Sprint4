@@ -135,7 +135,6 @@ const NewProductView = () => {
                 className={style.input}
                 type="file"
                 name="images"
-                multi
                 accept="image/*"
                 onChange={handleImageUpload}
               />

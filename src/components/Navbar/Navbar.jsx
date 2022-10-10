@@ -8,6 +8,8 @@ import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
 import NavItemLeft from "./NavItems/NavItemLeft";
 import useScreen from "../../hooks/useScreen";
+import { deleteProduct } from "../../utils/apiConfig";
+
 const Navbar = () => {
   const { width } = useScreen();
   const [searchBox, setSearchBox] = useState(false);
@@ -32,7 +34,18 @@ const Navbar = () => {
     navItemLeft = (
       <NavItemLeft url={"/products"} text={"productos"} seccion={`#${id}`} />
     );
+  } else if (location.includes("/users")) {
+    navItemLeft = <NavItemLeft url={"/users"} text={"usuarios"} />;
   }
+
+  const handleDelete = async () => {
+    try {
+      const deletedProduct = await deleteProduct(parseInt(id));
+      console.log(deletedProduct);
+    } catch (error) {
+      console.log(error);
+    }
+  };
 
   return (
     <header className={style.header}>
@@ -44,17 +57,26 @@ const Navbar = () => {
           >
             <img src={menuLogo} alt="" id="hamburguerMenu" />
           </button>
-          {width > 468 ? navItemLeft: (!searchBox) ? navItemLeft :""}
+          {width > 468 ? navItemLeft : !searchBox ? navItemLeft : ""}
         </div>
-        {(location === "/products" || location === "/products/")? (
+        {location === "/products" ||
+        location === "/products/" ||
+        location === "/users" ? (
           <div className={style.search_box_and_add}>
             <NavItemSearch setOpen={setSearchBox} open={searchBox} />
           </div>
-        ):(location.includes("/products/"))?(
-          <div style={{position: "relative", right: 0}}>
-            <button className={style.navbar_right_button}>Eliminar</button>
+        ) : location.includes("/products/") ? (
+          <div style={{ position: "relative", right: 0 }}>
+            <button
+              onClick={handleDelete}
+              className={style.navbar_right_button}
+            >
+              Eliminar
+            </button>
           </div>
-        ): ""}
+        ) : (
+          ""
+        )}
       </nav>
     </header>
   );
