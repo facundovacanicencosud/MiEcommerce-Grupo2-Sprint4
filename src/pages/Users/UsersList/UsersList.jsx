@@ -12,7 +12,6 @@ const UsersList = () => {
   const fetchUsers = async () => {
     const { data } = await getUsers();
     setUsers(data);
-    console.log(data);
   };
 
   //Fetch all products

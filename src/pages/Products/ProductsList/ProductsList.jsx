@@ -31,8 +31,15 @@ const ProductsList = () => {
     const onSearch = async (searchQuery) => {
       try {
         const { data: products } = await getProducts();
-        const filteredProducts = products.filter((product) =>
-          product.title.toLowerCase().includes(searchQuery.toLowerCase())
+        const filteredProducts = products.filter(
+          (product) =>
+            product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            product.category
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase()) ||
+            product.description
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase())
         );
         setProducts(filteredProducts);
       } catch (error) {
@@ -42,7 +49,7 @@ const ProductsList = () => {
     onSearch(searchQuery);
   }, [searchQuery]);
 
-  //Order products
+  //Sort products
   useEffect(() => {
     if (selectedFilter) {
       const filteredProducts = [...products].sort((a, b) => {
