@@ -4,6 +4,7 @@ import style from "./UsersList.module.css";
 import arrow from "../../../assets/chevron-right (1).svg";
 import { AppContext } from "../../../context/AppContext";
 import { /* deleteUser,*/ getUsers } from "../../../utils/apiConfig";
+import noProfilePic from "../../../assets/no-profile-pic.svg";
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
@@ -71,7 +72,14 @@ const UsersList = () => {
                 <Link key={user.id} to={`/users/${user.id}`}>
                   <li className={style.user}>
                     <div className={style.userDetails}>
-                      <img src={user.profilePicture} alt="" />
+                      <img
+                        src={
+                          user.profilePicture
+                            ? user.profilePicture
+                            : noProfilePic
+                        }
+                        alt=""
+                      />
                       <div>
                         <p>{`${user.firstname} ${user.lastname}`}</p>
                       </div>
