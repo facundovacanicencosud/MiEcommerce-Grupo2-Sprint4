@@ -5,6 +5,7 @@ import style from "./productsList.module.css";
 import arrow from "../../../assets/chevron-right (1).svg";
 import { AppContext } from "../../../context/AppContext";
 import FilterOptions from "../../../components/FilterOptions/FilterOptions";
+import noImage from "../../../assets/no-image.svg";
 
 const ProductsList = () => {
   const [products, setProducts] = useState({});
@@ -88,11 +89,19 @@ const ProductsList = () => {
             ) : (
               products.map((product) => (
                 <Link key={product.id} to={`/products/${product.id}`}>
-                  <li className={`${style.product} ${theme?style.product_dark:""}`}>
+                  <li
+                    className={`${style.product} ${
+                      theme ? style.product_dark : ""
+                    }`}
+                  >
                     <div>
                       <img
-                        src={product.images[product.images.length - 1]}
-                        alt=""
+                        src={
+                          product.images.length > 0
+                            ? product.images[product.images.length - 1]
+                            : noImage
+                        }
+                        alt={`${product.title}-picture`}
                       />
                       <div className={style.productDetails}>
                         <p className={style.productTitle}>{product.title}</p>
@@ -101,7 +110,13 @@ const ProductsList = () => {
                         </p>
                       </div>
                     </div>
-                    <img className={`${style.arrow} ${theme?style.arrow_dark:""}`} src={arrow} alt="" />
+                    <img
+                      className={`${style.arrow} ${
+                        theme ? style.arrow_dark : ""
+                      }`}
+                      src={arrow}
+                      alt=""
+                    />
                   </li>
                 </Link>
               ))
