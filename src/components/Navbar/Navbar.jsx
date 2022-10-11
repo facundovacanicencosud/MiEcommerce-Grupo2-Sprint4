@@ -12,7 +12,7 @@ import { deleteProduct } from "../../utils/apiConfig";
 
 const Navbar = () => {
   const [searchBox, setSearchBox] = useState(false);
-  const { setActiveSidebar } = useContext(AppContext);
+  const { setActiveSidebar,theme } = useContext(AppContext);
   const navegar = useNavigate();
   const location = useLocation().pathname;
   const { width } = useScreen();
@@ -63,12 +63,12 @@ const Navbar = () => {
   };
 
   return (
-    <header className={style.header}>
+    <header className={`${style.header} ${theme?"dark-background":""}`}>
       <nav className={style.navbar}>
         <div>
           <button
             onClick={setActiveSidebar}
-            className={style.navbar_menu_button}
+            className={theme? style.navbar_menu_button_dark: style.navbar_menu_button}
           >
             <img src={menuLogo} alt="" id="hamburguerMenu" />
           </button>

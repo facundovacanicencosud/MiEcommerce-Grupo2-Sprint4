@@ -1,7 +1,8 @@
 .sidebar {
-  background-color: var(--negro);
+  background-color: var(--blanco);
   filter: opacity(0.9);
   display: flex;
+  transition: 0.4s;
   flex-direction: column;
   justify-content: space-between;
   backdrop-filter: blur(4px);
@@ -32,7 +33,6 @@
 }
 
 .sidebar_top__links li img {
-  filter: invert(1);
   width: 0.8rem;
 }
 
@@ -49,6 +49,11 @@
 }
 
 .sidebar_top__link_selected {
+  background-color: var(--verde);
+  transition: 0.8s;
+}
+
+.sidebar_top__link_selected_dark {
   background-color: var(--gris);
   transition: 0.8s;
 }
