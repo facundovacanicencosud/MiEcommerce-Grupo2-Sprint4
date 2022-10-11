@@ -11,15 +11,21 @@
   display: none;
   margin-left: 8px;
   background-color: #fff;
-  border: 2px solid var(--verde);
+  border: 1px solid var(--negro-claro);
   border-radius: 16px;
   height: 34px;
   color: var(--blanco);
   padding-left: 15px;
 }
+.search_input:focus {
+  border-color:var(--verde);
+}
 .dark_search{
   background-color: var(--negro-claro);
   border-color: var(--btn-oscuro);
+}
+.dark_search:focus{
+  border-color: var(--blanco);
 }
 
 .search_form_div {

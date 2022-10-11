@@ -41,7 +41,8 @@ const NewProductView = () => {
     imagesInput.current.value = "";
   };
 
-  const handleDelete = (i) => {
+  const handleDelete = (e,i) => {
+    e.preventDefault();
     const tempImg = [...images];
     tempImg.splice(i, 1);
     setImages(tempImg);
@@ -180,7 +181,7 @@ const NewProductView = () => {
                       <p>{image}</p>
                       <button
                         className={style.quitar_img_prod}
-                        onClick={() => handleDelete(i)}
+                        onClick={(e) => handleDelete(e,i)}
                       >
                         Quitar
                       </button>

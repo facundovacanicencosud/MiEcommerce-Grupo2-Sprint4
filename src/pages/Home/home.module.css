@@ -19,7 +19,7 @@
 }
 .category_dark {
   background-color: var(--negro-claro);
-  
+  color: var(--blanco);
 }
 
 .category > div {
