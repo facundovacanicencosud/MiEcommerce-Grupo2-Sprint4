@@ -172,7 +172,7 @@ const NewProductView = () => {
               <div>
                 <ul className={style.loaded_images}>
                   {images.map((image, i) => (
-                    <li className={style.list_images} key={i}>
+                    <li className={style.list_images} key={`${image}${i}`}>
                       <img
                         className={style.create_image}
                         src={image}
