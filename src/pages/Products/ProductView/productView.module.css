@@ -1,6 +1,16 @@
 .container {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
+  animation: fade-in 0.7s ease-in;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .products {
@@ -9,15 +19,24 @@
     width: 45%;
 }
 
+.products h2 {
+    margin-right: 150px;
+}
+
 .products img {
     width: 15%;
-    height: 70px;
+    height: 75px;
     border-radius: 15px;
     margin-right: 10px;
+    display: flex;
+}
+
+.products h4 {
+    margin-left: 90px;
 }
 
 .headings {
-    margin: 20px 0px;
+  margin: 20px 0px;
 }
 
 
@@ -62,4 +81,7 @@
 ::placeholder {
     color: lightgray;
 }
+
+
+
 

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import useForm from "../../../hooks/useForm";
 import axios from "axios";
 import style from "./productView.module.css";
-import useForm from "../../../hooks/dataForm.js"
 
 
 const ProductView = () => {
@@ -42,7 +42,8 @@ const ProductView = () => {
     let formObject = JSON.stringify(Object.fromEntries(datas), replace)*/
     axios
       .put(`${baseURL}/product`, 
-        {"id": product.id, "title": data.title, "price": precio, "stock": stonk}
+        {"id": product.id, "title": data.title, "price": precio, 
+          "stock": stonk, "description": data.description}
   )
       .then((response) => {
         setProduct(response.data);
@@ -76,11 +77,12 @@ const ProductView = () => {
       });
       alert('Imagen agregada.')
   }
+  
 
   const deleteImg = () => {
     axios
       .put(`${baseURL}/product`, {
-        "images": [image], 
+        /*"images": [image],*/ 
         "id": product.id
       })
       .then((response) => {
@@ -117,7 +119,6 @@ const ProductView = () => {
     </div>
   )
 
-  
 
   return (
     <>
