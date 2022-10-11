@@ -82,6 +82,15 @@ a {
   color: var(--blanco) !important;
 }
 
+.arrow-nav-item-left{
+  filter: invert(0);
+  background-color: transparent;
+}
+
+.arrow-nav-item-left.dark{
+  filter: invert(1);
+}
+
 
 aside {
   width: 296px;
