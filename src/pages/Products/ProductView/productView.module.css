@@ -1,0 +1,87 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  animation: fade-in 0.7s ease-in;
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.products {
+    display: flex;
+    flex-wrap: wrap;
+    width: 45%;
+}
+
+.products h2 {
+    margin-right: 150px;
+}
+
+.products img {
+    width: 15%;
+    height: 75px;
+    border-radius: 15px;
+    margin-right: 10px;
+    display: flex;
+}
+
+.products h4 {
+    margin-left: 90px;
+}
+
+.headings {
+  margin: 20px 0px;
+}
+
+
+.inputs {
+    width: 25%;
+    height: 45px;
+    border-radius: 25px;
+    margin-bottom: 18px;
+    margin-top: 7px;
+    background-color: gray;
+    padding-left: 15px;
+    border: 0.5px solid white;
+    color: white;
+}
+
+.description {
+    width: 50%;
+    height: 135px;
+    border-radius: 25px;
+    background-color: gray;
+    padding-left: 15px;
+    padding-bottom: 90px;
+    margin-top: 7px;
+    border: 0.5px solid white;
+    color: white;
+}
+
+.imageBanner {
+    display: flex;
+    flex-direction: column;
+    background: grey;
+    border-radius: 25px;
+    width: 50%
+}
+
+.imageBanner img {
+    width: 70px;
+    height: 70px;
+    border-radius: 15px;
+}
+
+::placeholder {
+    color: lightgray;
+}
+
+
+
+

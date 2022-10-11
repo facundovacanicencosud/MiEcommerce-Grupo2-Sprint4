@@ -1,40 +1,99 @@
 import React from "react";
 import { useState } from "react";
-import { Link, useLocation } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import style from "./navbar.module.css";
 import menuLogo from "../../assets/menu.svg";
-// import menuLogoWhite from "../../assets/menu-white.svg";
 import NavItemSearch from "./NavItems/NavItemSearch";
-import useScreen from "../../hooks/useScreen"
 import { useContext } from "react";
 import { AppContext } from "../../context/AppContext";
+import NavItemLeft from "./NavItems/NavItemLeft";
+import useScreen from "../../hooks/useScreen";
+import { deleteProduct } from "../../utils/apiConfig";
 
 const Navbar = () => {
   const [searchBox, setSearchBox] = useState(false);
-  const { setActiveSidebar } = useContext(AppContext);
-  const location = useLocation();
-  const {width} = useScreen();
-  const changeSidebarButton = () =>{
-    setActiveSidebar(x => !x)
+  const { setActiveSidebar,theme } = useContext(AppContext);
+  const navegar = useNavigate();
+  const location = useLocation().pathname;
+  const { width } = useScreen();
+  const id = useParams().id;
+
+  let navItemLeft;
+  if (location === "/") {
+    navItemLeft = <NavItemLeft url={"/"} text={"¡Hola Olivia!"} />;
+  } else if (location === "/products" || location === "/products/") {
+    navItemLeft = <NavItemLeft url={"/products"} text={"productos"} />;
+  }else if (location === "/users" || location === "/users/") {
+    navItemLeft = <NavItemLeft url={"/users"} text={"usuarios"} />;
+  } else if (location === "/products/new") {
+    navItemLeft = (
+      <NavItemLeft
+        url={"/products"}
+        text={"productos"}
+        seccion={"nuevo producto"}
+      />
+    );
+  } else if (location.includes("/products/")) {
+    navItemLeft = (
+      <NavItemLeft url={"/products"} text={"productos"} seccion={`#${id}`} />
+    );
+  } else if (location === "/users/new") {
+    navItemLeft = (
+      <NavItemLeft
+        url={"/users"}
+        text={"usuarios"}
+        seccion={"nuevo usuario"}
+      />
+    );
+  } else if (location.includes("/users/")) {
+    navItemLeft = <NavItemLeft url={"/users"} text={"usuarios"} seccion={`#${id}`} />;
   }
+
+  const handleDelete = async () => {
+    try {
+      const deletedProduct = await deleteProduct(parseInt(id));
+      if (deletedProduct.status === 200) {
+        navegar("/products");
+      } else {
+        alert("Se produjo un error");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
-    <header className={style.header}>
+    <header className={`${style.header} ${theme?"dark-background":""}`}>
       <nav className={style.navbar}>
-        
         <div>
-          {(width<1024) &&  
-            <button onClick={changeSidebarButton} className={style.navbar_menu_button}>
-              <img src={menuLogo} alt="" />
-            </button>
-          }
-           
-            <Link to={`/${"product"}`}>
-                <span>{"Product"}</span>
-            </Link>
+          <button
+            onClick={setActiveSidebar}
+            className={theme? style.navbar_menu_button_dark: style.navbar_menu_button}
+          >
+            <img src={menuLogo} alt="" id="hamburguerMenu" />
+          </button>
+          {width > 468 ? navItemLeft : !searchBox ? navItemLeft : ""}
         </div>
-        {(location.pathname === "/products")&& <div className={style.search_box_and_add}>
-            <NavItemSearch setOpen={setSearchBox} open={searchBox}/>
-        </div>}
+        {location === "/products" ||
+        location === "/products/" ||
+        location === "/users" ? (
+          <div className={style.search_box_and_add}>
+            <NavItemSearch setOpen={setSearchBox} open={searchBox} />
+          </div>
+        ) : location === "/products/new" || location === "users/new" ? (
+          ""
+        ) : location.includes("/products/") ? (
+          <div style={{ position: "relative", right: 0 }}>
+            <button
+              onClick={handleDelete}
+              className={style.navbar_right_button}
+            >
+              Eliminar
+            </button>
+          </div>
+        ) : (
+          ""
+        )}
       </nav>
     </header>
   );
