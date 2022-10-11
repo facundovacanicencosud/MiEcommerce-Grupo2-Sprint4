@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import style from "./productView.module.css";
+import useForm from "../../../hooks/dataForm.js"
 
 
 const ProductView = () => {
@@ -15,21 +16,26 @@ const ProductView = () => {
   useEffect(() => {
     axios.get(`${baseURL}/product/${id}`).then((response) => {
       setProduct(response.data);
-      console.log(response)
     });
   }, []);
 
 
-  const handleChange = (e) => {
+  const handleChanges = (e) => {
     setImage(e.target.value);
     console.log(image)
   };
 
+  const initialValues = {
+    ...product
+   };
+
+  const { data, handleChange } = useForm(initialValues);
 
   const addImg = () => {
     axios
       .put(`${baseURL}/product`, {
-        "images": [...product.images, image]
+        "images": [...product.images, image], 
+        "id": product.id
       })
       .then((response) => {
         setImage(response.data);
@@ -39,27 +45,26 @@ const ProductView = () => {
   
   const updateProduct = (e) => {
     e.preventDefault();
-    let data = new FormData(e.target);
-    data.append('id', product.id)
+    /*let datas = new FormData(e.target);
+    datas.append('id', product.id)*/
 
-    function replace(key, value) {
+    /*function replace(key, value) {
       if (key === 'id' || key === 'stock' || key === 'price') {
         let change = Number(value);
         return change;
       }
       return value;
     }
-    let formObject = JSON.stringify(Object.fromEntries(data), replace)
-    
-    console.log(formObject);
+    let formObject = JSON.stringify(Object.fromEntries(datas), replace)*/
     axios
-      .put(`${baseURL}/product`, {
-        formObject
-      })
+      .put(`${baseURL}/product`, 
+        {...data, "id": product.id}
+  )
       .then((response) => {
         setProduct(response.data);
       });
   }
+
 
   const [stockNum, setStockNum] = useState(0)
   const handleSubtractOne = () => {
@@ -69,6 +74,10 @@ const ProductView = () => {
   const handleAddOne = () => {
     setStockNum(stockNum + 1);
   };
+
+  const deleteImg = () => {
+  }
+
 
 
   const deleteProduct = () => {
@@ -87,22 +96,18 @@ const ProductView = () => {
     Array.from(document.querySelectorAll("input")).forEach(
       input => (input.value = "")
     );
-    this.setState({
-      itemvalues: [{}]
-    });
   };
 
 
-  const imageList = product.images.map((index) => 
+  const imageList = product.images.map((img) => 
     <div>
-      <img src={index} key={index} alt={product.title}/>
-      <p>{index}</p>
-      <button>Quitar</button>
+      <img src={img} key={img} alt={product.title}/>
+      <p>{img}</p>
+      <button onClick={deleteImg}>Quitar</button>
     </div>
   )
 
   
-
 
   return (
     <>
@@ -121,6 +126,8 @@ const ProductView = () => {
         <form onSubmit={updateProduct} className="productForm">
           <label htmlFor="nombre">Nombre</label><br />
           <input required
+            defaultValue={data.title}
+            onChange={handleChange}
             className={style.inputs}
             type="text"
             name="title"
@@ -128,7 +135,8 @@ const ProductView = () => {
           /> <br /> 
           <label htmlFor="valor">Valor</label> <br />
           <input
-            defaultValue={0}
+            onChange={handleChange}
+            defaultValue={data.price}
             className={style.inputs}
             type="number"
             name="price"
@@ -140,6 +148,7 @@ const ProductView = () => {
           <div>
             <button onClick={handleSubtractOne}> - </button>
             <input
+              onChange={handleChange}
               value={stockNum}
               className={style.inputs}
               type="number"
@@ -152,6 +161,7 @@ const ProductView = () => {
             <label htmlFor="descripcion">Descripción</label>
             <br />
             <input
+            onChange={handleChange}
               className={style.description}
               type="text"
               name="description"
@@ -175,14 +185,13 @@ const ProductView = () => {
           <div>
             <label htmlFor="imagen">Nueva Imagen</label><br />
             <input
-              onChange={handleChange}
-              value={image}
+              onChange={handleChanges}
               className={style.inputs}
-              type="picture"
+              type="text"
               name="imagen"
               accept="image/*"
               placeholder="InputValue"
-            /> <button onClick={addImg}>Agregar img</button>
+            /> <button onClick={addImg}>Agregar imagen</button>
           </div>
           <h4 className={style.headings}>Imágenes Actuales</h4>
           <div className={style.imageBanner}>
