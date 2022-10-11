@@ -14,14 +14,28 @@
 }
 
 .products {
+<<<<<<< HEAD
   display: flex;
+=======
+    display: flex;
+    flex-wrap: wrap;
+    width: 45%;
+}
+
+.products img {
+    width: 15%;
+    height: 70px;
+    border-radius: 15px;
+>>>>>>> 5ee574e (fixing stuff)
 }
 
 .headings {
   margin: 20px 0px;
 }
 
+
 .inputs {
+<<<<<<< HEAD
   width: 25%;
   height: 45px;
   border-radius: 25px;
@@ -42,3 +56,45 @@
 ::placeholder {
   color: lightgray;
 }
+=======
+    width: 25%;
+    height: 45px;
+    border-radius: 25px;
+    margin-bottom: 18px;
+    margin-top: 7px;
+    background-color: gray;
+    padding-left: 15px;
+    border: 0.5px solid white;
+    color: white;
+}
+
+.description {
+    width: 50%;
+    height: 135px;
+    border-radius: 25px;
+    background-color: gray;
+    padding-left: 15px;
+    padding-bottom: 90px;
+    margin-top: 7px;
+    border: 0.5px solid white;
+}
+
+.imageBanner {
+    display: flex;
+    flex-direction: column;
+    background: grey;
+    border-radius: 25px;
+    width: 50%
+}
+
+.imageBanner img {
+    width: 70px;
+    height: 70px;
+    border-radius: 15px;
+}
+
+::placeholder {
+    color: lightgray;
+}
+
+>>>>>>> 5ee574e (fixing stuff)
