@@ -4,7 +4,6 @@ import ButtonNavAddProd from "./ButtonsNav/ButtonNavAddProd";
 import InputSearchNav from "./ButtonsNav/InputSearchNav";
 import { useContext } from "react";
 import { AppContext } from "../../../context/AppContext";
-import { useLocation } from "react-router-dom";
 
 const NavItemSearch = ({ setOpen, open }) => {
   const { setSearchQuery } = useContext(AppContext);
