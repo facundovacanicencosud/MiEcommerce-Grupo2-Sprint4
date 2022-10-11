@@ -5,6 +5,7 @@ import arrow from "../../../assets/chevron-right (1).svg";
 import { AppContext } from "../../../context/AppContext";
 import FilterOptions from "../../../components/FilterOptions/FilterOptions";
 import { getUsers } from "../../../utils/apiConfig";
+import noProfilePic from "../../../assets/no-profile-pic.svg";
 
 const UsersList = () => {
   const [users, setUsers] = useState([]);
@@ -80,14 +81,29 @@ const UsersList = () => {
             ) : (
               users.map((user) => (
                 <Link key={user.id} to={`/users/${user.id}`}>
-                  <li className={`${style.user} ${theme?style.user_dark:""}`}>
+                  <li
+                    className={`${style.user} ${theme ? style.user_dark : ""}`}
+                  >
                     <div>
-                      <img src={user.profilePicture} alt="" />
+                      <img
+                        src={
+                          user.profilePicture
+                            ? user.profilePicture
+                            : noProfilePic
+                        }
+                        alt={`${user.firstname}-profile-pic`}
+                      />
                       <div>
                         <p>{`${user.firstname} ${user.lastname}`}</p>
                       </div>
                     </div>
-                    <img className={`${style.arrow} ${theme? style.arrow_dark: ""}`} src={arrow} alt="" />
+                    <img
+                      className={`${style.arrow} ${
+                        theme ? style.arrow_dark : ""
+                      }`}
+                      src={arrow}
+                      alt=""
+                    />
                   </li>
                 </Link>
               ))
