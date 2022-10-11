@@ -9,10 +9,13 @@ const ProductView = () => {
   const id = useParams().id;
 
   const [product, setProduct] = useState(null);
+  const [image, setImage] = useState([]);
+  const [fer, setFer] = useState([]);
 
   useEffect(() => {
     axios.get(`${baseURL}/product/${id}`).then((response) => {
       setProduct(response.data);
+      setFer(response.data.images);
     });
   }, []);
 
@@ -60,7 +63,6 @@ const ProductView = () => {
     setStockNum(stockNum + 1);
   };
 
-  const [image, setImage] = useState([]);
   const handleChanges = (e) => {
     setImage(e.target.value);
   };
@@ -89,6 +91,13 @@ const ProductView = () => {
     alert("Imagen borrada!");
   };
 
+  const deleteImgActuales = (e, i) => {
+    e.preventDefault();
+    const actuales = [...fer];
+    actuales.splice(i, 1);
+    setFer(actuales);
+  };
+
   // const deleteProduct = () => {
   //   axios.delete(`${baseURL}/product?id=${id}`).then(() => {
   //     alert("Producto borrado.");
@@ -104,13 +113,13 @@ const ProductView = () => {
     );
   };
 
-  const imageList = product.images.map((img) => (
+  /*   const imageList = product.images.map((img, i) => (
     <div>
-      <img src={img} key={img} alt={product.title} />
+      <img src={img} key={`${img}${i}`} alt={product.title} />
       <p>{img}</p>
-      <button onClick={deleteImg}>Quitar</button>
+      <button onClick={(e) => deleteImgActuales(e, i)}>Quitar</button>
     </div>
-  ));
+  )); */
 
   return (
     <>
@@ -203,7 +212,18 @@ const ProductView = () => {
           <button onClick={addImg}>Agregar imagen</button>
         </div>
         <h4 className={style.headings}>Imágenes Actuales</h4>
-        <div className={style.imageBanner}>{imageList}</div>
+        <div className={style.imageBanner}>
+          <ul>
+            {fer.map((img, i) => (
+              <li key={`${img}${i}`}>
+                <img src={img} alt={img} />
+                <p>{img}</p>
+                <button onClick={(e) => deleteImgActuales(e, i)}>Quitar</button>
+              </li>
+            ))}
+          </ul>
+        </div>
+
         <br />
         <div>
           <button onClick={resetInputs}>CANCELAR</button>
