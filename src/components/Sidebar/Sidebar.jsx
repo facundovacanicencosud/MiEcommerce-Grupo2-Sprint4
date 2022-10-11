@@ -23,7 +23,12 @@ const Sidebar = () => {
       e.target.id !== "hamburguerMenu"
     ) {
       setActiveSidebar(false);
-      console.log();
+    }
+  };
+
+  const handleClickInside = (e) => {
+    if (sidebarRef.current.contains(e.target) && e.path[0].localName) {
+      setActiveSidebar(false);
     }
   };
 
@@ -33,6 +38,10 @@ const Sidebar = () => {
 
   useEffect(() => {
     return document.addEventListener("click", handleClickOutside);
+  }, []);
+
+  useEffect(() => {
+    return document.addEventListener("click", handleClickInside);
   }, []);
 
   return (
