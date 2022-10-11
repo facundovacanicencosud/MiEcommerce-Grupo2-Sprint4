@@ -8,6 +8,8 @@ const NewProductView = () => {
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
   const [warning, setWarning] = useState(null);
+  const [stock, setStock] = useState(0);
+  const imagesInput = useRef(null);
 
   const initialValues = {
     title: "",
@@ -22,9 +24,15 @@ const NewProductView = () => {
     images: [],
   };
 
-  const imagesInput = useRef(null);
-
   const { data, handleChange } = useForm(initialValues);
+  const handleAddOne = (e) => {
+    e.preventDefault();
+    setStock(stock + 1);
+  };
+  const handleSubtractOne = (e) => {
+    e.preventDefault();
+    setStock(stock - 1);
+  };
 
   const sendImage = (e) => {
     e.preventDefault();
@@ -113,14 +121,24 @@ const NewProductView = () => {
               </div>
             </div>
             <div className={style.inputfield}>
-              <label htmlFor="rate">Stock</label>
-              <input
-                className={`${style.input} asNum`}
-                type="number"
-                name="stock"
-                placeholder="Stock"
-                onChange={handleChange}
-              />
+              <label htmlFor="stock">Stock</label>
+              <div className={style.stock_wrapper}>
+                <button className={style.btn_stock} onClick={handleSubtractOne}>
+                  {" "}
+                  -{" "}
+                </button>
+                <input
+                  className={`${style.stock_input} asNum`}
+                  value={stock}
+                  type="number"
+                  name="stock"
+                  placeholder="Stock"
+                  onChange={handleChange}
+                />{" "}
+                <button className={style.btn_stock} onClick={handleAddOne}>
+                  +
+                </button>
+              </div>
             </div>
             <div className={style.inputfield}>
               <label htmlFor="rate">Category</label>

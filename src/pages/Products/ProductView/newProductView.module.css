@@ -139,6 +139,51 @@
   border-radius: 10px;
   margin-right: 0.5rem;
 }
+/* .stock_wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 5px;
+} */
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+.stock_wrapper {
+  width: 100px;
+  height: 32px;
+  border: var(--gris);
+  border-radius: 16px;
+  display: flex;
+  align-items: center;
+  justify-content: space-evenly;
+  overflow: hidden;
+  background-color: var(--gris);
+}
+.stock_input {
+  width: 33%;
+  background-color: var(--gris);
+  border: none;
+  color: var(--blanco);
+  font-size: 15px;
+  font-weight: 500;
+}
+.btn_stock {
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: white;
+}
+
+.btn_stock:hover {
+  background-color: var(--blanco);
+  color: var(--gris);
+  border-radius: 10px;
+  animation: fade-in 0.5s;
+}
 
 @media (max-width: 420px) {
   .wrapper .form .inputfield {
