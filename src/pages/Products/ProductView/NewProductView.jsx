@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import useForm from "../../../hooks/useForm";
 import { createProduct } from "../../../utils/apiConfig";
@@ -7,7 +7,6 @@ import style from "../ProductView/newProductView.module.css";
 const NewProductView = () => {
   const navigate = useNavigate();
   const [images, setImages] = useState([]);
-  const [imageURLs, setImageURLs] = useState([]);
   const [warning, setWarning] = useState(null);
 
   const initialValues = {
@@ -23,22 +22,22 @@ const NewProductView = () => {
     images: [],
   };
 
+  const imagesInput = useRef(null);
+
   const { data, handleChange } = useForm(initialValues);
 
-  useEffect(() => {
-    if (images.length < 1) return;
-    const newImageUrls = [];
-    images.forEach((image) => newImageUrls.push(URL.createObjectURL(image)));
-    setImageURLs(newImageUrls);
-  }, [images]);
-
-  const handleImageUpload = (e) => {
-    setImages([...e.target.files]);
+  const sendImage = (e) => {
+    e.preventDefault();
+    const imgStr = imagesInput.current.value;
+    setImages([...images, imgStr]);
+    imagesInput.current.value = "";
   };
 
   const handleSubmit = async (e) => {
+    data.images = images;
     console.log(data);
     e.preventDefault();
+
     try {
       const response = await createProduct(data);
       if (response.status === 201) {
@@ -133,17 +132,22 @@ const NewProductView = () => {
               <label htmlFor="images">Images</label>
               <input
                 className={style.input}
-                type="file"
+                ref={imagesInput}
+                type="url"
                 name="images"
                 accept="image/*"
-                onChange={handleImageUpload}
               />
+              <button onClick={sendImage}>Upload</button>
             </div>
             <div>
-              {" "}
-              {imageURLs.map((x) => (
-                <span> {imageURLs}</span>
-              ))}
+              <span>Imagenes cargadas:</span>
+              <div>
+                <ul>
+                  {images.map((image, i) => (
+                    <li key={`${image}${i}`}>{image}</li>
+                  ))}
+                </ul>
+              </div>
             </div>
 
             <div>
