@@ -19,11 +19,20 @@
     width: 45%;
 }
 
+.products h2 {
+    margin-right: 150px;
+}
+
 .products img {
     width: 15%;
-    height: 70px;
+    height: 75px;
     border-radius: 15px;
-  display: flex;
+    margin-right: 10px;
+    display: flex;
+}
+
+.products h4 {
+    margin-left: 90px;
 }
 
 .headings {
@@ -52,6 +61,7 @@
     padding-bottom: 90px;
     margin-top: 7px;
     border: 0.5px solid white;
+    color: white;
 }
 
 .imageBanner {
