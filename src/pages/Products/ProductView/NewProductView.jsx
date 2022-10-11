@@ -41,15 +41,15 @@ const NewProductView = () => {
     imagesInput.current.value = "";
   };
 
-  const handleDelete = (e) => {
-    images.splice(1, 0);
+  const handleDelete = (i) => {
+    const tempImg = [...images];
+    tempImg.splice(i, 1);
+    setImages(tempImg);
   };
 
   const handleSubmit = async (e) => {
     data.images = images;
-    console.log(data);
     e.preventDefault();
-
     try {
       const response = await createProduct(data);
       if (response.status === 201) {
@@ -171,12 +171,16 @@ const NewProductView = () => {
               <div>
                 <ul className={style.loaded_images}>
                   {images.map((image, i) => (
-                    <li className={style.list_images} key={`${image}${i}`}>
-                      <img className={style.create_image} src={image} alt="" />
+                    <li className={style.list_images} key={i}>
+                      <img
+                        className={style.create_image}
+                        src={image}
+                        alt={image}
+                      />
                       <p>{image}</p>
                       <button
                         className={style.quitar_img_prod}
-                        onClick={handleDelete}
+                        onClick={() => handleDelete(i)}
                       >
                         Quitar
                       </button>
