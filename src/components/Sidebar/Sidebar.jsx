@@ -36,15 +36,17 @@ const Sidebar = () => {
     >
       <div className={styles.sidebar_top}>
         <div className={styles.sidebar_top__logo}>
-          <img className={styles.sidebar_logo} src={logo} />
+          <img className={styles.sidebar_logo} src={logo} alt="logo" />
         </div>
         <div className={styles.sidebar_top__links}>
           <ul>
             <li
-              className={params == "/" ? styles.sidebar_top__link_selected : ""}
+              className={
+                params === "/" ? styles.sidebar_top__link_selected : ""
+              }
             >
               <div className={styles.sidebar_top__link_logo}>
-                <img src={homeIcon} />
+                <img src={homeIcon} alt="Icono home" />
               </div>
               <div className={styles.sidebar_top__link_title}>
                 <Link to="/">Inicio</Link>
@@ -52,11 +54,11 @@ const Sidebar = () => {
             </li>
             <li
               className={
-                params == "/products" ? styles.sidebar_top__link_selected : ""
+                params === "/products" ? styles.sidebar_top__link_selected : ""
               }
             >
               <div className={styles.sidebar_top__link_logo}>
-                <img src={packageIcon} />
+                <img src={packageIcon} alt="Products icon" />
               </div>
               <div className={styles.sidebar_top__link_title}>
                 <Link to="/products">Productos</Link>
@@ -64,11 +66,23 @@ const Sidebar = () => {
             </li>
             <li
               className={
-                params == "/store" ? styles.sidebar_top__link_selected : ""
+                params === "/users" ? styles.sidebar_top__link_selected : ""
               }
             >
               <div className={styles.sidebar_top__link_logo}>
-                <img src={storeIcon} />
+                <img src={storeIcon} alt="Stores icon" />
+              </div>
+              <div className={styles.sidebar_top__link_title}>
+                <Link to="/users">Usuarios</Link>
+              </div>
+            </li>
+            <li
+              className={
+                params === "/store" ? styles.sidebar_top__link_selected : ""
+              }
+            >
+              <div className={styles.sidebar_top__link_logo}>
+                <img src={storeIcon} alt="Stores icon" />
               </div>
               <div className={styles.sidebar_top__link_title}>
                 <Link to="/store">Tiendas</Link>
@@ -81,7 +95,7 @@ const Sidebar = () => {
         <Link to="/profile">
           <div className={styles.sidebar_footer_user_card}>
             <div className={styles.sidebar_footer_user_card_img}>
-              <img src={profileIcon} />
+              <img src={profileIcon} alt="Profile icon" />
             </div>
             <div className={styles.sidebar_footer__link_title}>
               <p>Olivia</p>

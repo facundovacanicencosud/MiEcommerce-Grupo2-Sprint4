@@ -1,12 +1,12 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
-import useForm from "../../../hooks/dataForm";
+import useForm from "../../../hooks/useForm";
 import { createProduct } from "../../../utils/apiConfig";
-import style from "../ProductView/createProduct.module.css";
+import style from "../ProductView/newProductView.module.css";
 
 const NewProductView = () => {
   const navigate = useNavigate();
-  const [image, setImage] = useState([]);
+  const [images, setImages] = useState([]);
   const [warning, setWarning] = useState(null);
 
   const initialValues = {
@@ -22,10 +22,22 @@ const NewProductView = () => {
     images: [],
   };
 
+  const imagesInput = useRef(null);
+
   const { data, handleChange } = useForm(initialValues);
 
-  const handleSubmit = async (e) => {
+  const sendImage = (e) => {
     e.preventDefault();
+    const imgStr = imagesInput.current.value;
+    setImages([...images, imgStr]);
+    imagesInput.current.value = "";
+  };
+
+  const handleSubmit = async (e) => {
+    data.images = images;
+    console.log(data);
+    e.preventDefault();
+
     try {
       const response = await createProduct(data);
       if (response.status === 201) {
@@ -66,9 +78,8 @@ const NewProductView = () => {
             <div className={style.inputfield}>
               <label htmlFor="price">Price</label>
               <input
-                className={style.input}
+                className={`${style.input} asNum`}
                 type="number"
-                id="asNum"
                 name="price"
                 placeholder="Price"
                 onChange={handleChange}
@@ -100,9 +111,8 @@ const NewProductView = () => {
             <div className={style.inputfield}>
               <label htmlFor="rate">Stock</label>
               <input
-                className={style.input}
+                className={`${style.input} asNum`}
                 type="number"
-                id="asNum"
                 name="stock"
                 placeholder="Stock"
                 onChange={handleChange}
@@ -122,13 +132,24 @@ const NewProductView = () => {
               <label htmlFor="images">Images</label>
               <input
                 className={style.input}
-                type="text"
+                ref={imagesInput}
+                type="url"
                 name="images"
                 accept="image/*"
-                value={image}
-                onChange={(e) => setImage(e.target.value)}
               />
+              <button onClick={sendImage}>Upload</button>
             </div>
+            <div>
+              <span>Imagenes cargadas:</span>
+              <div>
+                <ul>
+                  {images.map((image, i) => (
+                    <li key={`${image}${i}`}>{image}</li>
+                  ))}
+                </ul>
+              </div>
+            </div>
+
             <div>
               <button type="submit" className={style.btnCreateProduct}>
                 <span>Guardar Producto</span>

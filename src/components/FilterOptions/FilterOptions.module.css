@@ -1,0 +1,7 @@
+.selectFilter {
+  margin: 2rem 0.1rem 2rem 0.5rem;
+  padding: 0.5rem;
+  border-radius: 10px;
+  background-color: var(--negro-claro);
+  color: aliceblue;
+}
