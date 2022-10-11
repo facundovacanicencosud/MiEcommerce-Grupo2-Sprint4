@@ -1,0 +1,50 @@
+.error__container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: fade-in 0.7s ease-in;
+}
+
+.error__container p {
+  text-align: justify;
+  margin-bottom: 20px;
+}
+.error__icon {
+  width: 160px;
+  filter: invert(10%) sepia(0%) saturate(0%) hue-rotate(64deg) brightness(94%) contrast(91%);
+}
+
+.error__icon_dark{
+  filter: invert(1);
+}
+
+.error__title {
+  font-size: 50px;
+}
+
+.error__subtitle {
+  font-size: 20px;
+  margin: 0 0 30px 0;
+  line-height: 1.2;
+}
+
+.error__description {
+  width: 380px;
+}
+
+.error__description a{
+    color: rgb(29, 178, 141);
+}
+
+.error__description a:hover{
+    color: rgb(52, 237, 191);
+}
+
+@keyframes fade-in {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
