@@ -13,6 +13,7 @@
     width: 15%;
     height: 70px;
     border-radius: 15px;
+    margin-right: 10px;
 }
 
 .headings {
@@ -41,6 +42,7 @@
     padding-bottom: 90px;
     margin-top: 7px;
     border: 0.5px solid white;
+    color: white;
 }
 
 .imageBanner {
