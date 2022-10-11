@@ -9,22 +9,8 @@ const ProductView = () => {
   const baseURL = "http://localhost:5000/api";
   const id = useParams().id
 
-  const [image, setImage] = useState([]);
+  const [image, setImage] = useState([]); 
   const [product, setProduct] = useState(null);
-
-  /*const initialValues = {
-    id: {id},
-    title: "",
-    description: "",
-    price: 0,
-    rating: {
-      rate: 0,
-      count: 0,
-    },
-    stock: 0,
-    category: "",
-    images: [],
-  };*/
 
   useEffect(() => {
     axios.get(`${baseURL}/product/${id}`).then((response) => {
@@ -33,32 +19,89 @@ const ProductView = () => {
     });
   }, []);
 
-  const updateProduct = () => {
+
+  const handleChange = (e) => {
+    setImage(e.target.value);
+    console.log(image)
+  };
+
+
+  const addImg = () => {
     axios
       .put(`${baseURL}/product`, {
-        id: product.id,
-        title: "Editado!!",
-        price: 15
+        "images": [...product.images, image]
+      })
+      .then((response) => {
+        setImage(response.data);
+      });
+  }
+
+  
+  const updateProduct = (e) => {
+    e.preventDefault();
+    let data = new FormData(e.target);
+    data.append('id', product.id)
+
+    function replace(key, value) {
+      if (key === 'id' || key === 'stock' || key === 'price') {
+        let change = Number(value);
+        return change;
+      }
+      return value;
+    }
+    let formObject = JSON.stringify(Object.fromEntries(data), replace)
+    
+    console.log(formObject);
+    axios
+      .put(`${baseURL}/product`, {
+        formObject
       })
       .then((response) => {
         setProduct(response.data);
       });
   }
 
+  const [stockNum, setStockNum] = useState(0)
+  const handleSubtractOne = () => {
+    setStockNum(stockNum - 1);
+  };
+
+  const handleAddOne = () => {
+    setStockNum(stockNum + 1);
+  };
+
+
   const deleteProduct = () => {
     axios
-      .delete(`${baseURL}/product/${id}`)
+      .delete(`${baseURL}/product?id=${id}`)
       .then(() => {
-        alert("Post deleted!");
+        alert("Producto borrado!");
         setProduct(null)
       });
   }
 
   if (!product) return "No existe tal producto."
 
-  /* const eraseFields = () => {
 
-  } */
+  const resetInputs = () => {
+    Array.from(document.querySelectorAll("input")).forEach(
+      input => (input.value = "")
+    );
+    this.setState({
+      itemvalues: [{}]
+    });
+  };
+
+
+  const imageList = product.images.map((index) => 
+    <div>
+      <img src={index} key={index} alt={product.title}/>
+      <p>{index}</p>
+      <button>Quitar</button>
+    </div>
+  )
+
+  
 
 
   return (
@@ -66,40 +109,45 @@ const ProductView = () => {
     <button onClick={deleteProduct}>Eliminar</button>
 
       <div className={style.container}>
+
         <div className={style.products}>
-            <h2>{product.title}</h2>
-            <h2>{product.price}</h2>
-            <h2>{product.stock}</h2>
-            <img src={product.images[3]}alt={product.title}/>
+          <img src={product.images[0]}alt={product.title}/>
+          <h2>{product.title}</h2>
+          <h4>{product.price} Puntos Superclub</h4>
+          <h4>{product.stock} Stock Disponible</h4>
         </div>
 
         <h2 className={style.headings}>Información</h2>
-        <form />
-          <label htmlFor="nombre">Nombre</label>
-          <input
+        <form onSubmit={updateProduct} className="productForm">
+          <label htmlFor="nombre">Nombre</label><br />
+          <input required
             className={style.inputs}
             type="text"
             name="title"
-            placeholder="Ingresar Nombre"
-          />
-        </div>
-          <label htmlFor="calor">Valor</label>
-          <br />
+            placeholder="InputValue"
+          /> <br /> 
+          <label htmlFor="valor">Valor</label> <br />
           <input
+            defaultValue={0}
             className={style.inputs}
             type="number"
             name="price"
-            placeholder="Ingresar Valor"
+            placeholder="InputValue"
           />
           <br />
           <label htmlFor="stock">Stock</label>
           <br />
-          <input
-            className={style.inputs}
-            type="number"
-            name="stock"
-            placeholder="Ingresar Cantidad"
-          />
+          <div>
+            <button onClick={handleSubtractOne}> - </button>
+            <input
+              value={stockNum}
+              className={style.inputs}
+              type="number"
+              name="stock"
+              placeholder="InputValue"
+            />
+            <button onClick={handleAddOne}> + </button> 
+          </div>
           <div>
             <label htmlFor="descripcion">Descripción</label>
             <br />
@@ -107,37 +155,44 @@ const ProductView = () => {
               className={style.description}
               type="text"
               name="description"
-              placeholder="Ingresar Descripción"
+              placeholder="InputValue"
             />
-            <br />
-            <br />
+            <br /><br />
             <label htmlFor="tienda">Tienda</label>
             <br />
-            <input
+            <select
               className={style.inputs}
               type="text"
               name="category"
-              placeholder="Seleccionar"
-            />
+              placeholder="Select" >
+              <option>Pepito store</option> 
+            </select>
           </div>
-          <h3 className={style.headings}>Galería de Imágenes</h3>
+          <button type="submit">Guardar</button>
+        </form>
+
+        <h3 className={style.headings}>Galería de Imágenes</h3>
           <div>
-            <label htmlFor="imagen">Nueva Imagen</label>
+            <label htmlFor="imagen">Nueva Imagen</label><br />
             <input
-              type="file"
+              onChange={handleChange}
+              value={image}
+              className={style.inputs}
+              type="picture"
               name="imagen"
               accept="image/*"
-              value={image}
-              onChange={(e) => setImage(e.target.value)}
-            />
+              placeholder="InputValue"
+            /> <button onClick={addImg}>Agregar img</button>
           </div>
+          <h4 className={style.headings}>Imágenes Actuales</h4>
+          <div className={style.imageBanner}>
+            {imageList}
+          </div><br />
           <div>
-            <h4 className={style.headings}>Imágenes Actuales</h4>
+            <button onClick={resetInputs}>CANCELAR</button>
           </div>
-          <div>
-            <button type="submit" onClick={updateProduct}>Guardar</button>
-            {/* <button onClick={eraseFields}>Cancelar</button> */}
-          </div>
+      </div>
+
     </>
   )};
 
