@@ -11,6 +11,7 @@
   border-radius: 15px;
   padding: 0.5rem;
   display: flex;
+  color: var(--verde);
   width: 100%;
   justify-content: space-between;
   align-items: center;
