@@ -7,6 +7,7 @@
 
 .product {
   background-color: #fff;
+  color: var(--verde);
   border-radius: 15px;
   padding: 0.5rem;
   display: flex;
@@ -16,6 +17,7 @@
 }
 .product_dark {
   background-color: var(--negro-claro);
+  color: var(--blanco);
 }
 
 .filterContainer {
@@ -73,7 +75,7 @@
 .arrow {
   max-height: 20px;
   max-width: 20px;
-  filter: invert(0);
+  filter: invert(50%) sepia(33%) saturate(3588%) hue-rotate(136deg) brightness(95%) contrast(91%);
 }
 .arrow_dark {
   filter: invert(1);

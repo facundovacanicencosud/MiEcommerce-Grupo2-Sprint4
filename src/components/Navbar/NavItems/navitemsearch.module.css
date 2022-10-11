@@ -10,12 +10,16 @@
   width: 100%;
   display: none;
   margin-left: 8px;
-  background-color: var(--negro-claro);
-  border: 2px solid var(--btn-oscuro);
+  background-color: #fff;
+  border: 2px solid var(--verde);
   border-radius: 16px;
   height: 34px;
   color: var(--blanco);
   padding-left: 15px;
+}
+.dark_search{
+  background-color: var(--negro-claro);
+  border-color: var(--btn-oscuro);
 }
 
 .search_form_div {
@@ -56,6 +60,7 @@
   right: 15%;
   top: 0;
 }
+
 /* .search_form_search_icon{
     position: absolute;
     right: 20%;
@@ -77,6 +82,7 @@
   height: 36px;
   align-items: center;
   margin-left: 10px;
+  font-size: 24px;
   justify-content: center;
 }
 .add_icon span {
@@ -124,8 +130,6 @@
     width: 95%;
     display: initial;
     margin-left: 8px;
-    background-color: var(--negro-claro);
-    border: 2px solid var(--btn-oscuro);
     border-radius: 16px;
     height: 34px;
     color: var(--blanco);

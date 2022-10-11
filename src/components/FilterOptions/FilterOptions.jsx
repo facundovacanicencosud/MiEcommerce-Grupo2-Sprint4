@@ -1,6 +1,9 @@
+import { useContext } from "react";
+import { AppContext } from "../../context/AppContext";
 import style from "./FilterOptions.module.css";
 
 function FilterOptions({ selectedFilter, setSelectedFilter }) {
+  const {theme} = useContext(AppContext);
   const options = [
     { value: "", text: " --Seleccione una opción--" },
     { value: "menorPrecio", text: "Menor precio" },
@@ -15,7 +18,7 @@ function FilterOptions({ selectedFilter, setSelectedFilter }) {
 
   return (
     <select
-      className={style.selectFilter}
+      className={`${style.selectFilter} ${theme?style.selectFilter_dark:""}`}
       value={selectedFilter}
       onChange={handleChange}
     >

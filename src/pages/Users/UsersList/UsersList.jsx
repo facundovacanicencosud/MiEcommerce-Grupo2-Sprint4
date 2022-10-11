@@ -11,6 +11,7 @@ const UsersList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { searchQuery } = useContext(AppContext);
   const [selectedFilter, setSelectedFilter] = useState("");
+  const { theme } = useContext(AppContext);
   const fetchUsers = async () => {
     const { data } = await getUsers();
     setUsers(data);
@@ -79,14 +80,14 @@ const UsersList = () => {
             ) : (
               users.map((user) => (
                 <Link key={user.id} to={`/users/${user.id}`}>
-                  <li className={style.user}>
+                  <li className={`${style.user} ${theme?style.user_dark:""}`}>
                     <div>
                       <img src={user.profilePicture} alt="" />
                       <div>
                         <p>{`${user.firstname} ${user.lastname}`}</p>
                       </div>
                     </div>
-                    <img className={style.arrow} src={arrow} alt="" />
+                    <img className={`${style.arrow} ${theme? style.arrow_dark: ""}`} src={arrow} alt="" />
                   </li>
                 </Link>
               ))
