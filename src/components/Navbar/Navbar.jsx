@@ -25,7 +25,7 @@ const Navbar = () => {
 
   let navItemLeft;
   if (location === "/") {
-    navItemLeft = <NavItemLeft url={"/"} text={"¡Hola Olivia!"} />;
+    navItemLeft = <NavItemLeft url={"/"} username={"Olivia"} />;
   } else if (location === "/products" || location === "/products/") {
     navItemLeft = <NavItemLeft url={"/products"} text={"productos"} />;
   } else if (location === "/users" || location === "/users/") {

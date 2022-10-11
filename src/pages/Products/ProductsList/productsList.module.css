@@ -8,6 +8,7 @@
 .product {
   background-color: #fff;
   color: var(--verde);
+  transition: background-color 0.4s;
   border-radius: 15px;
   padding: 0.5rem;
   display: flex;
