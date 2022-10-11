@@ -66,6 +66,7 @@
   display: flex;
   background-color: var(--btn-oscuro);
   border-radius: 100px;
+  color: var(--blanco);
 }
 
 .sidebar_footer_user_card:hover {
