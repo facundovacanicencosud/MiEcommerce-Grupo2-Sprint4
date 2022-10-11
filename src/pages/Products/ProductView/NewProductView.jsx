@@ -33,6 +33,10 @@ const NewProductView = () => {
     imagesInput.current.value = "";
   };
 
+  const handleDelete = (e) => {
+    images.splice(1, 0);
+  };
+
   const handleSubmit = async (e) => {
     data.images = images;
     console.log(data);
@@ -88,7 +92,7 @@ const NewProductView = () => {
 
             <div className={style.inputfield}>
               <label htmlFor="rating">Rating:</label>
-              <div className={style.ratingComponents}>
+              <div className={style.rating_components}>
                 <input
                   className={style.input}
                   type="number"
@@ -130,21 +134,35 @@ const NewProductView = () => {
             </div>
             <div className={style.inputfield}>
               <label htmlFor="images">Images</label>
-              <input
-                className={style.input}
-                ref={imagesInput}
-                type="url"
-                name="images"
-                accept="image/*"
-              />
-              <button onClick={sendImage}>Upload</button>
+              <div className={style.upload_images}>
+                <input
+                  className={style.input}
+                  ref={imagesInput}
+                  type="url"
+                  name="images"
+                  accept="image/*"
+                  placeholder="Ingrese URL de la imagen"
+                />
+                <button onClick={sendImage} className={style.quitar_img_prod}>
+                  Upload
+                </button>
+              </div>
             </div>
             <div>
-              <span>Imagenes cargadas:</span>
+              <span>Loaded:</span>
               <div>
-                <ul>
+                <ul className={style.loaded_images}>
                   {images.map((image, i) => (
-                    <li key={`${image}${i}`}>{image}</li>
+                    <li className={style.list_images} key={`${image}${i}`}>
+                      <img className={style.create_image} src={image} alt="" />
+                      <p>{image}</p>
+                      <button
+                        className={style.quitar_img_prod}
+                        onClick={handleDelete}
+                      >
+                        Quitar
+                      </button>
+                    </li>
                   ))}
                 </ul>
               </div>
