@@ -1,6 +1,6 @@
 import React from "react";
 import { useState } from "react";
-import { useLocation, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import style from "./navbar.module.css";
 import menuLogo from "../../assets/menu.svg";
 import NavItemSearch from "./NavItems/NavItemSearch";
@@ -11,17 +11,20 @@ import useScreen from "../../hooks/useScreen";
 import { deleteProduct } from "../../utils/apiConfig";
 
 const Navbar = () => {
-  const { width } = useScreen();
   const [searchBox, setSearchBox] = useState(false);
   const { setActiveSidebar } = useContext(AppContext);
+  const navegar = useNavigate();
   const location = useLocation().pathname;
-
+  const { width } = useScreen();
   const id = useParams().id;
+
   let navItemLeft;
   if (location === "/") {
     navItemLeft = <NavItemLeft url={"/"} text={"¡Hola Olivia!"} />;
   } else if (location === "/products" || location === "/products/") {
     navItemLeft = <NavItemLeft url={"/products"} text={"productos"} />;
+  }else if (location === "/users" || location === "/users/") {
+    navItemLeft = <NavItemLeft url={"/users"} text={"usuarios"} />;
   } else if (location === "/products/new") {
     navItemLeft = (
       <NavItemLeft
@@ -34,14 +37,26 @@ const Navbar = () => {
     navItemLeft = (
       <NavItemLeft url={"/products"} text={"productos"} seccion={`#${id}`} />
     );
-  } else if (location.includes("/users")) {
-    navItemLeft = <NavItemLeft url={"/users"} text={"usuarios"} />;
+  } else if (location === "/users/new") {
+    navItemLeft = (
+      <NavItemLeft
+        url={"/users"}
+        text={"usuarios"}
+        seccion={"nuevo usuario"}
+      />
+    );
+  } else if (location.includes("/users/")) {
+    navItemLeft = <NavItemLeft url={"/users"} text={"usuarios"} seccion={`#${id}`} />;
   }
 
   const handleDelete = async () => {
     try {
       const deletedProduct = await deleteProduct(parseInt(id));
-      console.log(deletedProduct);
+      if (deletedProduct.status === 200) {
+        navegar("/products");
+      } else {
+        alert("Se produjo un error");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -65,6 +80,8 @@ const Navbar = () => {
           <div className={style.search_box_and_add}>
             <NavItemSearch setOpen={setSearchBox} open={searchBox} />
           </div>
+        ) : location === "/products/new" || location === "users/new" ? (
+          ""
         ) : location.includes("/products/") ? (
           <div style={{ position: "relative", right: 0 }}>
             <button
