@@ -9,7 +9,7 @@ import FilterOptions from "../../../components/FilterOptions/FilterOptions";
 const ProductsList = () => {
   const [products, setProducts] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-  const { searchQuery } = useContext(AppContext);
+  const { searchQuery, theme } = useContext(AppContext);
   const [selectedFilter, setSelectedFilter] = useState("");
   const fetchProducts = async () => {
     const { data } = await getProducts();
@@ -95,7 +95,7 @@ const ProductsList = () => {
             ) : (
               products.map((product) => (
                 <Link key={product.id} to={`/products/${product.id}`}>
-                  <li className={style.product}>
+                  <li className={`${style.product} ${theme?style.product_dark:""}`}>
                     <div>
                       <img
                         src={product.images[product.images.length - 1]}
@@ -108,7 +108,7 @@ const ProductsList = () => {
                         </p>
                       </div>
                     </div>
-                    <img className={style.arrow} src={arrow} alt="" />
+                    <img className={`${style.arrow} ${theme?style.arrow_dark:""}`} src={arrow} alt="" />
                   </li>
                 </Link>
               ))

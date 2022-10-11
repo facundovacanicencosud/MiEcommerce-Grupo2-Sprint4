@@ -6,7 +6,6 @@ import Categorys from "../../components/Home/Categorys";
 const Home = () => {
   const [products, setProducts] = useState({});
   const [isLoading, setIsLoading] = useState(true);
-
   useEffect(() => {
     const fetchProducts = async () => {
       try {

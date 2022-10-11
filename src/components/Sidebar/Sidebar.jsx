@@ -9,10 +9,12 @@ import { Link, useLocation } from "react-router-dom";
 import { AppContext } from "../../context/AppContext";
 
 const Sidebar = () => {
-  const { activeSidebar, setActiveSidebar } = useContext(AppContext);
+  const { activeSidebar, setActiveSidebar, theme, setTheme } =
+    useContext(AppContext);
   const params = useLocation().pathname;
 
   const sidebarRef = useRef(null);
+  const inputCheck = useRef();
 
   const handleClickOutside = (e) => {
     if (
@@ -25,6 +27,10 @@ const Sidebar = () => {
     }
   };
 
+  const changeTheme = () => {
+    setTheme((x) => !x);
+  };
+
   useEffect(() => {
     return document.addEventListener("click", handleClickOutside);
     // eslint-disable-next-line
@@ -33,7 +39,9 @@ const Sidebar = () => {
   return (
     <aside
       ref={sidebarRef}
-      className={`${styles.sidebar} ${activeSidebar ? "sidebar_active" : ""}`}
+      className={`${styles.sidebar} ${activeSidebar ? "sidebar_active" : ""} ${
+        theme ? "dark-background" : ""
+      }`}
     >
       <div className={styles.sidebar_top}>
         <div className={styles.sidebar_top__logo}>
@@ -43,56 +51,105 @@ const Sidebar = () => {
           <ul>
             <li
               className={
-                params === "/" ? styles.sidebar_top__link_selected : ""
+                params === "/" && theme
+                  ? styles.sidebar_top__link_selected_dark
+                  : params === "/"
+                  ? styles.sidebar_top__link_selected
+                  : ""
               }
             >
               <div className={styles.sidebar_top__link_logo}>
-                <img src={homeIcon} alt="Icono home" />
+                <img
+                  src={homeIcon}
+                  className={theme ? "dark-icon" : ""}
+                  alt="Icono home"
+                />
               </div>
               <div className={styles.sidebar_top__link_title}>
-                <Link to="/">Inicio</Link>
+                <Link to="/" className={theme ? "dark-color" : ""}>
+                  Inicio
+                </Link>
               </div>
             </li>
             <li
               className={
-                params === "/products" ? styles.sidebar_top__link_selected : ""
+                params === "/products" && theme
+                  ? styles.sidebar_top__link_selected_dark
+                  : params === "/products"
+                  ? styles.sidebar_top__link_selected
+                  : ""
               }
             >
               <div className={styles.sidebar_top__link_logo}>
-                <img src={packageIcon} alt="Products icon" />
+                <img
+                  className={theme ? "dark-icon" : ""}
+                  src={packageIcon}
+                  alt="Products icon"
+                />
               </div>
               <div className={styles.sidebar_top__link_title}>
-                <Link to="/products">Productos</Link>
+                <Link to="/products" className={theme ? "dark-color" : ""}>
+                  Productos
+                </Link>
               </div>
             </li>
             <li
               className={
-                params === "/users" ? styles.sidebar_top__link_selected : ""
+                params === "/users" && theme
+                  ? styles.sidebar_top__link_selected_dark
+                  : params === "/users"
+                  ? styles.sidebar_top__link_selected
+                  : ""
               }
             >
               <div className={styles.sidebar_top__link_logo}>
-                <img src={storeIcon} alt="Stores icon" />
+                <img
+                  className={theme ? "dark-icon" : ""}
+                  src={storeIcon}
+                  alt="Stores icon"
+                />
               </div>
               <div className={styles.sidebar_top__link_title}>
-                <Link to="/users">Usuarios</Link>
+                <Link to="/users" className={theme ? "dark-color" : ""}>
+                  Usuarios
+                </Link>
               </div>
             </li>
             <li
               className={
-                params === "/store" ? styles.sidebar_top__link_selected : ""
+                params === "/store" && theme
+                  ? styles.sidebar_top__link_selected_dark
+                  : params === "/store"
+                  ? styles.sidebar_top__link_selected
+                  : ""
               }
             >
               <div className={styles.sidebar_top__link_logo}>
-                <img src={storeIcon} alt="Stores icon" />
+                <img
+                  className={theme ? "dark-icon" : ""}
+                  src={storeIcon}
+                  alt="Stores icon"
+                />
               </div>
               <div className={styles.sidebar_top__link_title}>
-                <Link to="/store">Tiendas</Link>
+                <Link to="/store" className={theme ? "dark-color" : ""}>
+                  Tiendas
+                </Link>
               </div>
             </li>
           </ul>
         </div>
       </div>
       <div className={styles.sidebar_footer}>
+        <label className="switch">
+          <input
+            ref={inputCheck}
+            className={`switch-input ${theme ? "dark" : ""}`}
+            type="checkbox"
+            onChange={changeTheme}
+          />
+          <span className={`slider round ${theme ? "dark" : ""}`}></span>
+        </label>
         <Link to="/profile">
           <div className={styles.sidebar_footer_user_card}>
             <div className={styles.sidebar_footer_user_card_img}>
