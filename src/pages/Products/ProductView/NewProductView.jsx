@@ -54,6 +54,7 @@ const NewProductView = () => {
 
   const handleSubmit = async (e) => {
     data.images = images;
+    data.stock = stock;
     e.preventDefault();
     try {
       const response = await createProduct(data);
