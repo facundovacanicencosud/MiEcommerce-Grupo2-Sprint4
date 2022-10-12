@@ -1,8 +1,8 @@
-.wrapper{
+.wrapper {
   width: 60%;
 }
 
-.loaded_images img{
+.loaded_images img {
   height: 64px;
   width: 64px;
   object-fit: cover;
@@ -40,6 +40,7 @@
   background-color: var(--negro);
   box-shadow: 0px 4px 4px rgb(0 0 0 / 25%);
   border-radius: 15px;
+  border: 1px solid gray;
 }
 .list_images p {
   font-weight: 400;
@@ -51,6 +52,22 @@
   object-fit: cover;
   border-radius: 10px;
   margin-right: 0.5rem;
+}
+.img_span {
+  color: var(--blanco);
+}
+.btnCreateProduct {
+  width: 30%;
+  padding: 8px 10px;
+  font-size: 15px;
+  border: none;
+  background-color: var(--gris);
+  color: var(--blanco);
+  cursor: pointer;
+  border-radius: 3px;
+  outline: none;
+  transition: background-color 0.2s;
+  border-radius: 16px;
 }
 
 .products {
@@ -121,7 +138,7 @@
   align-items: center;
 }
 
-.products_img img{
+.products_img img {
   height: 64px;
   width: 64px;
   object-fit: cover;
@@ -228,7 +245,7 @@
   box-shadow: 0px 4px 0px 0px rgba(0 0 0 / 20%);
 }
 
-.productForm__images_list .productForm__images_list__image_card p{
+.productForm__images_list .productForm__images_list__image_card p {
   font-size: 11px;
   width: 75%;
   margin-left: 10px;
@@ -242,13 +259,15 @@
   border-radius: 10px;
 }
 
-.productForm__images_list .productForm__images_list__image_card button, .productForm .productForm_cancel_button, .productForm .productForm_save_button {
+.productForm__images_list .productForm__images_list__image_card button,
+.productForm .productForm_cancel_button,
+.productForm .productForm_save_button {
   padding: 10px 5px;
   border: none;
   border-radius: 100px;
   width: 90px;
   font-size: 13px;
-  background-color: rgb(74,78,80);
+  background-color: rgb(74, 78, 80);
   color: white;
   cursor: pointer;
 }
@@ -257,11 +276,11 @@
   color: lightgray;
 }
 
-.productForm_buttons_container{
+.productForm_buttons_container {
   width: 100%;
-    display: flex;
-    margin-top: 20px;
-    gap: 10px;
+  display: flex;
+  margin-top: 20px;
+  gap: 10px;
 }
 
 @keyframes fade-in {
