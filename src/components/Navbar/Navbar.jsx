@@ -9,21 +9,26 @@ import { AppContext } from "../../context/AppContext";
 import NavItemLeft from "./NavItems/NavItemLeft";
 import useScreen from "../../hooks/useScreen";
 import { deleteProduct } from "../../utils/apiConfig";
+import { useEffect } from "react";
 
 const Navbar = () => {
   const [searchBox, setSearchBox] = useState(false);
-  const { setActiveSidebar,theme } = useContext(AppContext);
+  const { setActiveSidebar, theme } = useContext(AppContext);
   const navegar = useNavigate();
   const location = useLocation().pathname;
   const { width } = useScreen();
   const id = useParams().id;
 
+  useEffect(()=>{
+    return setSearchBox(false);
+  },[location])
+
   let navItemLeft;
   if (location === "/") {
-    navItemLeft = <NavItemLeft url={"/"} text={"¡Hola Olivia!"} />;
+    navItemLeft = <NavItemLeft url={"/"} username={"Olivia"} />;
   } else if (location === "/products" || location === "/products/") {
     navItemLeft = <NavItemLeft url={"/products"} text={"productos"} />;
-  }else if (location === "/users" || location === "/users/") {
+  } else if (location === "/users" || location === "/users/") {
     navItemLeft = <NavItemLeft url={"/users"} text={"usuarios"} />;
   } else if (location === "/products/new") {
     navItemLeft = (
@@ -39,14 +44,12 @@ const Navbar = () => {
     );
   } else if (location === "/users/new") {
     navItemLeft = (
-      <NavItemLeft
-        url={"/users"}
-        text={"usuarios"}
-        seccion={"nuevo usuario"}
-      />
+      <NavItemLeft url={"/users"} text={"usuarios"} seccion={"nuevo usuario"} />
     );
   } else if (location.includes("/users/")) {
-    navItemLeft = <NavItemLeft url={"/users"} text={"usuarios"} seccion={`#${id}`} />;
+    navItemLeft = (
+      <NavItemLeft url={"/users"} text={"usuarios"} seccion={`#${id}`} />
+    );
   }
 
   const handleDelete = async () => {
@@ -63,16 +66,25 @@ const Navbar = () => {
   };
 
   return (
-    <header className={`${style.header} ${theme?"dark-background":""}`}>
+    <header className={`${style.header} ${theme ? "dark-background" : ""}`}>
       <nav className={style.navbar}>
         <div>
           <button
             onClick={setActiveSidebar}
-            className={theme? style.navbar_menu_button_dark: style.navbar_menu_button}
+            className={
+              theme ? style.navbar_menu_button_dark : style.navbar_menu_button
+            }
           >
             <img src={menuLogo} alt="" id="hamburguerMenu" />
           </button>
-          {width > 468 ? navItemLeft : !searchBox ? navItemLeft : ""}
+          {/* {width > 468
+            ? navItemLeft
+            : (searchBox && location !== "/products")
+            ? navItemLeft
+            : (!searchBox && (location === "/products" || location === "/products/"))? navItemLeft : ""} */}
+          {width > 468
+            ? navItemLeft
+            : !searchBox? navItemLeft : ""}
         </div>
         {location === "/products" ||
         location === "/products/" ||

@@ -41,7 +41,7 @@ const NewProductView = () => {
     imagesInput.current.value = "";
   };
 
-  const handleDelete = (e,i) => {
+  const handleDelete = (e, i) => {
     e.preventDefault();
     const tempImg = [...images];
     tempImg.splice(i, 1);
@@ -71,6 +71,7 @@ const NewProductView = () => {
             <div className={style.inputfield}>
               <label htmlFor="productName">Product title</label>
               <input
+                required
                 className={style.input}
                 type="text"
                 name="title"
@@ -91,11 +92,13 @@ const NewProductView = () => {
             <div className={style.inputfield}>
               <label htmlFor="price">Price</label>
               <input
+                required
                 className={`${style.input} asNum`}
                 type="number"
                 name="price"
                 placeholder="Price"
                 onChange={handleChange}
+                min="0"
               />
             </div>
 
@@ -108,6 +111,9 @@ const NewProductView = () => {
                   id="asNum"
                   name="rate"
                   placeholder="Rate"
+                  min="0"
+                  max="5"
+                  step="0.01"
                   onChange={handleChange}
                 />
 
@@ -117,6 +123,7 @@ const NewProductView = () => {
                   id="asNum"
                   name="count"
                   placeholder="Count"
+                  min="0"
                   onChange={handleChange}
                 />
               </div>
@@ -129,11 +136,13 @@ const NewProductView = () => {
                   -{" "}
                 </button>
                 <input
+                  required
                   className={`${style.stock_input} asNum`}
                   value={stock}
                   type="number"
                   name="stock"
                   placeholder="Stock"
+                  min="0"
                   onChange={handleChange}
                 />{" "}
                 <button className={style.btn_stock} onClick={handleAddOne}>
@@ -172,7 +181,7 @@ const NewProductView = () => {
               <div>
                 <ul className={style.loaded_images}>
                   {images.map((image, i) => (
-                    <li className={style.list_images} key={i}>
+                    <li className={style.list_images} key={`${image}${i}`}>
                       <img
                         className={style.create_image}
                         src={image}
@@ -181,7 +190,7 @@ const NewProductView = () => {
                       <p>{image}</p>
                       <button
                         className={style.quitar_img_prod}
-                        onClick={(e) => handleDelete(e,i)}
+                        onClick={(e) => handleDelete(e, i)}
                       >
                         Quitar
                       </button>
