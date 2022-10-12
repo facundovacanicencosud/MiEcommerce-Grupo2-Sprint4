@@ -92,6 +92,8 @@ a {
 
 .arrow-nav-item-left{
   filter: invert(0);
+  width: 26px;
+  margin: 0 5px;
   background-color: transparent;
 }
 

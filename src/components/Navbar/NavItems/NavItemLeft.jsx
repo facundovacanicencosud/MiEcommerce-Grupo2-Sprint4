@@ -10,11 +10,11 @@ const NavItemLeft = ({ url, text, seccion, username }) => {
     <>
       {username ? (
         <Link to={url}>
-          <span style={{ textTransform: "capitalize" }}>¡Hola {username}!</span>
+          <span style={{ textTransform: "capitalize", fontSize:24 }}>¡Hola {username}!</span>
         </Link>
       ) : (
         <Link to={url}>
-          <span style={{ textTransform: "capitalize" }}>{text}</span>
+          <span style={{ textTransform: "capitalize", fontSize:24 }}>{text}</span>
         </Link>
       )}
       {seccion ? (
@@ -23,7 +23,7 @@ const NavItemLeft = ({ url, text, seccion, username }) => {
             src={arrowIcon}
             className={`arrow-nav-item-left ${theme ? "dark" : ""}`}
           />
-          <span style={{ textTransform: "capitalize" }}>{seccion}</span>
+          <span style={{ textTransform: "capitalize", fontSize:24  }}>{seccion}</span>
         </>
       ) : (
         ""
