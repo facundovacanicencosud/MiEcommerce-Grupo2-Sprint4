@@ -1,10 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useForm from "../../../hooks/useForm";
 import axios from "axios";
 import style from "./productView.module.css";
 import profileIcon from "../../../assets/ProfileBtn.svg";
 import confirmTic from "../../../assets/confirm-tic.svg";
+import { AppContext } from "../../../context/AppContext";
 
 const ProductView = () => {
   const baseURL = "http://localhost:5000/api";
@@ -13,6 +14,7 @@ const ProductView = () => {
   const [product, setProduct] = useState();
   const [image, setImage] = useState([]);
   const [currentStock, setCurrentStock] = useState(0);
+  const { theme } = useContext(AppContext);
   const imagesInput = useRef(null);
   const inputPrice = useRef();
   const formRef = useRef();
@@ -216,7 +218,7 @@ const ProductView = () => {
               onClick={addImg}
               className={style.productForm__add_image_button}
             >
-              <img src={confirmTic} alt="Agregar Imagen" />
+              <img src={confirmTic} className={theme?style.dark:""} alt="Agregar Imagen" />
             </button>
           </div>
           <label htmlFor="new-images">

@@ -158,6 +158,10 @@
 
 .productForm .productForm__add_image_button img {
   width: 15px;
+  filter: invert(0);
+}
+.productForm .productForm__add_image_button img.dark {
+  width: 15px;
   filter: invert(1);
 }
 
