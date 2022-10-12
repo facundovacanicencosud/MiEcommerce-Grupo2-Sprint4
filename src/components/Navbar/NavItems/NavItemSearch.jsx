@@ -10,11 +10,11 @@ const NavItemSearch = ({ setOpen, open }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setSearchQuery(e.target[0].value);
+    setSearchQuery(e.target.value);
   };
   return (
     <>
-      <form onSubmit={handleSubmit} className={style.search_form}>
+      <form onChange={handleSubmit} className={style.search_form}>
         <div
           className={style.search_form_exit}
           style={!open ? { display: "none" } : {}}
