@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import usePutForm from "../../../hooks/usePutForm";
 import useForm from "../../../hooks/useForm";
 import axios from "axios";
 import style from "./productView.module.css";
-import { modifyProduct } from "../../../utils/apiConfig";
 import profileIcon from "../../../assets/ProfileBtn.svg";
 
 const ProductView = () => {
@@ -13,7 +11,6 @@ const ProductView = () => {
   const id = useParams().id;
   const [product, setProduct] = useState();
   const [image, setImage] = useState([]);
-  const [fer, setFer] = useState([]);
   const [currentStock, setCurrentStock] = useState(0);
   const imagesInput = useRef(null);
 
@@ -24,30 +21,15 @@ const ProductView = () => {
       setCurrentStock(response.data.stock);
     });
   }, []);
-  console.log(product);
 
   const initialValues = {
     ...product,
   };
-
   const { data, handleChange } = useForm(initialValues);
-
   const precio = parseInt(data.price);
-  const stonk = parseInt(data.stock);
-
   const updateProduct = (e) => {
     e.preventDefault();
-    /*let datas = new FormData(e.target);
-    datas.append('id', product.id)*/
 
-    /*function replace(key, value) {
-      if (key === 'id' || key === 'stock' || key === 'price') {
-        let change = Number(value);
-        return change;
-      }
-      return value;
-    }
-    let formObject = JSON.stringify(Object.fromEntries(datas), replace)*/
     axios
       .put(`${baseURL}/product`, {
         id: product.id,
@@ -82,17 +64,10 @@ const ProductView = () => {
 
   const deleteImgActuales = (e, i) => {
     e.preventDefault();
-    const actuales = [...fer];
+    const actuales = [...image];
     actuales.splice(i, 1);
     setImage(actuales);
   };
-
-  // const deleteProduct = () => {
-  //   axios.delete(`${baseURL}/product?id=${id}`).then(() => {
-  //     alert("Producto borrado.");
-  //     setProduct(null);
-  //   });
-  // };
 
   if (!product) return "No existe este producto.";
 
@@ -101,21 +76,6 @@ const ProductView = () => {
       (input) => (input.value = "")
     );
   };
-
-  /*   const handleSubmit = async (e) => {
-    data.stock = currentStock;
-    data.images = fer;
-    console.log(data);
-    e.preventDefault();
-    try {
-      const response = await modifyProduct(data);
-      if (response.status === 201) {
-        navigate("/products");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  }; */
 
   return (
     <>
