@@ -204,7 +204,7 @@ const NewProductView = () => {
             </div>
             <div>
               <span>Loaded:</span>
-              <div>
+              <div className="productView_productForm__images_list">
                 <ul className={style.loaded_images}>
                   {images.map((image, i) => (
                     <li className={style.list_images} key={`${image}${i}`}>
