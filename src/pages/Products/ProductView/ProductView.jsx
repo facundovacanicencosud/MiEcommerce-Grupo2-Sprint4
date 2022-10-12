@@ -83,7 +83,7 @@ const ProductView = () => {
 
   return (
     <>
-      <div className={style.container}>
+      <div className={style.productView_container}>
         <div className={style.products}>
           <div className={style.products_img}>
             <img src={product.images[0]} alt={product.title} />
@@ -116,14 +116,15 @@ const ProductView = () => {
         </div>
 
         <h2 className={style.headings}>Información</h2>
-        <form onSubmit={updateProduct} className="productForm" ref={formRef}>
+
+        <form onSubmit={updateProduct} className={style.productForm} ref={formRef}>
           <label htmlFor="nombre">Nombre</label>
           <br />
           <input
             required
             defaultValue={product.title}
             onChange={handleChange}
-            className={style.inputs}
+            className={style.productForm__input_name}
             type="text"
             name="title"
             placeholder="Titulo"
@@ -134,7 +135,7 @@ const ProductView = () => {
             required
             onChange={handleChange}
             defaultValue={product.price}
-            className={`${style.inputs} asNum`}
+            className={`${style.productForm__input_value} asNum`}
             ref={inputPrice}
             type="number"
             name="price"
@@ -145,18 +146,20 @@ const ProductView = () => {
           <label htmlFor="stock">Stock</label>
           <br />
           <div>
+            <div className={style.productForm__input_stock}>
             <button onClick={handleSubtractOne}> - </button>
             <input
               required
               onChange={handleChange}
               value={currentStock}
-              className={`${style.inputs} asNum`}
+              className={`falseClass asNum`}
               type="number"
               name="stock"
               min="0"
               placeholder="Stock"
             />
             <button onClick={handleAddOne}> + </button>
+            </div>
           </div>
           <div>
             <label htmlFor="descripcion">Descripción</label>
