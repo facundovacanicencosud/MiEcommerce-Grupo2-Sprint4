@@ -38,9 +38,9 @@ const NewProductView = () => {
   const sendImage = (e) => {
     e.preventDefault();
     const imgStr = imagesInput.current.value;
-    if(imgStr === "" || imgStr === undefined){
-      alert("No puede enviar un link vacio")
-      return
+    if (imgStr === "" || imgStr === undefined) {
+      alert("No puede enviar un link vacio");
+      return;
     }
     setImages([...images, imgStr]);
     imagesInput.current.value = "";
@@ -75,7 +75,9 @@ const NewProductView = () => {
         <div className={style.form}>
           <form onSubmit={handleSubmit} className={style.productForm}>
             <div className={style.inputfield}>
-              <label htmlFor="productName"><p>Product title</p></label>
+              <label htmlFor="productName">
+                <p>Product title</p>
+              </label>
               <input
                 required
                 className={`${style.productForm__input_name}`}
@@ -86,18 +88,21 @@ const NewProductView = () => {
               />
             </div>
             <div className={style.inputfield}>
-              <label htmlFor="description"><p>Description</p></label>
+              <label htmlFor="description">
+                <p>Description</p>
+              </label>
               <textarea
                 className={style.textarea}
                 type="text"
                 name="description"
                 placeholder="Description"
                 onChange={handleChange}
-                
               />
             </div>
             <div className={style.inputfield}>
-              <label htmlFor="price"><p>Price</p></label>
+              <label htmlFor="price">
+                <p>Price</p>
+              </label>
               <input
                 required
                 className={`${style.productForm__input_name} asNum`}
@@ -110,7 +115,9 @@ const NewProductView = () => {
             </div>
 
             <div className={style.inputfield}>
-              <label htmlFor="rating"><p>Rating:</p></label>
+              <label htmlFor="rating">
+                <p>Rating:</p>
+              </label>
               <div className={style.rating_components}>
                 <input
                   className={`${style.productForm__input_name}`}
@@ -157,25 +164,26 @@ const NewProductView = () => {
                 </button>
               </div>
             </div> */}
-           
+
             <div className={style.productForm__input_stock}>
               <button onClick={handleSubtractOne}> - </button>
               <input
-                  required
-                  className={`falseClass asNum`}
-                  value={stock}
-                  type="number"
-                  name="stock"
-                  placeholder="Stock"
-                  min="0"
-                  onChange={handleChange}
-                />{" "}
+                required
+                className={`falseClass asNum`}
+                value={stock}
+                type="number"
+                name="stock"
+                placeholder="Stock"
+                min="0"
+                onChange={handleChange}
+              />{" "}
               <button onClick={handleAddOne}> + </button>
             </div>
-           
-           
+
             <div className={style.inputfield}>
-              <label htmlFor="rate"><p>Category</p></label>
+              <label htmlFor="rate">
+                <p>Category</p>
+              </label>
               <input
                 className={`${style.productForm__input_name}`}
                 type="text"
@@ -185,7 +193,9 @@ const NewProductView = () => {
               />
             </div>
             <div className={style.inputfield}>
-              <label htmlFor="images"><p>Images</p></label>
+              <label htmlFor="images">
+                <p>Images</p>
+              </label>
               <div className={style.upload_images}>
                 <input
                   className={`${style.productForm__input_name}`}
@@ -195,8 +205,9 @@ const NewProductView = () => {
                   accept="image/*"
                   placeholder="Ingrese URL de la imagen"
                 />
-                <button onClick={sendImage}
-                className={`${style.quitar_img_prod} ${style.productForm_cancel_button}`}
+                <button
+                  onClick={sendImage}
+                  className={`${style.productForm_cancel_button}`}
                 >
                   Upload
                 </button>
@@ -213,9 +224,9 @@ const NewProductView = () => {
                         src={image}
                         alt={image}
                       />
-                      <p>{image}</p>
+                      <p className={style.img_span}>{image}</p>
                       <button
-                        className={`${style.quitar_img_prod} ${style.productForm_cancel_button}`}
+                        className={`${style.productForm_cancel_button}`}
                         onClick={(e) => handleDelete(e, i)}
                       >
                         Quitar
@@ -227,8 +238,7 @@ const NewProductView = () => {
             </div>
 
             <div>
-              <button type="submit"
-              className={`${style.btnCreateProduct} ${style.productForm_cancel_button}`}>
+              <button type="submit" className={`${style.btnCreateProduct}`}>
                 <span>Guardar Producto</span>
               </button>
               <div>{warning && <p>{warning}</p>}</div>
