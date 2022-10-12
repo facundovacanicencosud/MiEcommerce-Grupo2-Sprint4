@@ -13,6 +13,7 @@ const ProductView = () => {
   const [image, setImage] = useState([]);
   const [currentStock, setCurrentStock] = useState(0);
   const imagesInput = useRef(null);
+  const inputPrice = useRef();
 
   useEffect(() => {
     axios.get(`${baseURL}/product/${id}`).then((response) => {
@@ -26,7 +27,6 @@ const ProductView = () => {
     ...product,
   };
   const { data, handleChange } = useForm(initialValues);
-  const precio = parseInt(data.price);
   const updateProduct = (e) => {
     e.preventDefault();
 
@@ -34,7 +34,7 @@ const ProductView = () => {
       .put(`${baseURL}/product`, {
         id: product.id,
         title: data.title,
-        price: precio,
+        price: parseInt(inputPrice.current.value),
         stock: currentStock,
         description: data.description,
         images: image,
@@ -130,6 +130,7 @@ const ProductView = () => {
             onChange={handleChange}
             defaultValue={product.price}
             className={`${style.inputs} asNum`}
+            ref={inputPrice}
             type="number"
             name="price"
             placeholder="InputValue"
