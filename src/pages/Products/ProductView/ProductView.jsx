@@ -117,24 +117,31 @@ const ProductView = () => {
     <>
       <div className={style.container}>
         <div className={style.products}>
-          <div className="products_img">
+          <div className={style.products_img}>
             <img src={product.images[0]} alt={product.title} />
           </div>
-          <div className="product_info">
-            <div className="product_info__title">
+          <div className={style.product_info}>
+            <div className={style.product_info__title}>
               <h2>{product.title}</h2>
             </div>
-            <div className="product_info__detail">
-              <div className="product_info_detail__price">
-                <h4>{product.price}</h4>
+            <div className={style.product_info__detail}>
+              <div className={style.product_info_detail__price}>
+                <h1>{product.price}</h1>
                 <p>Puntos Superclub</p>
               </div>
-              <div className="product_info_detail__stock">
-                <h4>{product.stock}</h4>
+              <div className={style.product_info_detail__stock}>
+                <div className="">
+                <h1>{product.stock}</h1>
+                </div>
+                <div className="">
                 <p>Stock Disponible</p>
+                </div>
               </div>
-              <div className="product_info_detail__user">
-                  <img src={profileIcon} alt="" />
+              <div className={style.product_info_detail__user}>
+                  <img src={profileIcon} alt="Perfil del usuario" />
+                  <div className={style.product_info_detail__user_name}>
+                  <p>Olivia Store</p>
+                  </div>
               </div>
             </div>
           </div>
