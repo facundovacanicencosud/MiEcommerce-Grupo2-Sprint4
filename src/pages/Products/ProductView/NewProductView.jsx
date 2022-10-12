@@ -2,7 +2,8 @@ import React, { useState, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import useForm from "../../../hooks/useForm";
 import { createProduct } from "../../../utils/apiConfig";
-import style from "../ProductView/newProductView.module.css";
+// import style from "../ProductView/newProductView.module.css";
+import style from "./productView.module.css";
 
 const NewProductView = () => {
   const navigate = useNavigate();
@@ -72,12 +73,12 @@ const NewProductView = () => {
       <div className={style.wrapper}>
         <div className={style.title}>Create Product</div>
         <div className={style.form}>
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} className={style.productForm}>
             <div className={style.inputfield}>
-              <label htmlFor="productName">Product title</label>
+              <label htmlFor="productName"><p>Product title</p></label>
               <input
                 required
-                className={style.input}
+                className={`${style.productForm__input_name}`}
                 type="text"
                 name="title"
                 placeholder="Product title"
@@ -85,20 +86,21 @@ const NewProductView = () => {
               />
             </div>
             <div className={style.inputfield}>
-              <label htmlFor="description">Description</label>
+              <label htmlFor="description"><p>Description</p></label>
               <textarea
                 className={style.textarea}
                 type="text"
                 name="description"
                 placeholder="Description"
                 onChange={handleChange}
+                
               />
             </div>
             <div className={style.inputfield}>
-              <label htmlFor="price">Price</label>
+              <label htmlFor="price"><p>Price</p></label>
               <input
                 required
-                className={`${style.input} asNum`}
+                className={`${style.productForm__input_name} asNum`}
                 type="number"
                 name="price"
                 placeholder="Price"
@@ -108,10 +110,10 @@ const NewProductView = () => {
             </div>
 
             <div className={style.inputfield}>
-              <label htmlFor="rating">Rating:</label>
+              <label htmlFor="rating"><p>Rating:</p></label>
               <div className={style.rating_components}>
                 <input
-                  className={style.input}
+                  className={`${style.productForm__input_name}`}
                   type="number"
                   id="asNum"
                   name="rate"
@@ -123,7 +125,7 @@ const NewProductView = () => {
                 />
 
                 <input
-                  className={style.input}
+                  className={`${style.productForm__input_name}`}
                   type="number"
                   id="asNum"
                   name="count"
@@ -133,8 +135,8 @@ const NewProductView = () => {
                 />
               </div>
             </div>
-            <div className={style.inputfield}>
-              <label htmlFor="stock">Stock</label>
+            {/* <div className={style.inputfield}>
+              <label htmlFor="stock"><p>Stock</p></label>
               <div className={style.stock_wrapper}>
                 <button className={style.btn_stock} onClick={handleSubtractOne}>
                   {" "}
@@ -142,7 +144,7 @@ const NewProductView = () => {
                 </button>
                 <input
                   required
-                  className={`${style.stock_input} asNum`}
+                  className={`${style.stock_input} asNum ${style.productForm__input_name}`}
                   value={stock}
                   type="number"
                   name="stock"
@@ -154,11 +156,28 @@ const NewProductView = () => {
                   +
                 </button>
               </div>
-            </div>
-            <div className={style.inputfield}>
-              <label htmlFor="rate">Category</label>
+            </div> */}
+           
+            <div className={style.productForm__input_stock}>
+              <button onClick={handleSubtractOne}> - </button>
               <input
-                className={style.input}
+                  required
+                  className={`falseClass asNum`}
+                  value={stock}
+                  type="number"
+                  name="stock"
+                  placeholder="Stock"
+                  min="0"
+                  onChange={handleChange}
+                />{" "}
+              <button onClick={handleAddOne}> + </button>
+            </div>
+           
+           
+            <div className={style.inputfield}>
+              <label htmlFor="rate"><p>Category</p></label>
+              <input
+                className={`${style.productForm__input_name}`}
                 type="text"
                 name="category"
                 placeholder="Category"
@@ -166,17 +185,19 @@ const NewProductView = () => {
               />
             </div>
             <div className={style.inputfield}>
-              <label htmlFor="images">Images</label>
+              <label htmlFor="images"><p>Images</p></label>
               <div className={style.upload_images}>
                 <input
-                  className={style.input}
+                  className={`${style.productForm__input_name}`}
                   ref={imagesInput}
                   type="url"
                   name="images"
                   accept="image/*"
                   placeholder="Ingrese URL de la imagen"
                 />
-                <button onClick={sendImage} className={style.quitar_img_prod}>
+                <button onClick={sendImage}
+                className={`${style.quitar_img_prod} ${style.productForm_cancel_button}`}
+                >
                   Upload
                 </button>
               </div>
@@ -194,7 +215,7 @@ const NewProductView = () => {
                       />
                       <p>{image}</p>
                       <button
-                        className={style.quitar_img_prod}
+                        className={`${style.quitar_img_prod} ${style.productForm_cancel_button}`}
                         onClick={(e) => handleDelete(e, i)}
                       >
                         Quitar
@@ -206,7 +227,8 @@ const NewProductView = () => {
             </div>
 
             <div>
-              <button type="submit" className={style.btnCreateProduct}>
+              <button type="submit"
+              className={`${style.btnCreateProduct} ${style.productForm_cancel_button}`}>
                 <span>Guardar Producto</span>
               </button>
               <div>{warning && <p>{warning}</p>}</div>
