@@ -30,7 +30,6 @@ const ProductView = () => {
   const { data, handleChange } = useForm(initialValues);
   const updateProduct = (e) => {
     e.preventDefault();
-
     axios
       .put(`${baseURL}/product`, {
         id: product.id,
