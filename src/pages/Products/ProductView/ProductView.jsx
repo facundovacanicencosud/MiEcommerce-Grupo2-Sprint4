@@ -1,23 +1,29 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import usePutForm from "../../../hooks/usePutForm";
 import useForm from "../../../hooks/useForm";
 import axios from "axios";
 import style from "./productView.module.css";
+import { modifyProduct } from "../../../utils/apiConfig";
 
 const ProductView = () => {
   const baseURL = "http://localhost:5000/api";
+  const navigate = useNavigate();
   const id = useParams().id;
-
-  const [product, setProduct] = useState(null);
+  const [product, setProduct] = useState();
   const [image, setImage] = useState([]);
   const [fer, setFer] = useState([]);
+  const [currentStock, setCurrentStock] = useState(0);
+  const imagesInput = useRef(null);
 
   useEffect(() => {
     axios.get(`${baseURL}/product/${id}`).then((response) => {
       setProduct(response.data);
       setFer(response.data.images);
+      setCurrentStock(response.data.stock);
     });
   }, []);
+  console.log(product);
 
   const initialValues = {
     ...product,
@@ -46,56 +52,38 @@ const ProductView = () => {
         id: product.id,
         title: data.title,
         price: precio,
-        stock: stonk,
+        stock: currentStock,
         description: data.description,
+        images: image,
       })
       .then((response) => {
         setProduct(response.data);
+        navigate("/products");
       });
   };
 
-  const [stockNum, setStockNum] = useState(stonk);
-  const handleSubtractOne = () => {
-    setStockNum(stockNum - 1);
+  const handleSubtractOne = (e) => {
+    e.preventDefault();
+    setCurrentStock(currentStock - 1);
   };
 
-  const handleAddOne = () => {
-    setStockNum(stockNum + 1);
+  const handleAddOne = (e) => {
+    e.preventDefault();
+    setCurrentStock(currentStock + 1);
   };
 
-  const handleChanges = (e) => {
-    setImage(e.target.value);
-  };
-
-  const addImg = () => {
-    axios
-      .put(`${baseURL}/product`, {
-        images: [...product.images, image],
-        id: product.id,
-      })
-      .then((response) => {
-        setImage(response.data);
-      });
-    alert("Imagen agregada.");
-  };
-
-  const deleteImg = () => {
-    axios
-      .put(`${baseURL}/product`, {
-        /*"images": [image],*/
-        id: product.id,
-      })
-      .then((response) => {
-        setImage(response.data);
-      });
-    alert("Imagen borrada!");
+  const addImg = (e) => {
+    e.preventDefault();
+    const imgStr = imagesInput.current.value;
+    setImage([...image, imgStr]);
+    imagesInput.current.value = "";
   };
 
   const deleteImgActuales = (e, i) => {
     e.preventDefault();
     const actuales = [...fer];
     actuales.splice(i, 1);
-    setFer(actuales);
+    setImage(actuales);
   };
 
   // const deleteProduct = () => {
@@ -113,18 +101,23 @@ const ProductView = () => {
     );
   };
 
-  /*   const imageList = product.images.map((img, i) => (
-    <div>
-      <img src={img} key={`${img}${i}`} alt={product.title} />
-      <p>{img}</p>
-      <button onClick={(e) => deleteImgActuales(e, i)}>Quitar</button>
-    </div>
-  )); */
+  /*   const handleSubmit = async (e) => {
+    data.stock = currentStock;
+    data.images = fer;
+    console.log(data);
+    e.preventDefault();
+    try {
+      const response = await modifyProduct(data);
+      if (response.status === 201) {
+        navigate("/products");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  }; */
 
   return (
     <>
-      {/* <button onClick={deleteProduct}>Eliminar</button> */}
-
       <div className={style.container}>
         <div className={style.products}>
           <img src={product.images[0]} alt={product.title} />
@@ -139,7 +132,7 @@ const ProductView = () => {
           <br />
           <input
             required
-            defaultValue={initialValues.title}
+            defaultValue={product.title}
             onChange={handleChange}
             className={style.inputs}
             type="text"
@@ -147,11 +140,11 @@ const ProductView = () => {
             placeholder="InputValue"
           />{" "}
           <br />
-          <label htmlFor="valor">Valor</label> <br />
+          <label htmlFor="price">Price</label> <br />
           <input
             onChange={handleChange}
-            defaultValue={initialValues.price}
-            className={style.inputs}
+            defaultValue={product.price}
+            className={`${style.inputs} asNum`}
             type="number"
             name="price"
             placeholder="InputValue"
@@ -163,8 +156,8 @@ const ProductView = () => {
             <button onClick={handleSubtractOne}> - </button>
             <input
               onChange={handleChange}
-              defaultValue={initialValues.stock}
-              className={style.inputs}
+              value={currentStock}
+              className={`${style.inputs} asNum`}
               type="number"
               name="stock"
               placeholder="InputValue"
@@ -174,8 +167,9 @@ const ProductView = () => {
           <div>
             <label htmlFor="descripcion">Descripción</label>
             <br />
-            <input
+            <textarea
               onChange={handleChange}
+              defaultValue={product.description}
               className={style.description}
               type="text"
               name="description"
@@ -194,40 +188,39 @@ const ProductView = () => {
               <option>Pepito store</option>
             </select>
           </div>
+          <h3 className={style.headings}>Galería de Imágenes</h3>
+          <div>
+            <label htmlFor="imagen">Nueva Imagen</label>
+            <br />
+            <input
+              ref={imagesInput}
+              className={style.inputs}
+              type="url"
+              name="images"
+              accept="image/*"
+              placeholder="Ingrese URL de la imagen"
+            />{" "}
+            <button onClick={addImg}>Agregar imagen</button>
+          </div>
+          <h4 className={style.headings}>Imágenes Actuales</h4>
+          <div className={style.imageBanner}>
+            <ul>
+              {image.map((img, i) => (
+                <li key={`${img}${i}`}>
+                  <img src={img} alt={img} />
+                  <p>{img}</p>
+                  <button onClick={(e) => deleteImgActuales(e, i)}>
+                    Quitar
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
           <button type="submit">Guardar</button>
+          <div>
+            <button onClick={resetInputs}>CANCELAR</button>
+          </div>
         </form>
-
-        <h3 className={style.headings}>Galería de Imágenes</h3>
-        <div>
-          <label htmlFor="imagen">Nueva Imagen</label>
-          <br />
-          <input
-            onChange={handleChanges}
-            className={style.inputs}
-            type="text"
-            name="imagen"
-            accept="image/*"
-            placeholder="InputValue"
-          />{" "}
-          <button onClick={addImg}>Agregar imagen</button>
-        </div>
-        <h4 className={style.headings}>Imágenes Actuales</h4>
-        <div className={style.imageBanner}>
-          <ul>
-            {fer.map((img, i) => (
-              <li key={`${img}${i}`}>
-                <img src={img} alt={img} />
-                <p>{img}</p>
-                <button onClick={(e) => deleteImgActuales(e, i)}>Quitar</button>
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        <br />
-        <div>
-          <button onClick={resetInputs}>CANCELAR</button>
-        </div>
       </div>
     </>
   );
