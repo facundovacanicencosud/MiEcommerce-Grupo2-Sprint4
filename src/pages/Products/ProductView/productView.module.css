@@ -1,3 +1,7 @@
+.wrapper{
+  width: 60%;
+}
+
 .productView_container {
   display: flex;
   flex-direction: column;
