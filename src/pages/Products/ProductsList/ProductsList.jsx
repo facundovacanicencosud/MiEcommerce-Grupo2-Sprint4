@@ -68,7 +68,14 @@ const ProductsList = () => {
 
   return (
     <div className="lists-container">
-      {products.length && !isLoading ? (
+      
+      { isLoading? (
+        <li className={style.loaderContainer}>
+          <span>Loading</span>
+          <div className={style.spinner}></div>
+        </li>
+      ) :
+        products.length && !isLoading ? (
         <>
           <div className={style.productsListHeader}>
             <span>{products.length} productos |</span>

@@ -6,15 +6,21 @@
   flex-direction: column;
   justify-content: space-between;
   backdrop-filter: blur(4px);
+  padding: 0 5px;
+}
+
+.sidebar_top{
+  padding: 0 10px;
 }
 
 .sidebar_top__logo,
 .sidebar_top__links {
   width: 100%;
-  padding: 0.5rem;
+  padding: 0.5rem 0;
 }
 .sidebar_logo {
-  width: 180px;
+  width: 200px;
+  padding-top: 10px;
 }
 
 .sidebar_top__links li {

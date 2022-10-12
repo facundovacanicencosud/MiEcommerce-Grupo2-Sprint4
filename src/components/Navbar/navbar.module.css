@@ -7,6 +7,7 @@
     background-color: var(--blanco);
     display: flex;
     align-items: center;
+    transition: background-color 0.4s;
     padding: 0 1rem;
 }
 .navbar{
@@ -75,6 +76,9 @@
 }
 @media (min-width: 1024px){
     .navbar_menu_button{
+        display: none;
+    }
+    .navbar_menu_button_dark{
         display: none;
     }
 }

@@ -1,157 +1,145 @@
-import React, { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import React, { useState, useEffect, useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
 import useForm from "../../../hooks/useForm";
 import axios from "axios";
 import style from "./productView.module.css";
-
+import profileIcon from "../../../assets/ProfileBtn.svg";
 
 const ProductView = () => {
-
   const baseURL = "http://localhost:5000/api";
-  const id = useParams().id
-
-  const [product, setProduct] = useState(null);
+  const navigate = useNavigate();
+  const id = useParams().id;
+  const [product, setProduct] = useState();
+  const [image, setImage] = useState([]);
+  const [currentStock, setCurrentStock] = useState(0);
+  const imagesInput = useRef(null);
+  const inputPrice = useRef();
+  const formRef = useRef();
 
   useEffect(() => {
     axios.get(`${baseURL}/product/${id}`).then((response) => {
       setProduct(response.data);
+      setImage(response.data.images);
+      setCurrentStock(response.data.stock);
     });
   }, []);
 
   const initialValues = {
-    ...product
-   };
-
+    ...product,
+  };
   const { data, handleChange } = useForm(initialValues);
-
-  const precio =  parseInt(data.price)
-  const stonk = parseInt(data.stock)
-  
   const updateProduct = (e) => {
     e.preventDefault();
-    /*let datas = new FormData(e.target);
-    datas.append('id', product.id)*/
 
-    /*function replace(key, value) {
-      if (key === 'id' || key === 'stock' || key === 'price') {
-        let change = Number(value);
-        return change;
-      }
-      return value;
-    }
-    let formObject = JSON.stringify(Object.fromEntries(datas), replace)*/
     axios
-      .put(`${baseURL}/product`, 
-        {"id": product.id, "title": data.title, "price": precio, 
-          "stock": stonk, "description": data.description}
-  )
+      .put(`${baseURL}/product`, {
+        id: product.id,
+        title: data.title,
+        price: parseInt(inputPrice.current.value),
+        stock: currentStock,
+        description: data.description,
+        images: image,
+      })
       .then((response) => {
         setProduct(response.data);
+        navigate("/products");
       });
-  }
-
-
-  const [stockNum, setStockNum] = useState(stonk)
-  const handleSubtractOne = () => {
-    setStockNum(stockNum - 1);
   };
 
-  const handleAddOne = () => {
-    setStockNum(stockNum + 1);
+  const handleSubtractOne = (e) => {
+    e.preventDefault();
+    setCurrentStock(currentStock - 1);
   };
 
-
-  const [image, setImage] = useState([]);
-  const handleChanges = (e) => {
-    setImage(e.target.value);
-  };
-  
-  const addImg = () => {
-    axios
-      .put(`${baseURL}/product`, {
-        "images": [...product.images, image], 
-        "id": product.id
-      })
-      .then((response) => {
-        setImage(response.data);
-      });
-      alert('Imagen agregada.')
-  }
-  
-
-  const deleteImg = () => {
-    axios
-      .put(`${baseURL}/product`, {
-        /*"images": [image],*/ 
-        "id": product.id
-      })
-      .then((response) => {
-        setImage(response.data);
-      });
-      alert('Imagen borrada!')
-  }
-
-
-  const deleteProduct = () => {
-    axios
-      .delete(`${baseURL}/product?id=${id}`)
-      .then(() => {
-        alert("Producto borrado.");
-        setProduct(null)
-      });
-  }
-
-  if (!product) return "No existe este producto."
-
-
-  const resetInputs = () => {
-    Array.from(document.querySelectorAll("input")).forEach(
-      input => (input.value = "")
-    );
+  const handleAddOne = (e) => {
+    e.preventDefault();
+    setCurrentStock(currentStock + 1);
   };
 
+  const addImg = (e) => {
+    e.preventDefault();
+    const imgStr = imagesInput.current.value;
+    setImage([...image, imgStr]);
+    imagesInput.current.value = "";
+  };
 
-  const imageList = product.images.map((img) => 
-    <div>
-      <img src={img} key={img} alt={product.title}/>
-      <p>{img}</p>
-      <button onClick={deleteImg}>Quitar</button>
-    </div>
-  )
+  const deleteImgActuales = (e, i) => {
+    e.preventDefault();
+    const actuales = [...image];
+    actuales.splice(i, 1);
+    setImage(actuales);
+  };
 
+  if (!product) return "No existe este producto.";
+
+  const resetInputs = (e) => {
+    e.preventDefault();
+    formRef.current.title.value = initialValues.title;
+    formRef.current.price.value = initialValues.price;
+    formRef.current.stock.value = initialValues.stock;
+    formRef.current.description.value = initialValues.description;
+    setImage(initialValues.images);
+  };
 
   return (
     <>
-    <button onClick={deleteProduct}>Eliminar</button>
-
       <div className={style.container}>
-
         <div className={style.products}>
-          <img src={product.images[0]}alt={product.title}/>
-          <h2>{product.title}</h2>
-          <h4>{product.price} Puntos Superclub</h4>
-          <h4>{product.stock} Stock Disponible</h4>
+          <div className={style.products_img}>
+            <img src={product.images[0]} alt={product.title} />
+          </div>
+          <div className={style.product_info}>
+            <div className={style.product_info__title}>
+              <h2>{product.title}</h2>
+            </div>
+            <div className={style.product_info__detail}>
+              <div className={style.product_info_detail__price}>
+                <h1>{product.price}</h1>
+                <p>Puntos Superclub</p>
+              </div>
+              <div className={style.product_info_detail__stock}>
+                <div className="">
+                  <h1>{product.stock}</h1>
+                </div>
+                <div className="">
+                  <p>Stock Disponible</p>
+                </div>
+              </div>
+              <div className={style.product_info_detail__user}>
+                <img src={profileIcon} alt="Perfil del usuario" />
+                <div className={style.product_info_detail__user_name}>
+                  <p>Olivia Store</p>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
 
         <h2 className={style.headings}>Información</h2>
-        <form onSubmit={updateProduct} className="productForm">
-          <label htmlFor="nombre">Nombre</label><br />
-          <input required
-            defaultValue={initialValues.title}
+        <form onSubmit={updateProduct} className="productForm" ref={formRef}>
+          <label htmlFor="nombre">Nombre</label>
+          <br />
+          <input
+            required
+            defaultValue={product.title}
             onChange={handleChange}
             className={style.inputs}
             type="text"
             name="title"
-            placeholder="InputValue"
-          /> <br /> 
-          <label htmlFor="valor">Valor</label> <br />
+            placeholder="Titulo"
+          />{" "}
+          <br />
+          <label htmlFor="price">Price</label> <br />
           <input
+            required
             onChange={handleChange}
-            defaultValue={initialValues.price}
-            className={style.inputs}
+            defaultValue={product.price}
+            className={`${style.inputs} asNum`}
+            ref={inputPrice}
             type="number"
             name="price"
-            placeholder="InputValue"
+            min="0"
+            placeholder="Precio"
           />
           <br />
           <label htmlFor="stock">Stock</label>
@@ -159,61 +147,77 @@ const ProductView = () => {
           <div>
             <button onClick={handleSubtractOne}> - </button>
             <input
+              required
               onChange={handleChange}
-              defaultValue={initialValues.stock}
-              className={style.inputs}
+              value={currentStock}
+              className={`${style.inputs} asNum`}
               type="number"
               name="stock"
-              placeholder="InputValue"
+              min="0"
+              placeholder="Stock"
             />
-            <button onClick={handleAddOne}> + </button> 
+            <button onClick={handleAddOne}> + </button>
           </div>
           <div>
             <label htmlFor="descripcion">Descripción</label>
             <br />
-            <input
+            <textarea
               onChange={handleChange}
+              defaultValue={product.description}
               className={style.description}
               type="text"
               name="description"
-              placeholder="InputValue"
+              placeholder="Descripcion del producto"
             />
-            <br /><br />
+            <br />
+            <br />
             <label htmlFor="tienda">Tienda</label>
             <br />
             <select
               className={style.inputs}
               type="text"
               name="category"
-              placeholder="Select" >
-              <option>Pepito store</option> 
+              placeholder="Select"
+            >
+              <option>Pepito store</option>
             </select>
           </div>
-          <button type="submit">Guardar</button>
-        </form>
-
-        <h3 className={style.headings}>Galería de Imágenes</h3>
+          <h3 className={style.headings}>Galería de Imágenes</h3>
           <div>
-            <label htmlFor="imagen">Nueva Imagen</label><br />
+            <label htmlFor="imagen">Nueva Imagen</label>
+            <br />
             <input
-              onChange={handleChanges}
+              ref={imagesInput}
               className={style.inputs}
-              type="text"
-              name="imagen"
+              type="url"
+              name="images"
               accept="image/*"
-              placeholder="InputValue"
-            /> <button onClick={addImg}>Agregar imagen</button>
+              placeholder="Ingrese URL de la imagen"
+            />{" "}
+            <button onClick={addImg}>Agregar imagen</button>
           </div>
           <h4 className={style.headings}>Imágenes Actuales</h4>
           <div className={style.imageBanner}>
-            {imageList}
-          </div><br />
+            <ul>
+              {image.map((img, i) => (
+                <li key={`${img}${i}`}>
+                  <img src={img} alt={img} />
+                  <p>{img}</p>
+                  <button onClick={(e) => deleteImgActuales(e, i)}>
+                    Quitar
+                  </button>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <button type="submit">Guardar</button>
           <div>
             <button onClick={resetInputs}>CANCELAR</button>
           </div>
+        </form>
       </div>
-
     </>
-  )};
+  );
+};
 
 export default ProductView;
