@@ -60,6 +60,10 @@ const ProductView = () => {
   const addImg = (e) => {
     e.preventDefault();
     const imgStr = imagesInput.current.value;
+    if(imgStr === "" || imgStr === undefined){
+      alert("No puede subir una url vacia");
+      return;
+    }
     setImage([...image, imgStr]);
     imagesInput.current.value = "";
   };
