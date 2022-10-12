@@ -14,6 +14,7 @@ const ProductView = () => {
   const [currentStock, setCurrentStock] = useState(0);
   const imagesInput = useRef(null);
   const inputPrice = useRef();
+  const formRef = useRef();
 
   useEffect(() => {
     axios.get(`${baseURL}/product/${id}`).then((response) => {
@@ -71,10 +72,13 @@ const ProductView = () => {
 
   if (!product) return "No existe este producto.";
 
-  const resetInputs = () => {
-    Array.from(document.querySelectorAll("input")).forEach(
-      (input) => (input.value = "")
-    );
+  const resetInputs = (e) => {
+    e.preventDefault();
+    formRef.current.title.value = initialValues.title;
+    formRef.current.price.value = initialValues.price;
+    formRef.current.stock.value = initialValues.stock;
+    formRef.current.description.value = initialValues.description;
+    setImage(initialValues.images);
   };
 
   return (
@@ -95,24 +99,24 @@ const ProductView = () => {
               </div>
               <div className={style.product_info_detail__stock}>
                 <div className="">
-                <h1>{product.stock}</h1>
+                  <h1>{product.stock}</h1>
                 </div>
                 <div className="">
-                <p>Stock Disponible</p>
+                  <p>Stock Disponible</p>
                 </div>
               </div>
               <div className={style.product_info_detail__user}>
-                  <img src={profileIcon} alt="Perfil del usuario" />
-                  <div className={style.product_info_detail__user_name}>
+                <img src={profileIcon} alt="Perfil del usuario" />
+                <div className={style.product_info_detail__user_name}>
                   <p>Olivia Store</p>
-                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <h2 className={style.headings}>Información</h2>
-        <form onSubmit={updateProduct} className="productForm">
+        <form onSubmit={updateProduct} className="productForm" ref={formRef}>
           <label htmlFor="nombre">Nombre</label>
           <br />
           <input
@@ -122,18 +126,20 @@ const ProductView = () => {
             className={style.inputs}
             type="text"
             name="title"
-            placeholder="InputValue"
+            placeholder="Titulo"
           />{" "}
           <br />
           <label htmlFor="price">Price</label> <br />
           <input
+            required
             onChange={handleChange}
             defaultValue={product.price}
             className={`${style.inputs} asNum`}
             ref={inputPrice}
             type="number"
             name="price"
-            placeholder="InputValue"
+            min="0"
+            placeholder="Precio"
           />
           <br />
           <label htmlFor="stock">Stock</label>
@@ -141,12 +147,14 @@ const ProductView = () => {
           <div>
             <button onClick={handleSubtractOne}> - </button>
             <input
+              required
               onChange={handleChange}
               value={currentStock}
               className={`${style.inputs} asNum`}
               type="number"
               name="stock"
-              placeholder="InputValue"
+              min="0"
+              placeholder="Stock"
             />
             <button onClick={handleAddOne}> + </button>
           </div>
@@ -159,7 +167,7 @@ const ProductView = () => {
               className={style.description}
               type="text"
               name="description"
-              placeholder="InputValue"
+              placeholder="Descripcion del producto"
             />
             <br />
             <br />
