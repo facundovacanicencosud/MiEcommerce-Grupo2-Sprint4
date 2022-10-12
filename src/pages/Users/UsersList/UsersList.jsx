@@ -3,7 +3,6 @@ import { Link } from "react-router-dom";
 import style from "./UsersList.module.css";
 import arrow from "../../../assets/chevron-right (1).svg";
 import { AppContext } from "../../../context/AppContext";
-import FilterOptions from "../../../components/FilterOptions/FilterOptions";
 import { getUsers } from "../../../utils/apiConfig";
 import noProfilePic from "../../../assets/no-profile-pic.svg";
 
@@ -11,15 +10,13 @@ const UsersList = () => {
   const [users, setUsers] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { searchQuery } = useContext(AppContext);
-  const [selectedFilter, setSelectedFilter] = useState("");
   const { theme } = useContext(AppContext);
   const fetchUsers = async () => {
     const { data } = await getUsers();
     setUsers(data);
-    console.log(data);
   };
 
-  //Fetch all products
+  //Fetch all users
   useEffect(() => {
     try {
       fetchUsers();
@@ -29,7 +26,7 @@ const UsersList = () => {
     }
   }, []);
 
-  //Search products
+  //Search users
   useEffect(() => {
     const onSearch = async (searchQuery) => {
       try {
@@ -47,23 +44,6 @@ const UsersList = () => {
     onSearch(searchQuery);
   }, [searchQuery]);
 
-  //Order products
-  useEffect(() => {
-    if (selectedFilter) {
-      const filteredUsers = [...users].sort((a, b) => {
-        if (selectedFilter === "menorPrecio") return a.price - b.price;
-        return null;
-      });
-      setUsers(filteredUsers);
-    } else {
-      try {
-        fetchUsers();
-      } catch (error) {
-        console.log(error);
-      }
-    }
-    // eslint-disable-next-line
-  }, [selectedFilter]);
 
   return (
     <div className="lists-container">
@@ -95,6 +75,7 @@ const UsersList = () => {
                       />
                       <div>
                         <p>{`${user.firstname} ${user.lastname}`}</p>
+                        <p>{user.email}</p>
                       </div>
                     </div>
                     <img

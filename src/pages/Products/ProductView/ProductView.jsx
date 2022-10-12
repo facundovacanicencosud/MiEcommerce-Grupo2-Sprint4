@@ -1,9 +1,11 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useForm from "../../../hooks/useForm";
 import axios from "axios";
 import style from "./productView.module.css";
 import profileIcon from "../../../assets/ProfileBtn.svg";
+import confirmTic from "../../../assets/confirm-tic.svg";
+import { AppContext } from "../../../context/AppContext";
 
 const ProductView = () => {
   const baseURL = "http://localhost:5000/api";
@@ -12,6 +14,7 @@ const ProductView = () => {
   const [product, setProduct] = useState();
   const [image, setImage] = useState([]);
   const [currentStock, setCurrentStock] = useState(0);
+  const { theme } = useContext(AppContext);
   const imagesInput = useRef(null);
   const inputPrice = useRef();
   const formRef = useRef();
@@ -59,6 +62,10 @@ const ProductView = () => {
   const addImg = (e) => {
     e.preventDefault();
     const imgStr = imagesInput.current.value;
+    if(imgStr === "" || imgStr === undefined){
+      alert("No puede subir una url vacia");
+      return;
+    }
     setImage([...image, imgStr]);
     imagesInput.current.value = "";
   };
@@ -83,7 +90,7 @@ const ProductView = () => {
 
   return (
     <>
-      <div className={style.container}>
+      <div className={style.productView_container}>
         <div className={style.products}>
           <div className={style.products_img}>
             <img src={product.images[0]} alt={product.title} />
@@ -116,91 +123,114 @@ const ProductView = () => {
         </div>
 
         <h2 className={style.headings}>Información</h2>
-        <form onSubmit={updateProduct} className="productForm" ref={formRef}>
-          <label htmlFor="nombre">Nombre</label>
-          <br />
+
+        <form
+          onSubmit={updateProduct}
+          className={style.productForm}
+          ref={formRef}
+        >
+          <label htmlFor="nombre">
+            <p>Nombre</p>
+          </label>
           <input
             required
             defaultValue={product.title}
             onChange={handleChange}
-            className={style.inputs}
+            className={style.productForm__input_name}
             type="text"
             name="title"
             placeholder="Titulo"
           />{" "}
-          <br />
-          <label htmlFor="price">Price</label> <br />
+          <label htmlFor="price">
+            <p>Price</p>
+          </label>
           <input
             required
             onChange={handleChange}
             defaultValue={product.price}
-            className={`${style.inputs} asNum`}
+            className={`${style.productForm__input_value} asNum`}
             ref={inputPrice}
             type="number"
             name="price"
             min="0"
             placeholder="Precio"
           />
-          <br />
-          <label htmlFor="stock">Stock</label>
-          <br />
+          <label htmlFor="stock">
+            <p>Stock</p>
+          </label>
           <div>
-            <button onClick={handleSubtractOne}> - </button>
-            <input
-              required
-              onChange={handleChange}
-              value={currentStock}
-              className={`${style.inputs} asNum`}
-              type="number"
-              name="stock"
-              min="0"
-              placeholder="Stock"
-            />
-            <button onClick={handleAddOne}> + </button>
+            <div className={style.productForm__input_stock}>
+              <button onClick={handleSubtractOne}> - </button>
+              <input
+                required
+                onChange={handleChange}
+                value={currentStock}
+                className={`falseClass asNum`}
+                type="number"
+                name="stock"
+                min="0"
+                placeholder="Stock"
+              />
+              <button onClick={handleAddOne}> + </button>
+            </div>
           </div>
           <div>
-            <label htmlFor="descripcion">Descripción</label>
-            <br />
+            <label htmlFor="descripcion">
+              <p>Descripción</p>
+            </label>
+
             <textarea
               onChange={handleChange}
               defaultValue={product.description}
-              className={style.description}
+              className={style.productForm__input_description}
               type="text"
               name="description"
               placeholder="Descripcion del producto"
             />
-            <br />
-            <br />
-            <label htmlFor="tienda">Tienda</label>
-            <br />
+
+            <label htmlFor="tienda">
+              <p>Tienda</p>
+            </label>
+
             <select
-              className={style.inputs}
+              className={style.productForm__input_store}
               type="text"
               name="category"
               placeholder="Select"
             >
-              <option>Pepito store</option>
+              <option>MiEcommerce</option>
             </select>
           </div>
-          <h3 className={style.headings}>Galería de Imágenes</h3>
+          <h2 className={style.headings}>Galería de Imágenes</h2>
           <div>
-            <label htmlFor="imagen">Nueva Imagen</label>
-            <br />
+            <label htmlFor="imagen">
+              <p>Nueva Imagen</p>
+            </label>
             <input
               ref={imagesInput}
-              className={style.inputs}
+              className={style.productForm__input_img}
               type="url"
               name="images"
               accept="image/*"
               placeholder="Ingrese URL de la imagen"
             />{" "}
-            <button onClick={addImg}>Agregar imagen</button>
+            <button
+              onClick={addImg}
+              className={style.productForm__add_image_button}
+            >
+              <img src={confirmTic} className={theme?style.dark:""} alt="Agregar Imagen" />
+            </button>
           </div>
-          <h4 className={style.headings}>Imágenes Actuales</h4>
-          <div className={style.imageBanner}>
+          <label htmlFor="new-images">
+            <p>Imágenes Actuales</p>
+          </label>
+          <div className={style.productForm__images_list}>
             <ul>
               {image.map((img, i) => (
-                <li key={`${img}${i}`}>
+                <li
+                  key={`${img}${i}`}
+                  className={style.productForm__images_list__image_card}
+                >
                   <img src={img} alt={img} />
                   <p>{img}</p>
                   <button onClick={(e) => deleteImgActuales(e, i)}>
@@ -210,9 +240,16 @@ const ProductView = () => {
               ))}
             </ul>
           </div>
-          <button type="submit">Guardar</button>
-          <div>
-            <button onClick={resetInputs}>CANCELAR</button>
+          <div className={style.productForm_buttons_container}>
+            <button type="submit" className={style.productForm_save_button}>
+              Guardar
+            </button>
+            <button
+              onClick={resetInputs}
+              className={style.productForm_cancel_button}
+            >
+              Cancelar
+            </button>
           </div>
         </form>
       </div>

@@ -2,6 +2,7 @@
   list-style: none;
   display: flex;
   flex-direction: column;
+  padding-top: 10px;
   gap: 1rem;
 }
 
@@ -30,7 +31,22 @@
   display: flex;
   justify-content: flex-end;
   align-items: center;
+  position: sticky;
+  width: 102%;
+  top: 72px;
+  margin-left: -4px;
+  z-index: 100;
+  background-color: var(--blanco);
   gap: 1rem;
+  transition: all 0.4s;
+}
+
+.productsListHeaderDark{
+  background-color: var(--negro);
+}
+
+.productsListHeader > span {
+  display: none;
 }
 
 .noMatch {
@@ -119,5 +135,23 @@
 @-webkit-keyframes spin {
   to {
     -webkit-transform: rotate(360deg);
+  }
+}
+
+
+@media (min-width:468px) {
+  .productsListHeader {
+    width: 102%;
+    padding-right: 7px;
+  }
+  .productsListHeader > span {
+    display: initial;
+  }
+  
+}
+@media (min-width: 1024px){
+  .productsListHeader {
+    width: 102%;
+    margin-left: -12px;
   }
 }
