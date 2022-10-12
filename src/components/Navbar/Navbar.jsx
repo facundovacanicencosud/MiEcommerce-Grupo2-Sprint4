@@ -19,11 +19,13 @@ const Navbar = () => {
   const { width } = useScreen();
   const id = useParams().id;
 
+  //cuando se desmonta navbar, el buscador en celulares tiene que volverse falso
   useEffect(()=>{
     return setSearchBox(false);
   },[location])
 
   let navItemLeft;
+  //condicional para renderizar la parte del header de texto a la izquierda
   if (location === "/") {
     navItemLeft = <NavItemLeft url={"/"} username={"Olivia"} />;
   } else if (location === "/products" || location === "/products/") {
@@ -52,6 +54,7 @@ const Navbar = () => {
     );
   }
 
+  //función para borrar un producto
   const handleDelete = async () => {
     try {
       const deletedProduct = await deleteProduct(parseInt(id));
@@ -77,11 +80,6 @@ const Navbar = () => {
           >
             <img src={menuLogo} alt="" id="hamburguerMenu" />
           </button>
-          {/* {width > 468
-            ? navItemLeft
-            : (searchBox && location !== "/products")
-            ? navItemLeft
-            : (!searchBox && (location === "/products" || location === "/products/"))? navItemLeft : ""} */}
           {width > 468
             ? navItemLeft
             : !searchBox? navItemLeft : ""}

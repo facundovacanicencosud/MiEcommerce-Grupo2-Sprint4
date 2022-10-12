@@ -100,6 +100,7 @@
   margin-left: 10px;
   font-size: 24px;
   justify-content: center;
+  padding-bottom: 3px;
 }
 .add_icon span {
   color: var(--blanco);
@@ -148,7 +149,6 @@
     margin-left: 8px;
     border-radius: 16px;
     height: 34px;
-    color: var(--blanco);
     padding-left: 15px;
   }
   .search_input:focus {
