@@ -78,8 +78,8 @@ const ProductsList = () => {
       ) :
         products.length && !isLoading ? (
         <>
-          <div className={style.productsListHeader}>
-            <span>{products.length} productos |</span>
+          <div className={`${style.productsListHeader} ${theme? style.productsListHeaderDark:""}`}>
+            <span>{products.length} productos</span>
             <div className={style.filterContainer}>
               <span>Ordenar por:</span>
               <FilterOptions
@@ -109,7 +109,7 @@ const ProductsList = () => {
                             ? product.images[product.images.length - 1]
                             : noImage
                         }
-                        alt={`${product.title}-picture`}
+                        alt={`${product.title}-pictures`}
                       />
                       <div className={style.productDetails}>
                         <p className={style.productTitle}>{product.title}</p>

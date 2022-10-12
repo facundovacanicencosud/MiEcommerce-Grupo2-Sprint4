@@ -54,6 +54,20 @@
   justify-content: center;
 }
 
+.user > div > div:last-child {
+  flex-direction: column;
+  justify-content: center;
+  gap: 2px;
+}
+.user > div > div:last-child > p:last-child{
+  font-size: 14px;
+  font-weight: 300;
+}
+.user > div > div:last-child > p:first-child{
+  font-size: 17px;
+  font-weight: 600;
+}
+
 .user img {
   height: 64px;
   width: 64px;

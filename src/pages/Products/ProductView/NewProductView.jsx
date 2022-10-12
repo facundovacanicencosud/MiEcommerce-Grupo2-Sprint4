@@ -37,6 +37,10 @@ const NewProductView = () => {
   const sendImage = (e) => {
     e.preventDefault();
     const imgStr = imagesInput.current.value;
+    if(imgStr === "" || imgStr === undefined){
+      alert("No puede enviar un link vacio")
+      return
+    }
     setImages([...images, imgStr]);
     imagesInput.current.value = "";
   };
