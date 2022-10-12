@@ -115,7 +115,7 @@ const ProductView = () => {
 
   return (
     <>
-      <div className={style.container}>
+      <div className={style.productView_container}>
         <div className={style.products}>
           <div className={style.products_img}>
             <img src={product.images[0]} alt={product.title} />
@@ -131,31 +131,32 @@ const ProductView = () => {
               </div>
               <div className={style.product_info_detail__stock}>
                 <div className="">
-                <h1>{product.stock}</h1>
+                  <h1>{product.stock}</h1>
                 </div>
                 <div className="">
-                <p>Stock Disponible</p>
+                  <p>Stock Disponible</p>
                 </div>
               </div>
               <div className={style.product_info_detail__user}>
-                  <img src={profileIcon} alt="Perfil del usuario" />
-                  <div className={style.product_info_detail__user_name}>
+                <img src={profileIcon} alt="Perfil del usuario" />
+                <div className={style.product_info_detail__user_name}>
                   <p>Olivia Store</p>
-                  </div>
+                </div>
               </div>
             </div>
           </div>
         </div>
 
         <h2 className={style.headings}>Información</h2>
-        <form onSubmit={updateProduct} className="productForm">
+        
+        <form onSubmit={updateProduct} className={style.productForm}>
           <label htmlFor="nombre">Nombre</label>
           <br />
           <input
             required
             defaultValue={initialValues.title}
             onChange={handleChange}
-            className={style.inputs}
+            className={style.productForm__input_name}
             type="text"
             name="title"
             placeholder="InputValue"
@@ -165,7 +166,7 @@ const ProductView = () => {
           <input
             onChange={handleChange}
             defaultValue={initialValues.price}
-            className={style.inputs}
+            className={style.productForm__input_value}
             type="number"
             name="price"
             placeholder="InputValue"
@@ -174,16 +175,18 @@ const ProductView = () => {
           <label htmlFor="stock">Stock</label>
           <br />
           <div>
+            <div className={style.productForm__input_stock}>
             <button onClick={handleSubtractOne}> - </button>
             <input
               onChange={handleChange}
               defaultValue={initialValues.stock}
-              className={style.inputs}
+              className=""
               type="number"
               name="stock"
               placeholder="InputValue"
             />
             <button onClick={handleAddOne}> + </button>
+            </div>
           </div>
           <div>
             <label htmlFor="descripcion">Descripción</label>
