@@ -7,7 +7,6 @@ import style from "./productView.module.css";
 import { modifyProduct } from "../../../utils/apiConfig";
 import profileIcon from "../../../assets/ProfileBtn.svg";
 
-
 const ProductView = () => {
   const baseURL = "http://localhost:5000/api";
   const navigate = useNavigate();
@@ -21,7 +20,7 @@ const ProductView = () => {
   useEffect(() => {
     axios.get(`${baseURL}/product/${id}`).then((response) => {
       setProduct(response.data);
-      setFer(response.data.images);
+      setImage(response.data.images);
       setCurrentStock(response.data.stock);
     });
   }, []);
@@ -139,7 +138,7 @@ const ProductView = () => {
                 <p>Stock Disponible</p>
               </div>
               <div className="product_info_detail__user">
-                  <img src={profileIcon} alt="" />
+                <img src={profileIcon} alt="" />
               </div>
             </div>
           </div>
