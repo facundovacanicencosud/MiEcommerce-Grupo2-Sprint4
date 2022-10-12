@@ -15,8 +15,7 @@
 
 .products {
     display: flex;
-    flex-wrap: wrap;
-    width: 45%;
+    width: 50%;
 }
 
 .products h2 {
@@ -24,11 +23,7 @@
 }
 
 .products img {
-    width: 15%;
-    height: 75px;
     border-radius: 15px;
-    margin-right: 10px;
-    display: flex;
 }
 
 .products h4 {

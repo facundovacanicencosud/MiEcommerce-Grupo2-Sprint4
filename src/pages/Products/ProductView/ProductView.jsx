@@ -5,6 +5,8 @@ import useForm from "../../../hooks/useForm";
 import axios from "axios";
 import style from "./productView.module.css";
 import { modifyProduct } from "../../../utils/apiConfig";
+import profileIcon from "../../../assets/ProfileBtn.svg";
+
 
 const ProductView = () => {
   const baseURL = "http://localhost:5000/api";
@@ -120,10 +122,27 @@ const ProductView = () => {
     <>
       <div className={style.container}>
         <div className={style.products}>
-          <img src={product.images[0]} alt={product.title} />
-          <h2>{product.title}</h2>
-          <h4>{product.price} Puntos Superclub</h4>
-          <h4>{product.stock} Stock Disponible</h4>
+          <div className="products_img">
+            <img src={product.images[0]} alt={product.title} />
+          </div>
+          <div className="product_info">
+            <div className="product_info__title">
+              <h2>{product.title}</h2>
+            </div>
+            <div className="product_info__detail">
+              <div className="product_info_detail__price">
+                <h4>{product.price}</h4>
+                <p>Puntos Superclub</p>
+              </div>
+              <div className="product_info_detail__stock">
+                <h4>{product.stock}</h4>
+                <p>Stock Disponible</p>
+              </div>
+              <div className="product_info_detail__user">
+                  <img src={profileIcon} alt="" />
+              </div>
+            </div>
+          </div>
         </div>
 
         <h2 className={style.headings}>Información</h2>

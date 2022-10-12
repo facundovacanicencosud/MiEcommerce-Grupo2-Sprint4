@@ -16,6 +16,17 @@ const Sidebar = () => {
   const sidebarRef = useRef(null);
   const inputCheck = useRef();
 
+  useEffect(()=>{
+    if(localStorage.getItem("theme")){
+      if(localStorage.getItem("theme")==="dark"){
+        setTheme(true);
+      }else{
+        setTheme(false);
+      }
+    }else{
+      localStorage.setItem("theme","light")
+    }
+  },[]);
   const handleClickOutside = (e) => {
     if (
       sidebarRef.current &&
@@ -34,6 +45,11 @@ const Sidebar = () => {
 
   const changeTheme = () => {
     setTheme((x) => !x);
+    (!theme)?
+      localStorage.setItem("theme", "dark")
+    :
+      localStorage.setItem("theme", "light")
+    ;
   };
 
   useEffect(() => {
@@ -155,6 +171,7 @@ const Sidebar = () => {
             className={`switch-input ${theme ? "dark" : ""}`}
             type="checkbox"
             onChange={changeTheme}
+            checked={theme}
           />
           <span className={`slider round ${theme ? "dark" : ""}`}></span>
         </label>
