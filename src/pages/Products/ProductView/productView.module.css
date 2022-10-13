@@ -76,23 +76,20 @@
   gap: 10px;
   align-items: center;
   width: 100%;
-  animation: fade-bottom-slide-in 0.5s;
+  transform: translateY(-50px);
+  opacity: 0;
   transition: 0.5s;
+  margin-top: -100px;
+}
+
+.showProductCard {
+  transform: translateY(0);
+  opacity: 1;
+  margin-top: 0;
 }
 
 .wrapper .products {
   margin-bottom: 2rem;
-}
-
-@keyframes fade-bottom-slide-in {
-  from {
-    transform: translateY(-50px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
 }
 
 .product_info {

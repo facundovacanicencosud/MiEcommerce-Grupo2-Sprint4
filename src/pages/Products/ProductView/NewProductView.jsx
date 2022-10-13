@@ -75,43 +75,45 @@ const NewProductView = () => {
   return (
     <>
       <div className={style.wrapper}>
-        {!product.title && product.images.length === 0 ? (
-          <h2 className={style.headings}>Create Product</h2>
-        ) : (
-          <div className={style.products}>
-            <div className={style.products_img}>
-              <img
-                src={product.images.length ? product.images[0] : noImage}
-                alt={product.title}
-              />
+        <h2 className={style.headings}>Create Product</h2>
+        <div
+          className={`${style.products} ${
+            (product.title || product.images.length > 0) &&
+            style.showProductCard
+          }`}
+        >
+          <div className={style.products_img}>
+            <img
+              src={product.images.length ? product.images[0] : noImage}
+              alt={product.title}
+            />
+          </div>
+          <div className={style.product_info}>
+            <div className={style.product_info__title}>
+              <h2>{product.title}</h2>
             </div>
-            <div className={style.product_info}>
-              <div className={style.product_info__title}>
-                <h2>{product.title}</h2>
+            <div className={style.product_info__detail}>
+              <div className={style.product_info_detail__price}>
+                <h1>{product.price}</h1>
+                <p>Puntos Superclub</p>
               </div>
-              <div className={style.product_info__detail}>
-                <div className={style.product_info_detail__price}>
-                  <h1>{product.price}</h1>
-                  <p>Puntos Superclub</p>
+              <div className={style.product_info_detail__stock}>
+                <div className="">
+                  <h1>{product.stock}</h1>
                 </div>
-                <div className={style.product_info_detail__stock}>
-                  <div className="">
-                    <h1>{product.stock}</h1>
-                  </div>
-                  <div className="">
-                    <p>Stock Disponible</p>
-                  </div>
+                <div className="">
+                  <p>Stock Disponible</p>
                 </div>
-                <div className={style.product_info_detail__user}>
-                  <img src={profileIcon} alt="Perfil del usuario" />
-                  <div className={style.product_info_detail__user_name}>
-                    <p>Olivia Store</p>
-                  </div>
+              </div>
+              <div className={style.product_info_detail__user}>
+                <img src={profileIcon} alt="Perfil del usuario" />
+                <div className={style.product_info_detail__user_name}>
+                  <p>Olivia Store</p>
                 </div>
               </div>
             </div>
           </div>
-        )}
+        </div>
 
         <div className={style.form}>
           <form onSubmit={handleSubmit} className={style.productForm}>
