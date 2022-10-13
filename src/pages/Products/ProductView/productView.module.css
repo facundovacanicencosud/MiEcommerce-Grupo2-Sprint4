@@ -76,11 +76,23 @@
   gap: 10px;
   align-items: center;
   width: 100%;
+  animation: fade-bottom-slide-in 0.5s;
+  transition: 0.5s;
 }
 
-.productView_container h2 {
-  font-weight: 300;
-  font-size: 22px;
+.wrapper .products {
+  margin-bottom: 2rem;
+}
+
+@keyframes fade-bottom-slide-in {
+  from {
+    transform: translateY(-50px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .product_info {
@@ -147,6 +159,8 @@
 
 .headings {
   margin: 20px 0px;
+  font-weight: 300;
+  font-size: 22px;
 }
 
 .productForm__input_name,

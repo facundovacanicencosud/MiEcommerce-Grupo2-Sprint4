@@ -23,7 +23,7 @@ const ProductView = () => {
       setProduct(response.data);
       setImage(response.data.images);
     });
-  }, []);
+  }, [id]);
 
   const initialValues = {
     ...product,
@@ -168,7 +168,6 @@ const ProductView = () => {
               <input
                 required
                 onChange={(e) => {
-                  console.log(e.target.value);
                   handleChange(e);
                   setProduct({ ...product, stock: e.target.value });
                 }}
