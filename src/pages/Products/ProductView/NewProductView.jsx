@@ -78,8 +78,9 @@ const NewProductView = () => {
         <h2 className={style.headings}>Create Product</h2>
         <div
           className={`${style.products} ${
-            (product.title || product.images.length > 0) &&
-            style.showProductCard
+            product.title || product.images.length > 0
+              ? style.showProductCard
+              : ""
           }`}
         >
           <div className={style.products_img}>

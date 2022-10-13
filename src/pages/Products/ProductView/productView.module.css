@@ -70,7 +70,15 @@
   border-radius: 16px;
 }
 
-.products {
+.productView_container .products {
+  display: flex;
+  width: fit-content;
+  gap: 10px;
+  align-items: center;
+  width: 100%;
+}
+
+.wrapper .products {
   display: flex;
   width: fit-content;
   gap: 10px;
@@ -78,11 +86,11 @@
   width: 100%;
   transform: translateY(-50px);
   opacity: 0;
-  transition: 0.5s;
+  transition: all 0.5s;
   margin-top: -100px;
 }
 
-.showProductCard {
+.wrapper .showProductCard {
   transform: translateY(0);
   opacity: 1;
   margin-top: 0;
