@@ -13,7 +13,6 @@ const ProductView = () => {
   const id = useParams().id;
   const [product, setProduct] = useState();
   const [image, setImage] = useState([]);
-  const [currentStock, setCurrentStock] = useState(0);
   const { theme } = useContext(AppContext);
   const imagesInput = useRef(null);
   const inputPrice = useRef();
@@ -23,7 +22,6 @@ const ProductView = () => {
     axios.get(`${baseURL}/product/${id}`).then((response) => {
       setProduct(response.data);
       setImage(response.data.images);
-      setCurrentStock(response.data.stock);
     });
   }, []);
 
@@ -39,7 +37,7 @@ const ProductView = () => {
         id: product.id,
         title: data.title,
         price: parseInt(inputPrice.current.value),
-        stock: currentStock,
+        stock: data.stock,
         description: data.description,
         images: image,
       })
@@ -51,18 +49,18 @@ const ProductView = () => {
 
   const handleSubtractOne = (e) => {
     e.preventDefault();
-    setCurrentStock(currentStock - 1);
+    setProduct({ ...product, stock: parseInt(product.stock) - 1 });
   };
 
   const handleAddOne = (e) => {
     e.preventDefault();
-    setCurrentStock(currentStock + 1);
+    setProduct({ ...product, stock: parseInt(product.stock) + 1 });
   };
 
   const addImg = (e) => {
     e.preventDefault();
     const imgStr = imagesInput.current.value;
-    if(imgStr === "" || imgStr === undefined){
+    if (imgStr === "" || imgStr === undefined) {
       alert("No puede subir una url vacia");
       return;
     }
@@ -135,7 +133,10 @@ const ProductView = () => {
           <input
             required
             defaultValue={product.title}
-            onChange={handleChange}
+            onChange={(e) => {
+              handleChange(e);
+              setProduct({ ...product, title: e.target.value });
+            }}
             className={style.productForm__input_name}
             type="text"
             name="title"
@@ -146,7 +147,10 @@ const ProductView = () => {
           </label>
           <input
             required
-            onChange={handleChange}
+            onChange={(e) => {
+              handleChange(e);
+              setProduct({ ...product, price: e.target.value });
+            }}
             defaultValue={product.price}
             className={`${style.productForm__input_value} asNum`}
             ref={inputPrice}
@@ -163,8 +167,12 @@ const ProductView = () => {
               <button onClick={handleSubtractOne}> - </button>
               <input
                 required
-                onChange={handleChange}
-                value={currentStock}
+                onChange={(e) => {
+                  console.log(e.target.value);
+                  handleChange(e);
+                  setProduct({ ...product, stock: e.target.value });
+                }}
+                value={product.stock}
                 className={`falseClass asNum`}
                 type="number"
                 name="stock"
@@ -218,7 +226,11 @@ const ProductView = () => {
               onClick={addImg}
               className={style.productForm__add_image_button}
             >
-              <img src={confirmTic} className={theme?style.dark:""} alt="Agregar Imagen" />
+              <img
+                src={confirmTic}
+                className={theme ? style.dark : ""}
+                alt="Agregar Imagen"
+              />
             </button>
           </div>
           <label htmlFor="new-images">
