@@ -1,7 +1,7 @@
 import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import style from "./UsersList.module.css";
-import arrow from "../../../assets/chevron-right (1).svg";
+import arrow from "../../../assets/chevron-right.svg";
 import { AppContext } from "../../../context/AppContext";
 import { getUsers } from "../../../utils/apiConfig";
 import noProfilePic from "../../../assets/no-profile-pic.svg";
@@ -43,7 +43,6 @@ const UsersList = () => {
     };
     onSearch(searchQuery);
   }, [searchQuery]);
-
 
   return (
     <div className="lists-container">
