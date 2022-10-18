@@ -2,7 +2,6 @@ import { act, render, screen } from "@testing-library/react";
 import NewProductView from "./NewProductView";
 import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
-import { toBeChecked } from "@testing-library/jest-dom/dist/matchers";
 import { createProduct } from "../../../utils/apiConfig";
 
 //jest.mock("axios");
@@ -121,7 +120,7 @@ describe("NewProductView Test", () => {
     );
     userEvent.type(inputImages, "https://dummyjson.com/image/i.jpg");
     const uploadBtn = screen.getByRole("button", { name: "Upload" });
-    const liImage = screen.queryByText("https://dummyjson.com/image/i.jpg");
+    const liImage = screen.queryByText("https://dummyjson.com/image/i.jpg...");
     const image = screen.queryByAltText("https://dummyjson.com/image/i.jpg");
     const deleteBtn = screen.queryByRole("button", { name: "Quitar" });
 
@@ -133,7 +132,7 @@ describe("NewProductView Test", () => {
     // Act
     userEvent.click(uploadBtn);
 
-    const liImage2 = screen.queryByText("https://dummyjson.com/image/i.jpg");
+    const liImage2 = screen.getByText("https://dummyjson.com/image/i.jpg...");
     const image2 = screen.queryByAltText("https://dummyjson.com/image/i.jpg");
     const deleteBtn2 = screen.queryByRole("button", { name: "Quitar" });
 
@@ -144,9 +143,13 @@ describe("NewProductView Test", () => {
 
     userEvent.click(deleteBtn2);
 
+    const liImage3 = screen.queryByText("https://dummyjson.com/image/i.jpg...");
+    const image3 = screen.queryByAltText("https://dummyjson.com/image/i.jpg");
+    const deleteBtn3 = screen.queryByRole("button", { name: "Quitar" });
+
     //Assertion
-    expect(liImage2).not.toBeInTheDocument();
-    expect(image2).not.toBeInTheDocument();
-    expect(deleteBtn2).not.toBeInTheDocument();
+    expect(liImage3).not.toBeInTheDocument();
+    expect(image3).not.toBeInTheDocument();
+    expect(deleteBtn3).not.toBeInTheDocument();
   });
 });
