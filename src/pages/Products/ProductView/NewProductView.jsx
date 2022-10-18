@@ -1,5 +1,5 @@
 import React, { useState, useRef } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import useForm from "../../../hooks/useForm";
 import { createProduct } from "../../../utils/apiConfig";
 // import style from "../ProductView/newProductView.module.css";
@@ -228,7 +228,9 @@ const NewProductView = () => {
                 </button>
               </div>
             </div> */}
-
+            <label htmlFor="stock">
+              <p>Stock:</p>
+            </label>
             <div className={style.productForm__input_stock}>
               <button onClick={handleSubtractOne}> - </button>
               <input
@@ -294,7 +296,7 @@ const NewProductView = () => {
                         src={image}
                         alt={image}
                       />
-                      <p className={style.img_span}>{image}</p>
+                      <p className={style.img_span}>{`${image.substring(0, 40)}...`}</p>
                       <button
                         className={`${style.productForm_cancel_button}`}
                         onClick={(e) => handleDelete(e, i)}
@@ -311,6 +313,13 @@ const NewProductView = () => {
               <button type="submit" className={`${style.btnCreateProduct}`}>
                 <span>Guardar Producto</span>
               </button>
+              <Link to="/products" >
+              <button
+              className={style.productForm_cancel_button}
+            >
+              Cancelar
+            </button>
+            </Link>
               <div>{warning && <p>{warning}</p>}</div>
             </div>
           </form>
