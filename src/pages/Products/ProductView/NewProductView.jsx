@@ -119,10 +119,11 @@ const NewProductView = () => {
         <div className={style.form}>
           <form onSubmit={handleSubmit} className={style.productForm}>
             <div className={style.inputfield}>
-              <label htmlFor="productName">
+              <label htmlFor="title">
                 <p>Product title</p>
               </label>
               <input
+                id="title"
                 required
                 className={`${style.productForm__input_name}`}
                 type="text"
@@ -250,7 +251,7 @@ const NewProductView = () => {
             </div>
 
             <div className={style.inputfield}>
-              <label htmlFor="rate">
+              <label htmlFor="category">
                 <p>Category</p>
               </label>
               <input

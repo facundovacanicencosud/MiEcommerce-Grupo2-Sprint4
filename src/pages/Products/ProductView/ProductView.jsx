@@ -127,7 +127,7 @@ const ProductView = () => {
           className={style.productForm}
           ref={formRef}
         >
-          <label htmlFor="nombre">
+          <label htmlFor="title">
             <p>Nombre</p>
           </label>
           <input
