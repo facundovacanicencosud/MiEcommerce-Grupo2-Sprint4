@@ -1,42 +1,36 @@
-import { AppContext } from "./AppContext";
+import { Contexto } from "./AppContext";
 import Sidebar from "../components/Sidebar/Sidebar";
-import { fireEvent, render, screen, act } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { BrowserRouter } from "react-router-dom";
 import userEvent from "@testing-library/user-event";
 
-const mockedValue = {
-    theme: false,
-    setTheme:()=>mockedValue.theme = !mockedValue.theme,
-    activeSidebar: true,
-    setActiveSidebar: jest.fn(),
-}
+describe("Testing dark mode in differents componentes", () => {
+  beforeEach(() => {
+    render(
+      <BrowserRouter>
+        <Contexto>
+          <Sidebar />
+        </Contexto>
+      </BrowserRouter>
+    );
+  });
 
+  test("There is a dark mode button and it's false", () => {
+    const inputChangeMode = screen.queryByRole("checkbox");
+    expect(inputChangeMode).toBeInTheDocument();
+    expect(inputChangeMode.checked).toBeFalsy();
+  });
 
+  test("User clicked the button and this change the mode", () => {
+    const inputChangeMode = screen.queryByRole("checkbox");
+    const sidebar = document.querySelector("aside");
 
-describe("Testing dark mode in differents componentes",()=>{
-    beforeEach(()=>{
-        render(
-            <BrowserRouter>
-                <AppContext.Provider value={mockedValue}>
-                    <Sidebar />
-                </AppContext.Provider>
-            </BrowserRouter>
-        );
+    expect(inputChangeMode.checked).toBeFalsy();
+    expect(sidebar.className).not.toMatch("dark-background");
 
-    });
+    userEvent.click(inputChangeMode);
 
-    test("There is a dark mode button and it's false", ()=>{
-        const inputChangeMode = screen.queryByRole("checkbox");
-        expect(inputChangeMode).toBeInTheDocument();
-        expect(inputChangeMode.checked).toBeFalsy();
-    })
-    test("User clicked the button and this change the mode", ()=>{
-        const inputChangeMode = screen.queryByRole("checkbox");
-        // let span = sidebar.querySelector(".slider");
-        fireEvent.change(inputChangeMode, {target: {checked:true}});
-        // fireEvent.change(inputChangeMode)
-        expect(inputChangeMode.checked).toBeTruthy();
-        const sidebar = document.querySelector("aside");
-        // expect(sidebar.classList[2]).toBe("dark-background")
-    })
+    expect(inputChangeMode.checked).toBeTruthy();
+    expect(sidebar.className).toMatch("dark-background");
+  });
 });

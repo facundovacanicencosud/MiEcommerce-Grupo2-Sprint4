@@ -183,8 +183,8 @@ const Sidebar = () => {
             ref={inputCheck}
             className={`switch-input ${theme ? "dark" : ""}`}
             type="checkbox"
-            onChange={changeTheme}
-            checked={theme}
+            onClick={changeTheme}
+            defaultChecked={theme}
           />
           <span className={`slider round ${theme ? "dark" : ""}`}></span>
         </label>
