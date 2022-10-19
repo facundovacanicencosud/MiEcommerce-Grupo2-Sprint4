@@ -2,7 +2,9 @@ import { act, render, screen } from "@testing-library/react";
 import UsersList from "../UsersList/UsersList";
 import { getUsers } from "../../../utils/apiConfig";
 import { BrowserRouter } from "react-router-dom";
-import { AppContext } from "../../../context/AppContext";
+import { AppContext, Contexto } from "../../../context/AppContext";
+import NavItemSearch from "../../../components/Navbar/NavItems/NavItemSearch";
+import userEvent from "@testing-library/user-event";
 
 jest.mock("../../../utils/apiConfig");
 
@@ -62,25 +64,35 @@ describe("Testing UsersList", () => {
       data: allUsers,
     });
     // eslint-disable-next-line testing-library/no-unnecessary-act
-    await act(() => {
+    await act(async () => {
       // eslint-disable-next-line testing-library/no-render-in-setup
       render(
         <BrowserRouter>
-          <AppContext.Provider value={mockedValue}>
+          <Contexto>
+            <NavItemSearch />
             <UsersList />
-          </AppContext.Provider>
+          </Contexto>
         </BrowserRouter>
       );
     });
   });
 
   it("Testing users renders and checking user have correct link path", () => {
-    const users = screen.getAllByRole("link");
+    const users = screen.getAllByRole("listitem");
     const user = screen.getByText("Arya Stark");
     const userLink = screen.getByRole("link", { name: /arya stark/i });
     expect(users).toHaveLength(allUsers.length);
     expect(user).toBeInTheDocument();
-    console.log(userLink.id);
     expect(userLink.getAttribute("href")).toBe("/users/0");
+  });
+
+  it("Test search", async () => {
+    const searchInput = screen.getByPlaceholderText("Buscar...");
+    userEvent.click(searchInput);
+    await act(async () => {
+      userEvent.type(searchInput, "arya");
+    });
+    const firstElem = document.querySelector("div > p:first-child");
+    expect(firstElem.textContent).toMatch(/arya/i);
   });
 });

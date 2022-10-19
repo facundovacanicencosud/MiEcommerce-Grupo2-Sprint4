@@ -5,7 +5,7 @@ import style from "./FilterOptions.module.css";
 function FilterOptions({ selectedFilter, setSelectedFilter }) {
   const { theme } = useContext(AppContext);
   const options = [
-    { value: "", text: " --Seleccione una opción--" },
+    { value: "", text: "--Seleccione una opción--" },
     { value: "menorPrecio", text: "Menor precio", name: "Menor precio" },
     { value: "mayorPrecio", text: "Mayor precio", name: "Mayor precioo" },
     { value: "masValorados", text: "Más valorados", name: "Más valorados" },

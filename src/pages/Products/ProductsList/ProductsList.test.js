@@ -3,7 +3,7 @@ import userEvent from "@testing-library/user-event";
 import React from "react";
 import { BrowserRouter } from "react-router-dom";
 import NavItemSearch from "../../../components/Navbar/NavItems/NavItemSearch";
-import { AppContext } from "../../../context/AppContext";
+import { AppContext, Contexto } from "../../../context/AppContext";
 import { getProducts } from "../../../utils/apiConfig";
 import ProductsList from "./ProductsList";
 
@@ -79,10 +79,10 @@ describe("Testing ProductList", () => {
     await act(async () => {
       render(
         <BrowserRouter>
-          <AppContext.Provider value={mockedValue}>
+          <Contexto>
             <NavItemSearch />
             <ProductsList />
-          </AppContext.Provider>
+          </Contexto>
         </BrowserRouter>
       );
     });
@@ -166,10 +166,10 @@ describe("Testing ProductList", () => {
   it("Test search", async () => {
     const searchInput = screen.getByPlaceholderText("Buscar...");
     userEvent.click(searchInput);
-    userEvent.type(searchInput, "samsung");
-    /*  await act(async () => {
-      screen.debug();
-    }); */
-    expect(mockedValue.setSearchQuery).toBeCalled();
+    await act(async () => {
+      userEvent.type(searchInput, "samsung");
+    });
+    const firstElem = document.querySelector(".productTitle");
+    expect(firstElem.textContent).toMatch(/samsung/i);
   });
 });
