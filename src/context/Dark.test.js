@@ -6,7 +6,7 @@ import userEvent from "@testing-library/user-event";
 
 const mockedValue = {
     theme: false,
-    setTheme:function(){mockedValue.theme = !mockedValue.theme},
+    setTheme:()=>mockedValue.theme = !mockedValue.theme,
     activeSidebar: true,
     setActiveSidebar: jest.fn(),
 }
@@ -32,9 +32,11 @@ describe("Testing dark mode in differents componentes",()=>{
     })
     test("User clicked the button and this change the mode", ()=>{
         const inputChangeMode = screen.queryByRole("checkbox");
-        // const sidebar = document.querySelector("aside");
         // let span = sidebar.querySelector(".slider");
         fireEvent.change(inputChangeMode, {target: {checked:true}});
+        // fireEvent.change(inputChangeMode)
         expect(inputChangeMode.checked).toBeTruthy();
+        const sidebar = document.querySelector("aside");
+        // expect(sidebar.classList[2]).toBe("dark-background")
     })
 });
