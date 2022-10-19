@@ -92,7 +92,7 @@ describe("Testing ProductList", () => {
     const productTitle = screen.getByText(/iPhone X/i);
     const productsListItems = screen.getAllByRole("listitem");
     expect(productsListItems).toHaveLength(products.length);
-    expect(productTitle).toBeInTheDocument;
+    expect(productTitle).toBeInTheDocument();
   });
 
   it("Order products from lower to higher price", () => {

@@ -29,6 +29,7 @@ const ProductView = () => {
     ...product,
   };
   const { data, handleChange } = useForm(initialValues);
+  
   const updateProduct = (e) => {
     e.preventDefault();
 
