@@ -5,8 +5,20 @@ import React from "react";
 import "@testing-library/jest-dom";
 import { MemoryRouter, BrowserRouter } from "react-router-dom";
 import App from "./App";
+import { getProducts, getUsers } from "./utils/apiConfig";
+
+//Mock getProducts
+jest.mock("./utils/apiConfig");
 
 describe("Testing router", () => {
+  beforeEach(async () => {
+    getProducts.mockResolvedValue({
+      data: [],
+    });
+    getUsers.mockResolvedValue({
+      data: [],
+    });
+  });
   test("full app rendering/navigating", async () => {
     render(<App />, { wrapper: BrowserRouter });
 
