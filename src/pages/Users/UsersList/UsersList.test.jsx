@@ -1,7 +1,7 @@
 import { act, render, screen } from "@testing-library/react";
 import UsersList from "../UsersList/UsersList";
 import { getUsers } from "../../../utils/apiConfig";
-import { BrowserRouter } from "react-router-dom";
+import { BrowserRouter, MemoryRouter } from "react-router-dom";
 import { AppContext } from "../../../context/AppContext";
 
 jest.mock("../../../utils/apiConfig");
@@ -80,7 +80,27 @@ describe("Testing UsersList", () => {
     const userLink = screen.getByRole("link", { name: /arya stark/i });
     expect(users).toHaveLength(allUsers.length);
     expect(user).toBeInTheDocument();
-    console.log(userLink.id);
     expect(userLink.getAttribute("href")).toBe("/users/0");
   });
+});
+
+describe("Testing Users Routes", () => {
+  beforeEach(async () => {
+    getUsers.mockResolvedValue({
+      data: allUsers,
+    });
+    // eslint-disable-next-line testing-library/no-unnecessary-act
+    await act(() => {
+      // eslint-disable-next-line testing-library/no-render-in-setup
+      render(
+        <MemoryRouter initialEntries={["/users/0"]}>
+          <AppContext.Provider value={mockedValue}>
+            <UsersList />
+          </AppContext.Provider>
+        </MemoryRouter>
+      );
+    });
+  });
+
+  expect(screen.getByText(/pagina no encontrada/i)).toBeInTheDocument();
 });
