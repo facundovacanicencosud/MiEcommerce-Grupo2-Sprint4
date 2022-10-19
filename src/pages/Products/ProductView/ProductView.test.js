@@ -144,7 +144,7 @@ describe("NewProductView Test", () => {
     expect(inputStock).toHaveValue((testStock -= 1));
   });
 
-  it("Testing Upload button, it should render li element. Delete button should remove it", () => {
+  it("Testing Upload button, it should render li element.", () => {
     //Arrange
     const inputImages = screen.getByPlaceholderText(
       /ingrese URL de la imagen/i
@@ -160,7 +160,33 @@ describe("NewProductView Test", () => {
     userEvent.click(uploadBtn);
 
     const imagesList2 = screen.queryAllByRole("listitem");
+
     //Assertion
     expect(imagesList2).toHaveLength(5);
+  });
+
+  it("Testing delete button should remove it", () => {
+    //Arrange
+    const imageLi = screen.queryAllByRole("listitem").at(0);
+    const imagesList = screen.queryAllByRole("listitem");
+
+    const deleteBtn = screen
+      .queryAllByRole("listitem")
+      .at(0)
+      .querySelector("button");
+
+    //Assertion
+    expect(imageLi).toBeInTheDocument();
+    expect(deleteBtn).toBeInTheDocument();
+    expect(imagesList).toHaveLength(4);
+
+    // Act
+    userEvent.click(deleteBtn);
+
+    //Assertion
+    expect(imageLi).not.toBeInTheDocument();
+    expect(deleteBtn).not.toBeInTheDocument();
+    const imagesList2 = screen.queryAllByRole("listitem");
+    expect(imagesList2).toHaveLength(3);
   });
 });
