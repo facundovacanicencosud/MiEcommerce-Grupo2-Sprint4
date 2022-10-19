@@ -37,6 +37,7 @@ const ProductsList = () => {
             product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
             product.category.toLowerCase().includes(searchQuery.toLowerCase())
         );
+
         setProducts(filteredProducts);
       } catch (error) {
         console.log(error);
