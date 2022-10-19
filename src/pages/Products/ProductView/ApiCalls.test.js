@@ -2,10 +2,10 @@ import userEvent from "@testing-library/user-event";
 import ProductView from "./ProductView";
 import { act, render, screen } from "@testing-library/react";
 import React from "react";
-import { BrowserRouter } from "react-router-dom";
-import NavItemSearch from "../../../components/Navbar/NavItems/NavItemSearch";
+import { BrowserRouter, MemoryRouter, Router } from "react-router-dom";
 import { AppContext } from "../../../context/AppContext";
-import { deleteProduct } from "../../../utils/apiConfig";
+import { deleteProduct, getProduct } from "../../../utils/apiConfig";
+import Navbar from "../../../components/Navbar/Navbar";
 
 /* import ProductsList from "../ProductsList/ProductsList"; */
 
@@ -17,6 +17,15 @@ const mockedValue = {
     setSearchQuery: jest.fn((value) => (mockedValue.searchQuery = value)),
     theme: false,
   };
+
+  jest.mock("react-router-dom", () => {
+    return {
+        ...jest.requireActual("react-router-dom"),
+        useParams: () => ({
+          id: '9'
+        })
+    }
+   });
 
 const producto =
     {
@@ -35,34 +44,31 @@ const producto =
         ]
     }
 
-describe("Testing ProductList", () => {
+describe("Testing DeleteButton", () => {
     beforeEach(async () => {
-      deleteProduct.mockResolvedValue({ data: producto });
       await act(async () => {
-        render(
-          <BrowserRouter>
-            <AppContext.Provider value={mockedValue}>
-              <NavItemSearch />
+        getProduct.mockResolvedValue({
+            data: producto,
+          });
+          render(
+            <MemoryRouter initialEntries={['/products/9']}>
+              <AppContext.Provider value={mockedValue}>
+              <Navbar />
               <ProductView />
+              {/* <ProductsList /> */}
             </AppContext.Provider>
-          </BrowserRouter>
-        );
+            </MemoryRouter>
+          );
       });
     });
 
-    it('deletes the product page when clicked', async () => {
-      render(<ProductView />)
-      await screen.findByText(/Compu Geimer/i)
-      const deleteBtn = await screen.findByText(/Eliminar/i)
+    it('deletes the product page when clicked', async () => { 
 
-      userEvent.click(deleteBtn)
-      expect(screen.queryByText(/Compu Geimer/i)).not.toBeInTheDocument()
-      
-      /* it('removes the product from product list', async () => {
-        render(<ProductsList />)
-        await screen.findByRole('p', { text: /Compu Geimer/i })
-        expect(screen.queryByText(/Compue Geimer/i)).not.toBeInTheDocument()
-      }) */
-    })
-    
-  });
+        const deleteBtn = await screen.findByRole('button', { name: /eliminar/i })
+        
+        act( () => userEvent.click(deleteBtn))
+        console.log(deleteProduct.mock)
+        expect(deleteProduct).toHaveBeenCalled();
+        expect(deleteProduct).toHaveBeenCalledWith(9);
+        })
+})
