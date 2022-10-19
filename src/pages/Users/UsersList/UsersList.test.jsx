@@ -84,7 +84,7 @@ describe("Testing UsersList", () => {
   });
 });
 
-describe("Testing Users Routes", () => {
+describe("Testing Users Routes renders page not found", () => {
   beforeEach(async () => {
     getUsers.mockResolvedValue({
       data: allUsers,
