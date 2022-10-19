@@ -74,10 +74,13 @@ describe("Testing UsersList", () => {
     });
   });
 
-  it("First test", () => {
+  it("Testing users renders and checking user have correct link path", () => {
     const users = screen.getAllByRole("listitem");
     const user = screen.getByText("Arya Stark");
+    const userLink = screen.getByRole("link", { name: /arya stark/i });
     expect(users).toHaveLength(allUsers.length);
     expect(user).toBeInTheDocument();
+    console.log(userLink.id);
+    expect(userLink.getAttribute("href")).toBe("/users/0");
   });
 });
