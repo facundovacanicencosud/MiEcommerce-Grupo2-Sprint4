@@ -76,7 +76,7 @@ describe("Testing ProductList", () => {
     getProducts.mockResolvedValue({
       data: products,
     });
-    await act(() => {
+    await act(async () => {
       render(
         <BrowserRouter>
           <AppContext.Provider value={mockedValue}>
@@ -163,12 +163,13 @@ describe("Testing ProductList", () => {
     expect(firstElem[0].textContent).toEqual(products2[0].title);
   });
 
-  it("Order products from higher to lower count", async () => {
+  it("Test search", async () => {
     const searchInput = screen.getByPlaceholderText("Buscar...");
     userEvent.click(searchInput);
     userEvent.type(searchInput, "samsung");
-    console.log(searchInput.value);
+    /*  await act(async () => {
+      screen.debug();
+    }); */
     expect(mockedValue.setSearchQuery).toBeCalled();
-    screen.debug();
   });
 });
