@@ -95,7 +95,7 @@ describe("NewProductView Test", () => {
     const uploadBtn = screen.getByRole("button", { name: "Upload" });
     userEvent.click(uploadBtn);
 
-    await act(() => userEvent.click(buttonSubmit));
+    await act(async () => userEvent.click(buttonSubmit));
 
     expect(createProduct).toHaveBeenCalled();
     expect(createProduct).toHaveBeenCalledWith(testProduct);

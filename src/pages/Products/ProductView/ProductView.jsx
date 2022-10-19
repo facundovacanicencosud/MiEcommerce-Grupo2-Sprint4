@@ -1,14 +1,13 @@
 import React, { useState, useEffect, useRef, useContext } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import useForm from "../../../hooks/useForm";
-import axios from "axios";
 import style from "./productView.module.css";
 import profileIcon from "../../../assets/ProfileBtn.svg";
 import confirmTic from "../../../assets/confirm-tic.svg";
 import { AppContext } from "../../../context/AppContext";
+import { getProduct, putProduct } from "../../../utils/apiConfig";
 
 const ProductView = () => {
-  const baseURL = "http://localhost:5000/api";
   const navigate = useNavigate();
   const id = useParams().id;
   const [product, setProduct] = useState();
@@ -19,32 +18,30 @@ const ProductView = () => {
   const formRef = useRef();
 
   useEffect(() => {
-    axios.get(`${baseURL}/product/${id}`).then((response) => {
-      setProduct(response.data);
-      setImage(response.data.images);
-    });
+    const fetchProduct = async () => {
+      const { data } = await getProduct(id);
+      setProduct(data);
+      setImage(data.images);
+    };
+    fetchProduct();
   }, [id]);
 
   const initialValues = {
     ...product,
   };
   const { data, handleChange } = useForm(initialValues);
-  const updateProduct = (e) => {
+  const updateProduct = async (e) => {
     e.preventDefault();
-
-    axios
-      .put(`${baseURL}/product`, {
-        id: product.id,
-        title: data.title,
-        price: parseInt(inputPrice.current.value),
-        stock: data.stock,
-        description: data.description,
-        images: image,
-      })
-      .then((response) => {
-        setProduct(response.data);
-        navigate("/products");
-      });
+    const response = await putProduct({
+      id: product.id,
+      title: data.title,
+      price: parseInt(inputPrice.current.value),
+      stock: data.stock,
+      description: data.description,
+      images: image,
+    });
+    setProduct(response.data);
+    navigate("/products");
   };
 
   const handleSubtractOne = (e) => {
