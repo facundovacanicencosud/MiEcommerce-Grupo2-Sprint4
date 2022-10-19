@@ -75,7 +75,7 @@ describe("Testing UsersList", () => {
   });
 
   it("Testing users renders and checking user have correct link path", () => {
-    const users = screen.getAllByRole("listitem");
+    const users = screen.getAllByRole("link");
     const user = screen.getByText("Arya Stark");
     const userLink = screen.getByRole("link", { name: /arya stark/i });
     expect(users).toHaveLength(allUsers.length);
