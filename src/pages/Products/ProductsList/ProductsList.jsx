@@ -2,7 +2,7 @@ import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { getProducts } from "../../../utils/apiConfig";
 import style from "./productsList.module.css";
-import arrow from "../../../assets/chevron-right (1).svg";
+import arrow from "../../../assets/chevron-right.svg";
 import { AppContext } from "../../../context/AppContext";
 import FilterOptions from "../../../components/FilterOptions/FilterOptions";
 import noImage from "../../../assets/no-image.svg";
@@ -32,10 +32,12 @@ const ProductsList = () => {
     const onSearch = async (searchQuery) => {
       try {
         const { data: products } = await getProducts();
-        const filteredProducts = products.filter((product) =>
-          product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          product.category.toLowerCase().includes(searchQuery.toLowerCase())
+        const filteredProducts = products.filter(
+          (product) =>
+            product.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+            product.category.toLowerCase().includes(searchQuery.toLowerCase())
         );
+
         setProducts(filteredProducts);
       } catch (error) {
         console.log(error);
@@ -69,16 +71,18 @@ const ProductsList = () => {
 
   return (
     <div className="lists-container">
-      
-      { isLoading? (
+      {isLoading ? (
         <li className={style.loaderContainer}>
           <span>Loading</span>
           <div className={style.spinner}></div>
         </li>
-      ) :
-        products.length && !isLoading ? (
+      ) : products.length && !isLoading ? (
         <>
-          <div className={`${style.productsListHeader} ${theme? style.productsListHeaderDark:""}`}>
+          <div
+            className={`${style.productsListHeader} ${
+              theme ? style.productsListHeaderDark : ""
+            }`}
+          >
             <span>{products.length} productos</span>
             <div className={style.filterContainer}>
               <span>Ordenar por:</span>

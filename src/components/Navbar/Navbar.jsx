@@ -94,7 +94,7 @@ const Navbar = () => {
           ""
         ) : location.includes("/products/") ? (
           <div style={{ position: "relative", right: 0 }}>
-            <button
+            <button data-testid="custom-element"
               onClick={handleDelete}
               className={style.navbar_right_button}
             >

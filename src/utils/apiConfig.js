@@ -6,6 +6,14 @@ export const getProducts = async () => {
   return axios.get(`${baseUrl}/product`);
 };
 
+export const getProduct = async (id) => {
+  return axios.get(`${baseUrl}/product/${id}`);
+};
+
+export const putProduct = async (data) => {
+  return axios.put(`${baseUrl}/product`, data);
+};
+
 export const createProduct = (data) => {
   return axios.post(`${baseUrl}/product`, data);
 };

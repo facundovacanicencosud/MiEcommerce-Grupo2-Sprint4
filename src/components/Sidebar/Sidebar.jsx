@@ -16,17 +16,17 @@ const Sidebar = () => {
   const sidebarRef = useRef(null);
   const inputCheck = useRef();
 
-  useEffect(()=>{
-    if(localStorage.getItem("theme")){
-      if(localStorage.getItem("theme")==="dark"){
+  useEffect(() => {
+    if (localStorage.getItem("theme")) {
+      if (localStorage.getItem("theme") === "dark") {
         setTheme(true);
-      }else{
+      } else {
         setTheme(false);
       }
-    }else{
-      localStorage.setItem("theme","light")
+    } else {
+      localStorage.setItem("theme", "light");
     }
-  },[]);
+  }, []);
   const handleClickOutside = (e) => {
     if (
       sidebarRef.current &&
@@ -37,27 +37,24 @@ const Sidebar = () => {
     }
   };
 
-  const handleClickInside = (e) => {
-    if (sidebarRef.current.contains(e.target) && e.path[0].localName) {
-      setActiveSidebar(false);
-    }
+  const handleClickInside = () => {
+    setActiveSidebar(false);
   };
 
   const changeTheme = () => {
     setTheme((x) => !x);
-    (!theme)?
-      localStorage.setItem("theme", "dark")
-    :
-      localStorage.setItem("theme", "light")
-    ;
+    !theme
+      ? localStorage.setItem("theme", "dark")
+      : localStorage.setItem("theme", "light");
   };
 
   useEffect(() => {
-    return document.addEventListener("click", handleClickOutside);
-  }, []);
+    document.addEventListener("click", handleClickOutside);
 
-  useEffect(() => {
-    return document.addEventListener("click", handleClickInside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -90,7 +87,11 @@ const Sidebar = () => {
                 />
               </div>
               <div className={styles.sidebar_top__link_title}>
-                <Link to="/" className={theme ? "dark-color" : ""}>
+                <Link
+                  onClick={handleClickInside}
+                  to="/"
+                  className={theme ? "dark-color" : ""}
+                >
                   Inicio
                 </Link>
               </div>
@@ -112,7 +113,11 @@ const Sidebar = () => {
                 />
               </div>
               <div className={styles.sidebar_top__link_title}>
-                <Link to="/products" className={theme ? "dark-color" : ""}>
+                <Link
+                  onClick={handleClickInside}
+                  to="/products"
+                  className={theme ? "dark-color" : ""}
+                >
                   Productos
                 </Link>
               </div>
@@ -134,7 +139,11 @@ const Sidebar = () => {
                 />
               </div>
               <div className={styles.sidebar_top__link_title}>
-                <Link to="/users" className={theme ? "dark-color" : ""}>
+                <Link
+                  onClick={handleClickInside}
+                  to="/users"
+                  className={theme ? "dark-color" : ""}
+                >
                   Usuarios
                 </Link>
               </div>
@@ -156,7 +165,11 @@ const Sidebar = () => {
                 />
               </div>
               <div className={styles.sidebar_top__link_title}>
-                <Link to="/store" className={theme ? "dark-color" : ""}>
+                <Link
+                  onClick={handleClickInside}
+                  to="/store"
+                  className={theme ? "dark-color" : ""}
+                >
                   Tiendas
                 </Link>
               </div>
@@ -170,8 +183,8 @@ const Sidebar = () => {
             ref={inputCheck}
             className={`switch-input ${theme ? "dark" : ""}`}
             type="checkbox"
-            onChange={changeTheme}
-            checked={theme}
+            onClick={changeTheme}
+            defaultChecked={theme}
           />
           <span className={`slider round ${theme ? "dark" : ""}`}></span>
         </label>
