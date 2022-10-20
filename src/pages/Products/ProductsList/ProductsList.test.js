@@ -165,7 +165,7 @@ describe("Testing ProductList", () => {
 
   it("Test search", async () => {
     const searchInput = screen.getByPlaceholderText("Buscar...");
-    userEvent.click(searchInput);
+
     await act(async () => {
       userEvent.type(searchInput, "samsung");
     });

@@ -19,7 +19,8 @@ describe("Testing router", () => {
       data: [],
     });
   });
-  test("full app rendering/navigating", async () => {
+
+  test("Testing full app rendering/navigating", async () => {
     render(<App />, { wrapper: BrowserRouter });
 
     // verify page content for default route
