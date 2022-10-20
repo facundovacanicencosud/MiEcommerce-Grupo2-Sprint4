@@ -62,7 +62,7 @@ const NewProductView = () => {
 
   const handleSubmit = async (e) => {
     data.images = images;
-    data.stock = productView.stock;
+    data.stock = parseInt(productView.stock);
     data.title = productView.title;
     data.price = parseInt(productView.price);
     e.preventDefault();
@@ -105,7 +105,7 @@ const NewProductView = () => {
               </div>
               <div className={style.product_info_detail__stock}>
                 <div className="">
-                  <h2>{productView.stock}</h2>
+                  <h2>{productView.stock>0? productView.stock: 0}</h2>
                 </div>
                 <div className="">
                   <p>Stock Disponible</p>
@@ -169,7 +169,7 @@ const NewProductView = () => {
                 required
                 onChange={(e) => {
                   handleChange(e);
-                  setProductView({ ...productView, stock: parseInt(e.target.value )});
+                  setProductView({ ...productView, stock: e.target.value });
 
                 }}
                 value={productView.stock}
