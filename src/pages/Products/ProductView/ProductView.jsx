@@ -6,11 +6,13 @@ import profileIcon from "../../../assets/ProfileBtn.svg";
 import confirmTic from "../../../assets/confirm-tic.svg";
 import { AppContext } from "../../../context/AppContext";
 import { getProduct, putProduct } from "../../../utils/apiConfig";
+import noImage from "../../../assets/no-image.svg";
 
 const ProductView = () => {
   const navigate = useNavigate();
   const id = useParams().id;
   const [product, setProduct] = useState();
+  const [productView, setProductView] = useState();
   const [image, setImage] = useState([]);
   const { theme } = useContext(AppContext);
   const imagesInput = useRef(null);
@@ -21,6 +23,7 @@ const ProductView = () => {
     const fetchProduct = async () => {
       const { data } = await getProduct(id);
       setProduct(data);
+      setProductView(data);
       setImage(data.images);
     };
     fetchProduct();
@@ -37,7 +40,7 @@ const ProductView = () => {
       id: product.id,
       title: data.title,
       price: parseInt(inputPrice.current.value),
-      stock: data.stock,
+      stock: parseInt(productView.stock),
       description: data.description,
       images: image,
     });
@@ -47,12 +50,18 @@ const ProductView = () => {
 
   const handleSubtractOne = (e) => {
     e.preventDefault();
-    setProduct({ ...product, stock: parseInt(product.stock) - 1 });
+    // setProduct({ ...product, stock: parseInt(product.stock) - 1 });
+    if(productView.stock<= 0){
+      setProductView({ ...productView, stock: parseInt(productView.stock) });
+    }else{
+      setProductView({ ...productView, stock: parseInt(productView.stock) - 1 });
+    }
   };
 
   const handleAddOne = (e) => {
     e.preventDefault();
-    setProduct({ ...product, stock: parseInt(product.stock) + 1 });
+    // setProduct({ ...product, stock: parseInt(product.stock) + 1 });
+    setProductView({ ...productView, stock: parseInt(productView.stock) + 1 });
   };
 
   const addImg = (e) => {
@@ -73,6 +82,12 @@ const ProductView = () => {
     setImage(actuales);
   };
 
+  const keyPressFunction = (e) =>{
+    if(e.target.value[0] === "0"){
+      e.target.value = e.target.value[1];
+    }
+  }
+
   if (!product) return "No existe este producto.";
 
   const resetInputs = (e) => {
@@ -82,6 +97,7 @@ const ProductView = () => {
     formRef.current.stock.value = initialValues.stock;
     formRef.current.description.value = initialValues.description;
     setImage(initialValues.images);
+    setProductView({ ...productView, ...initialValues });
   };
 
   return (
@@ -89,20 +105,20 @@ const ProductView = () => {
       <div className={style.productView_container}>
         <div className={style.products}>
           <div className={style.products_img}>
-            <img src={product.images[0]} alt={product.title} />
+            <img src={image.length?image[0]: noImage} alt={product.title} />
           </div>
           <div className={style.product_info}>
             <div className={style.product_info__title}>
-              <h2>{product.title}</h2>
+              <h1>{productView.title}</h1>
             </div>
             <div className={style.product_info__detail}>
               <div className={style.product_info_detail__price}>
-                <h1>{product.price}</h1>
+                <h2>{productView.price}</h2>
                 <p>Puntos Superclub</p>
               </div>
               <div className={style.product_info_detail__stock}>
                 <div className="">
-                  <h1>{product.stock}</h1>
+                  <h2>{productView.stock}</h2>
                 </div>
                 <div className="">
                   <p>Stock Disponible</p>
@@ -133,7 +149,7 @@ const ProductView = () => {
             defaultValue={product.title}
             onChange={(e) => {
               handleChange(e);
-              setProduct({ ...product, title: e.target.value });
+              setProductView({ ...productView, title: e.target.value });
             }}
             className={style.productForm__input_name}
             type="text"
@@ -141,17 +157,20 @@ const ProductView = () => {
             placeholder="Titulo"
           />{" "}
           <label htmlFor="price">
-            <p>Price</p>
+            <p>Precio</p>
           </label>
           <input
             required
             onChange={(e) => {
               handleChange(e);
-              setProduct({ ...product, price: e.target.value });
+              setProductView({ ...productView, price: e.target.value });
             }}
             defaultValue={product.price}
             className={`${style.productForm__input_value} asNum`}
             ref={inputPrice}
+            onKeyDown={(e)=>{
+              keyPressFunction(e)
+            }}
             type="number"
             name="price"
             min="0"
@@ -167,9 +186,12 @@ const ProductView = () => {
                 required
                 onChange={(e) => {
                   handleChange(e);
-                  setProduct({ ...product, stock: e.target.value });
+                  setProductView({ ...productView, stock: e.target.value });
                 }}
-                value={product.stock}
+                onKeyDown={(e)=>{
+                  keyPressFunction(e);
+                }}
+                value={productView.stock === "" ? setProductView({...productView, stock: "0"}) : productView.stock}
                 className={`falseClass asNum`}
                 type="number"
                 name="stock"
@@ -190,7 +212,7 @@ const ProductView = () => {
               className={style.productForm__input_description}
               type="text"
               name="description"
-              placeholder="Descripcion del producto"
+              placeholder="Descripción del producto"
             />
 
             <label htmlFor="tienda">
@@ -230,25 +252,37 @@ const ProductView = () => {
               />
             </button>
           </div>
-          <label htmlFor="new-images">
-            <p>Imágenes Actuales</p>
-          </label>
-          <div className={style.productForm__images_list}>
-            <ul>
-              {image.map((img, i) => (
-                <li
-                  key={`${img}${i}`}
-                  className={style.productForm__images_list__image_card}
-                >
-                  <img src={img} alt={img} />
-                  <p>{img}</p>
-                  <button onClick={(e) => deleteImgActuales(e, i)}>
-                    Quitar
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {image.length ? (
+            <>
+              <label htmlFor="new-images">
+                <p>Imágenes Actuales</p>
+              </label>
+              <div className={style.productForm__images_list}>
+                <ul>
+                  {image.map((img, i) => (
+                    <li
+                      key={`${img}${i}`}
+                      className={style.productForm__images_list__image_card}
+                    >
+                      <img src={img} alt={img} />
+                      <p>
+                        {img.length > 30 ? `${img.substring(0, 30)}...` : img}
+                      </p>
+                      <button onClick={(e) => deleteImgActuales(e, i)}>
+                        Quitar
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          ) : (
+            <>
+              <label htmlFor="new-images">
+                <p>Este producto no contiene imagenes</p>
+              </label>
+            </>
+          )}
           <div className={style.productForm_buttons_container}>
             <button type="submit" className={style.productForm_save_button}>
               Guardar
