@@ -30,6 +30,7 @@ const ProductView = () => {
     ...product,
   };
   const { data, handleChange } = useForm(initialValues);
+
   const updateProduct = async (e) => {
     e.preventDefault();
     const response = await putProduct({
