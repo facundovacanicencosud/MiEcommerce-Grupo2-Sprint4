@@ -29,6 +29,10 @@ const ProductView = () => {
     fetchProduct();
   }, [id]);
 
+  useEffect(()=> {
+    console.log(productView ? productView.stock === "" : "");
+  }, [productView])
+
   const initialValues = {
     ...product,
   };
@@ -175,7 +179,7 @@ const ProductView = () => {
                   handleChange(e);
                   setProductView({ ...productView, stock: e.target.value });
                 }}
-                value={productView.stock}
+                value={productView.stock === "" ? setProductView({...productView, stock: 0}) : productView.stock}
                 className={`falseClass asNum`}
                 type="number"
                 name="stock"
