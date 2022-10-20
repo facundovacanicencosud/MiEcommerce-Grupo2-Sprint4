@@ -32,12 +32,12 @@ const NewProductView = () => {
   const { data, handleChange } = useForm(initialValues);
   const handleAddOne = (e) => {
     e.preventDefault();
-    setProductView({ ...product, stock: parseInt(product.stock) + 1 });
+    setProductView({ ...productView, stock: parseInt(product.stock) + 1 });
     setProduct({ ...product, stock: parseInt(product.stock) + 1 });
   };
   const handleSubtractOne = (e) => {
     e.preventDefault();
-    setProductView({ ...product, stock: parseInt(product.stock) - 1 });
+    setProductView({ ...productView, stock: parseInt(product.stock) - 1 });
     setProduct({ ...product, stock: parseInt(product.stock) - 1 });
   };
 
@@ -62,7 +62,7 @@ const NewProductView = () => {
 
   const handleSubmit = async (e) => {
     data.images = images;
-    data.stock = parseInt(productView.stock);
+    data.stock = productView.stock;
     data.title = productView.title;
     data.price = parseInt(productView.price);
     e.preventDefault();
@@ -167,18 +167,18 @@ const NewProductView = () => {
               <button onClick={handleSubtractOne}> - </button>
               <input
                 required
-                className={`falseClass asNum`}
-                value={productView.stock}
-                type="number"
-                name="stock"
-                placeholder="Stock"
-                min="0"
                 onChange={(e) => {
                   handleChange(e);
                   setProductView({ ...productView, stock: parseInt(e.target.value )});
 
                 }}
-              />{" "}
+                value={productView.stock? productView.stock: 0}
+                className={`falseClass asNum`}
+                type="number"
+                name="stock"
+                min="0"
+                placeholder="Stock"
+              />
               <button onClick={handleAddOne}> + </button>
             </div>
 
