@@ -59,7 +59,7 @@ describe("NewProductView Test", () => {
         rate: 4.5,
         count: 300,
       },
-      stock: "01000",
+      stock: 1000,
       category: "smartphones",
       images: ["https://dummyjson.com/image/i/products/1/1.jpg"],
     };

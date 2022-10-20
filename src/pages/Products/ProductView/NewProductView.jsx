@@ -32,10 +32,12 @@ const NewProductView = () => {
   const { data, handleChange } = useForm(initialValues);
   const handleAddOne = (e) => {
     e.preventDefault();
+    setProductView({ ...product, stock: parseInt(product.stock) + 1 });
     setProduct({ ...product, stock: parseInt(product.stock) + 1 });
   };
   const handleSubtractOne = (e) => {
     e.preventDefault();
+    setProductView({ ...product, stock: parseInt(product.stock) - 1 });
     setProduct({ ...product, stock: parseInt(product.stock) - 1 });
   };
 
