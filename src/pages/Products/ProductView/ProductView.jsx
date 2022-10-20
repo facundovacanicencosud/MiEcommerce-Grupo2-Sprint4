@@ -29,10 +29,6 @@ const ProductView = () => {
     fetchProduct();
   }, [id]);
 
-  useEffect(()=> {
-    console.log(productView ? productView.stock === "" : "");
-  }, [productView])
-
   const initialValues = {
     ...product,
   };
@@ -55,7 +51,11 @@ const ProductView = () => {
   const handleSubtractOne = (e) => {
     e.preventDefault();
     // setProduct({ ...product, stock: parseInt(product.stock) - 1 });
-    setProductView({ ...productView, stock: parseInt(productView.stock) - 1 });
+    if(productView.stock<= 0){
+      setProductView({ ...productView, stock: parseInt(productView.stock) });
+    }else{
+      setProductView({ ...productView, stock: parseInt(productView.stock) - 1 });
+    }
   };
 
   const handleAddOne = (e) => {
@@ -81,6 +81,12 @@ const ProductView = () => {
     actuales.splice(i, 1);
     setImage(actuales);
   };
+
+  const keyPressFunction = (e) =>{
+    if(e.target.value[0] === "0"){
+      e.target.value = e.target.value[1];
+    }
+  }
 
   if (!product) return "No existe este producto.";
 
@@ -162,6 +168,9 @@ const ProductView = () => {
             defaultValue={product.price}
             className={`${style.productForm__input_value} asNum`}
             ref={inputPrice}
+            onKeyDown={(e)=>{
+              keyPressFunction(e)
+            }}
             type="number"
             name="price"
             min="0"
@@ -179,7 +188,10 @@ const ProductView = () => {
                   handleChange(e);
                   setProductView({ ...productView, stock: e.target.value });
                 }}
-                value={productView.stock === "" ? setProductView({...productView, stock: 0}) : productView.stock}
+                onKeyDown={(e)=>{
+                  keyPressFunction(e);
+                }}
+                value={productView.stock === "" ? setProductView({...productView, stock: "0"}) : productView.stock}
                 className={`falseClass asNum`}
                 type="number"
                 name="stock"

@@ -37,8 +37,15 @@ const NewProductView = () => {
   };
   const handleSubtractOne = (e) => {
     e.preventDefault();
-    setProductView({ ...productView, stock: parseInt(product.stock) - 1 });
-    setProduct({ ...product, stock: parseInt(product.stock) - 1 });
+    if(productView.stock <= 0){
+      setProductView({ ...productView, stock: parseInt(product.stock) });
+      setProduct({ ...product, stock: parseInt(product.stock) });
+
+    }else{
+      setProductView({ ...productView, stock: parseInt(product.stock) - 1 });
+      setProduct({ ...product, stock: parseInt(product.stock) - 1 });
+
+    }
   };
 
   const sendImage = (e) => {
@@ -59,6 +66,12 @@ const NewProductView = () => {
     tempImg.splice(i, 1);
     setImages(tempImg);
   };
+
+  const keyPressFunction = (e) =>{
+    if(e.target.value[0] === "0"){
+      e.target.value = e.target.value[1];
+    }
+  }
 
   const handleSubmit = async (e) => {
     data.images = images;
@@ -156,6 +169,9 @@ const NewProductView = () => {
                   handleChange(e);
                   setProductView({ ...productView, price: e.target.value });
                 }}
+                onKeyDown={(e)=>{
+                  keyPressFunction(e)
+                }}
                 min="0"
                 value={productView.price}
               />
@@ -171,6 +187,9 @@ const NewProductView = () => {
                   handleChange(e);
                   setProductView({ ...productView, stock: e.target.value });
 
+                }}
+                onKeyDown={(e)=>{
+                  keyPressFunction(e)
                 }}
                 value={productView.stock}
                 className={`falseClass asNum`}
