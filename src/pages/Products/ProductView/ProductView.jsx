@@ -5,7 +5,7 @@ import style from "./productView.module.css";
 import profileIcon from "../../../assets/ProfileBtn.svg";
 import confirmTic from "../../../assets/confirm-tic.svg";
 import { AppContext } from "../../../context/AppContext";
-import { getProduct, putProduct } from "../../../utils/apiConfig";
+import { deleteProduct, getProduct, putProduct } from "../../../utils/apiConfig";
 import noImage from "../../../assets/no-image.svg";
 
 const ProductView = () => {
@@ -14,7 +14,7 @@ const ProductView = () => {
   const [product, setProduct] = useState();
   const [productView, setProductView] = useState();
   const [image, setImage] = useState([]);
-  const { theme } = useContext(AppContext);
+  const { theme, deleting, setDeleting } = useContext(AppContext);
   const imagesInput = useRef(null);
   const inputPrice = useRef();
   const formRef = useRef();
@@ -33,6 +33,23 @@ const ProductView = () => {
     ...product,
   };
   const { data, handleChange } = useForm(initialValues);
+
+
+  //función para borrar un producto
+  const handleDelete = async () => {
+    try {
+      const deletedProduct = await deleteProduct(parseInt(id));
+      if (deletedProduct.status === 200) {
+        navigate("/products");
+      } else {
+        alert("Se produjo un error");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setDeleting(false);
+  };
+
 
   const updateProduct = async (e) => {
     e.preventDefault();
@@ -102,6 +119,19 @@ const ProductView = () => {
 
   return (
     <>
+      {deleting? 
+      <>
+        <div className={style.modal_delete_background}>
+          <div className={style.modal_delete_options}>
+            <h3>Estás seguro que quieres eliminar este producto?</h3>
+            <div>
+              <button onClick={()=>setDeleting(false)}>Cancelar</button>
+              <button onClick={handleDelete}>Eliminar</button>
+
+            </div>
+          </div>
+        </div>
+      </>: ""}
       <div className={style.productView_container}>
         <div className={style.products}>
           <div className={style.products_img}>
