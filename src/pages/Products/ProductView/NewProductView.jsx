@@ -96,16 +96,16 @@ const NewProductView = () => {
           </div>
           <div className={style.product_info}>
             <div className={style.product_info__title}>
-              <h2>{productView.title}</h2>
+              <h1>{productView.title}</h1>
             </div>
             <div className={style.product_info__detail}>
               <div className={style.product_info_detail__price}>
-                <h1>{productView.price}</h1>
+                <h2>{productView.price}</h2>
                 <p>Puntos Superclub</p>
               </div>
               <div className={style.product_info_detail__stock}>
                 <div className="">
-                  <h1>{productView.stock}</h1>
+                  <h2>{productView.stock}</h2>
                 </div>
                 <div className="">
                   <p>Stock Disponible</p>
@@ -172,7 +172,7 @@ const NewProductView = () => {
                   setProductView({ ...productView, stock: parseInt(e.target.value )});
 
                 }}
-                value={productView.stock? productView.stock: 0}
+                value={productView.stock}
                 className={`falseClass asNum`}
                 type="number"
                 name="stock"
