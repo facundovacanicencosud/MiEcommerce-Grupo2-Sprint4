@@ -6,6 +6,7 @@ export const Contexto = ({ children }) => {
     const [activeSidebar, setActiveSidebar] = useState(false);
     const [searchQuery, setSearchQuery] = useState("");
     const [theme, setTheme] = useState(false);
+    const [deleting, setDeleting] = useState(false);
 
 
   const value = {
@@ -14,7 +15,9 @@ export const Contexto = ({ children }) => {
     searchQuery,
     setSearchQuery,
     theme,
-    setTheme
+    setTheme,
+    deleting,
+    setDeleting
   };
 
   return <AppContext.Provider value={value}>{children}</AppContext.Provider>;
