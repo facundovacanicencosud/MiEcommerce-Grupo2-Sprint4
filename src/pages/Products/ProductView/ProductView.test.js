@@ -72,7 +72,7 @@ describe("NewProductView Test", () => {
 
   it("Should render the form elements", () => {
     const inputTitle = screen.getByPlaceholderText(/titulo/i);
-    const inputDescription = screen.getByPlaceholderText(/descripcion/i);
+    const inputDescription = screen.getByPlaceholderText(/descripción/i);
     const inputPrice = screen.getByPlaceholderText(/precio/i);
     const inputStock = screen.getByPlaceholderText(/stock/i);
     const inputCategory = screen.getByPlaceholderText(/select/i);
@@ -99,7 +99,7 @@ describe("NewProductView Test", () => {
   it("On submit returns an object with the input values", async () => {
     //Get elements
     const inputTitle = screen.getByPlaceholderText(/titulo/i);
-    const inputDescription = screen.getByPlaceholderText(/descripcion/i);
+    const inputDescription = screen.getByPlaceholderText(/descripción/i);
     const inputPrice = screen.getByPlaceholderText(/precio/i);
     const inputStock = screen.getByPlaceholderText(/stock/i);
     const inputImages = screen.getByPlaceholderText(

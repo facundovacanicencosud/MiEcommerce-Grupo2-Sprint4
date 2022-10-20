@@ -76,6 +76,7 @@ const ProductView = () => {
   if (!product) return "No existe este producto.";
 
   const resetInputs = (e) => {
+    console.log(product);
     e.preventDefault();
     formRef.current.title.value = initialValues.title;
     formRef.current.price.value = initialValues.price;
@@ -93,16 +94,16 @@ const ProductView = () => {
           </div>
           <div className={style.product_info}>
             <div className={style.product_info__title}>
-              <h2>{product.title}</h2>
+              <h1>{product.title}</h1>
             </div>
             <div className={style.product_info__detail}>
               <div className={style.product_info_detail__price}>
-                <h1>{product.price}</h1>
+                <h2>{product.price}</h2>
                 <p>Puntos Superclub</p>
               </div>
               <div className={style.product_info_detail__stock}>
                 <div className="">
-                  <h1>{product.stock}</h1>
+                  <h2>{product.stock}</h2>
                 </div>
                 <div className="">
                   <p>Stock Disponible</p>
@@ -141,7 +142,7 @@ const ProductView = () => {
             placeholder="Titulo"
           />{" "}
           <label htmlFor="price">
-            <p>Price</p>
+            <p>Precio</p>
           </label>
           <input
             required
@@ -190,7 +191,7 @@ const ProductView = () => {
               className={style.productForm__input_description}
               type="text"
               name="description"
-              placeholder="Descripcion del producto"
+              placeholder="Descripción del producto"
             />
 
             <label htmlFor="tienda">
@@ -241,7 +242,7 @@ const ProductView = () => {
                   className={style.productForm__images_list__image_card}
                 >
                   <img src={img} alt={img} />
-                  <p>{img}</p>
+                  <p>{img.length >30 ? `${img.substring(0,30)}...`: img}</p>
                   <button onClick={(e) => deleteImgActuales(e, i)}>
                     Quitar
                   </button>

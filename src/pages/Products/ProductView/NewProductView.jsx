@@ -75,7 +75,7 @@ const NewProductView = () => {
   return (
     <>
       <div className={style.wrapper}>
-        <h2 className={style.headings}>Create Product</h2>
+        <h2 className={style.headings}>Información</h2>
         <div
           className={`${style.products} ${
             product.title || product.images.length > 0
@@ -120,7 +120,7 @@ const NewProductView = () => {
           <form onSubmit={handleSubmit} className={style.productForm}>
             <div className={style.inputfield}>
               <label htmlFor="title">
-                <p>Product title</p>
+                <p>Nombre</p>
               </label>
               <input
                 id="title"
@@ -128,41 +128,66 @@ const NewProductView = () => {
                 className={`${style.productForm__input_name}`}
                 type="text"
                 name="title"
-                placeholder="Product title"
+                placeholder="Nombre"
                 onChange={(e) => {
                   handleChange(e);
                   setProduct({ ...product, title: e.target.value });
                 }}
               />
             </div>
-            <div className={style.inputfield}>
-              <label htmlFor="description">
-                <p>Description</p>
-              </label>
-              <textarea
-                className={style.textarea}
-                type="text"
-                name="description"
-                placeholder="Description"
-                onChange={handleChange}
-              />
-            </div>
+
             <div className={style.inputfield}>
               <label htmlFor="price">
-                <p>Price</p>
+                <p>Valor</p>
               </label>
               <input
                 required
                 className={`${style.productForm__input_name} asNum`}
                 type="number"
                 name="price"
-                placeholder="Price"
+                placeholder="Precio"
                 onChange={(e) => {
                   handleChange(e);
                   setProduct({ ...product, price: e.target.value });
                 }}
                 min="0"
                 value={product.price}
+              />
+            </div>
+            <label htmlFor="stock">
+              <p>Stock</p>
+            </label>
+            <div className={style.productForm__input_stock}>
+              <button onClick={handleSubtractOne}> - </button>
+              <input
+                required
+                className={`falseClass asNum`}
+                value={product.stock}
+                type="number"
+                name="stock"
+                placeholder="Stock"
+                min="0"
+                onChange={(e) => {
+                  handleChange(e);
+                  setProduct({
+                    ...product,
+                    stock: e.target.value,
+                  });
+                }}
+              />{" "}
+              <button onClick={handleAddOne}> + </button>
+            </div>
+
+            <div className={style.inputfield}>
+              <label htmlFor="description">
+                <p>Descripción</p>
+              </label>
+              <textarea
+                className={style.textarea}
+                type="text"
+                name="description"
+                placeholder="Descripción"
+                onChange={handleChange}
               />
             </div>
 
@@ -228,45 +253,22 @@ const NewProductView = () => {
                 </button>
               </div>
             </div> */}
-            <label htmlFor="stock">
-              <p>Stock:</p>
-            </label>
-            <div className={style.productForm__input_stock}>
-              <button onClick={handleSubtractOne}> - </button>
-              <input
-                required
-                className={`falseClass asNum`}
-                value={product.stock}
-                type="number"
-                name="stock"
-                placeholder="Stock"
-                min="0"
-                onChange={(e) => {
-                  handleChange(e);
-                  setProduct({
-                    ...product,
-                    stock: e.target.value,
-                  });
-                }}
-              />{" "}
-              <button onClick={handleAddOne}> + </button>
-            </div>
 
             <div className={style.inputfield}>
               <label htmlFor="category">
-                <p>Category</p>
+                <p>Categoría</p>
               </label>
               <input
                 className={`${style.productForm__input_name}`}
                 type="text"
                 name="category"
-                placeholder="Category"
+                placeholder="Categoría"
                 onChange={handleChange}
               />
             </div>
             <div className={style.inputfield}>
               <label htmlFor="images">
-                <p>Images</p>
+                <p>Nueva Imagén</p>
               </label>
               <div className={style.upload_images}>
                 <input
@@ -281,45 +283,53 @@ const NewProductView = () => {
                   onClick={sendImage}
                   className={`${style.productForm_cancel_button}`}
                 >
-                  Upload
+                  Cargar
                 </button>
               </div>
             </div>
             <div>
-              <span>Loaded:</span>
-              <div className={style.productView_productForm__images_list}>
-                <ul className={style.loaded_images}>
-                  {images.map((image, i) => (
-                    <li className={style.list_images} key={`${image}${i}`}>
-                      <img
-                        className={style.create_image}
-                        src={image}
-                        alt={image}
-                      />
-                      <p className={style.img_span}>{`${image.substring(0, 40)}...`}</p>
-                      <button
-                        className={`${style.productForm_cancel_button}`}
-                        onClick={(e) => handleDelete(e, i)}
-                      >
-                        Quitar
-                      </button>
-                    </li>
-                  ))}
-                </ul>
-              </div>
+              {images.length ? (
+                <>
+                  <span>Galería de Imágenes:</span>
+                  <div className={style.productView_productForm__images_list}>
+                    <ul className={style.loaded_images}>
+                      {images.map((image, i) => (
+                        <li className={style.list_images} key={`${image}${i}`}>
+                          <img
+                            className={style.create_image}
+                            src={image}
+                            alt={image}
+                          />
+                          <p className={style.img_span}>
+                            {image.length > 30
+                              ? `${image.substring(0, 30)}...`
+                              : image}
+                          </p>
+                          <button
+                            className={`${style.productForm_cancel_button}`}
+                            onClick={(e) => handleDelete(e, i)}
+                          >
+                            Quitar
+                          </button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </>
+              ) : (
+                <></>
+              )}
             </div>
 
             <div>
               <button type="submit" className={`${style.btnCreateProduct}`}>
                 <span>Guardar Producto</span>
               </button>
-              <Link to="/products" >
-              <button
-              className={style.productForm_cancel_button}
-            >
-              Cancelar
-            </button>
-            </Link>
+              <Link to="/products">
+                <button className={style.productForm_cancel_button}>
+                  Cancelar
+                </button>
+              </Link>
               <div>{warning && <p>{warning}</p>}</div>
             </div>
           </form>

@@ -67,7 +67,7 @@ describe("Testing DeleteButton", () => {
         const deleteBtn = await screen.findByRole('button', { name: /eliminar/i })
         
         act( () => userEvent.click(deleteBtn))
-        console.log(deleteProduct.mock)
+        // console.log(deleteProduct.mock)
         expect(deleteProduct).toHaveBeenCalled();
         expect(deleteProduct).toHaveBeenCalledWith(9);
         })

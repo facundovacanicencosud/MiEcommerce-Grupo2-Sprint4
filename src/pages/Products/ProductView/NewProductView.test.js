@@ -24,13 +24,13 @@ describe("NewProductView Test", () => {
   });
 
   it("Should render the form elements", () => {
-    const inputTitle = screen.getByPlaceholderText(/title/i);
-    const inputDescription = screen.getByPlaceholderText(/description/i);
-    const inputPrice = screen.getByPlaceholderText(/price/i);
+    const inputTitle = screen.getByPlaceholderText(/nombre/i);
+    const inputDescription = screen.getByPlaceholderText(/descripción/i);
+    const inputPrice = screen.getByPlaceholderText(/precio/i);
     const inputRate = screen.getByPlaceholderText(/rate/i);
     const inputCount = screen.getByPlaceholderText(/count/i);
     const inputStock = screen.getByPlaceholderText(/stock/i);
-    const inputCategory = screen.getByPlaceholderText(/category/i);
+    const inputCategory = screen.getByPlaceholderText(/categoría/i);
     const inputImages = screen.getByPlaceholderText(
       /ingrese URL de la imagen/i
     );
@@ -65,13 +65,13 @@ describe("NewProductView Test", () => {
     };
 
     //Get elements
-    const inputTitle = screen.getByPlaceholderText(/title/i);
-    const inputDescription = screen.getByPlaceholderText(/description/i);
-    const inputPrice = screen.getByPlaceholderText(/price/i);
+    const inputTitle = screen.getByPlaceholderText(/nombre/i);
+    const inputDescription = screen.getByPlaceholderText(/descripción/i);
+    const inputPrice = screen.getByPlaceholderText(/precio/i);
     const inputRate = screen.getByPlaceholderText(/rate/i);
     const inputCount = screen.getByPlaceholderText(/count/i);
     const inputStock = screen.getByPlaceholderText(/stock/i);
-    const inputCategory = screen.getByPlaceholderText(/category/i);
+    const inputCategory = screen.getByPlaceholderText(/categoría/i);
     const inputImages = screen.getByPlaceholderText(
       /ingrese URL de la imagen/i
     );
@@ -92,7 +92,7 @@ describe("NewProductView Test", () => {
       "https://dummyjson.com/image/i/products/1/1.jpg"
     );
 
-    const uploadBtn = screen.getByRole("button", { name: "Upload" });
+    const uploadBtn = screen.getByRole("button", { name: "Cargar" });
     userEvent.click(uploadBtn);
 
     await act(async () => userEvent.click(buttonSubmit));
@@ -119,7 +119,7 @@ describe("NewProductView Test", () => {
       /ingrese URL de la imagen/i
     );
     userEvent.type(inputImages, "https://dummyjson.com/image/i.jpg");
-    const uploadBtn = screen.getByRole("button", { name: "Upload" });
+    const uploadBtn = screen.getByRole("button", { name: "Cargar" });
     const liImage = screen.queryByText("https://dummyjson.com/image/i.jpg...");
     const image = screen.queryByAltText("https://dummyjson.com/image/i.jpg");
     const deleteBtn = screen.queryByRole("button", { name: "Quitar" });
@@ -132,7 +132,7 @@ describe("NewProductView Test", () => {
     // Act
     userEvent.click(uploadBtn);
 
-    const liImage2 = screen.getByText("https://dummyjson.com/image/i.jpg...");
+    const liImage2 = screen.getByText("https://dummyjson.com/image/i....");
     const image2 = screen.queryByAltText("https://dummyjson.com/image/i.jpg");
     const deleteBtn2 = screen.queryByRole("button", { name: "Quitar" });
 
