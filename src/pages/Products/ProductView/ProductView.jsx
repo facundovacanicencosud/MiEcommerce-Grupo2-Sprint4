@@ -11,6 +11,7 @@ const ProductView = () => {
   const navigate = useNavigate();
   const id = useParams().id;
   const [product, setProduct] = useState();
+  const [productView, setProductView] = useState();
   const [image, setImage] = useState([]);
   const { theme } = useContext(AppContext);
   const imagesInput = useRef(null);
@@ -21,6 +22,7 @@ const ProductView = () => {
     const fetchProduct = async () => {
       const { data } = await getProduct(id);
       setProduct(data);
+      setProductView(data)
       setImage(data.images);
     };
     fetchProduct();
@@ -37,7 +39,7 @@ const ProductView = () => {
       id: product.id,
       title: data.title,
       price: parseInt(inputPrice.current.value),
-      stock: data.stock,
+      stock: parseInt(productView.stock),
       description: data.description,
       images: image,
     });
@@ -47,12 +49,14 @@ const ProductView = () => {
 
   const handleSubtractOne = (e) => {
     e.preventDefault();
-    setProduct({ ...product, stock: parseInt(product.stock) - 1 });
+    // setProduct({ ...product, stock: parseInt(product.stock) - 1 });
+    setProductView({ ...productView, stock: parseInt(productView.stock) - 1 });
   };
 
   const handleAddOne = (e) => {
     e.preventDefault();
-    setProduct({ ...product, stock: parseInt(product.stock) + 1 });
+    // setProduct({ ...product, stock: parseInt(product.stock) + 1 });
+    setProductView({ ...productView, stock: parseInt(productView.stock) + 1 });
   };
 
   const addImg = (e) => {
@@ -76,13 +80,13 @@ const ProductView = () => {
   if (!product) return "No existe este producto.";
 
   const resetInputs = (e) => {
-    console.log(product);
     e.preventDefault();
     formRef.current.title.value = initialValues.title;
     formRef.current.price.value = initialValues.price;
     formRef.current.stock.value = initialValues.stock;
     formRef.current.description.value = initialValues.description;
     setImage(initialValues.images);
+    setProductView({...productView, ...initialValues});
   };
 
   return (
@@ -90,20 +94,20 @@ const ProductView = () => {
       <div className={style.productView_container}>
         <div className={style.products}>
           <div className={style.products_img}>
-            <img src={product.images[0]} alt={product.title} />
+            <img src={productView.images[0]} alt={product.title} />
           </div>
           <div className={style.product_info}>
             <div className={style.product_info__title}>
-              <h1>{product.title}</h1>
+              <h1>{productView.title}</h1>
             </div>
             <div className={style.product_info__detail}>
               <div className={style.product_info_detail__price}>
-                <h2>{product.price}</h2>
+                <h2>{productView.price}</h2>
                 <p>Puntos Superclub</p>
               </div>
               <div className={style.product_info_detail__stock}>
                 <div className="">
-                  <h2>{product.stock}</h2>
+                  <h2>{productView.stock}</h2>
                 </div>
                 <div className="">
                   <p>Stock Disponible</p>
@@ -134,7 +138,7 @@ const ProductView = () => {
             defaultValue={product.title}
             onChange={(e) => {
               handleChange(e);
-              setProduct({ ...product, title: e.target.value });
+              setProductView({ ...productView, title: e.target.value });
             }}
             className={style.productForm__input_name}
             type="text"
@@ -148,7 +152,7 @@ const ProductView = () => {
             required
             onChange={(e) => {
               handleChange(e);
-              setProduct({ ...product, price: e.target.value });
+              setProductView({ ...productView, price: e.target.value });
             }}
             defaultValue={product.price}
             className={`${style.productForm__input_value} asNum`}
@@ -168,9 +172,9 @@ const ProductView = () => {
                 required
                 onChange={(e) => {
                   handleChange(e);
-                  setProduct({ ...product, stock: e.target.value });
+                  setProductView({ ...productView, stock: e.target.value });
                 }}
-                value={product.stock}
+                value={productView.stock}
                 className={`falseClass asNum`}
                 type="number"
                 name="stock"
