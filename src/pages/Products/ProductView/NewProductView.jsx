@@ -27,6 +27,7 @@ const NewProductView = () => {
   };
 
   const [product, setProduct] = useState(initialValues);
+  const [productView, setProductView] = useState(initialValues);
 
   const { data, handleChange } = useForm(initialValues);
   const handleAddOne = (e) => {
@@ -59,7 +60,9 @@ const NewProductView = () => {
 
   const handleSubmit = async (e) => {
     data.images = images;
-    data.stock = product.stock;
+    data.stock = parseInt(productView.stock);
+    data.title = productView.title;
+    data.price = parseInt(productView.price);
     e.preventDefault();
     try {
       const response = await createProduct(data);
@@ -78,7 +81,7 @@ const NewProductView = () => {
         <h2 className={style.headings}>Información</h2>
         <div
           className={`${style.products} ${
-            product.title || product.images.length > 0
+            productView.title || product.images.length > 0
               ? style.showProductCard
               : ""
           }`}
@@ -86,21 +89,21 @@ const NewProductView = () => {
           <div className={style.products_img}>
             <img
               src={product.images.length ? product.images[0] : noImage}
-              alt={product.title}
+              alt={productView.title}
             />
           </div>
           <div className={style.product_info}>
             <div className={style.product_info__title}>
-              <h2>{product.title}</h2>
+              <h2>{productView.title}</h2>
             </div>
             <div className={style.product_info__detail}>
               <div className={style.product_info_detail__price}>
-                <h1>{product.price}</h1>
+                <h1>{productView.price}</h1>
                 <p>Puntos Superclub</p>
               </div>
               <div className={style.product_info_detail__stock}>
                 <div className="">
-                  <h1>{product.stock}</h1>
+                  <h1>{productView.stock}</h1>
                 </div>
                 <div className="">
                   <p>Stock Disponible</p>
@@ -131,8 +134,9 @@ const NewProductView = () => {
                 placeholder="Nombre"
                 onChange={(e) => {
                   handleChange(e);
-                  setProduct({ ...product, title: e.target.value });
+                  setProductView({ ...productView, title: e.target.value });
                 }}
+                value={productView.title}
               />
             </div>
 
@@ -148,10 +152,10 @@ const NewProductView = () => {
                 placeholder="Precio"
                 onChange={(e) => {
                   handleChange(e);
-                  setProduct({ ...product, price: e.target.value });
+                  setProductView({ ...productView, price: e.target.value });
                 }}
                 min="0"
-                value={product.price}
+                value={productView.price}
               />
             </div>
             <label htmlFor="stock">
@@ -162,17 +166,15 @@ const NewProductView = () => {
               <input
                 required
                 className={`falseClass asNum`}
-                value={product.stock}
+                value={productView.stock}
                 type="number"
                 name="stock"
                 placeholder="Stock"
                 min="0"
                 onChange={(e) => {
                   handleChange(e);
-                  setProduct({
-                    ...product,
-                    stock: e.target.value,
-                  });
+                  setProductView({ ...productView, stock: parseInt(e.target.value )});
+
                 }}
               />{" "}
               <button onClick={handleAddOne}> + </button>

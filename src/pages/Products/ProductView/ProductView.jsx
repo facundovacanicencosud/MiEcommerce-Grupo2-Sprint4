@@ -6,6 +6,7 @@ import profileIcon from "../../../assets/ProfileBtn.svg";
 import confirmTic from "../../../assets/confirm-tic.svg";
 import { AppContext } from "../../../context/AppContext";
 import { getProduct, putProduct } from "../../../utils/apiConfig";
+import noImage from "../../../assets/no-image.svg";
 
 const ProductView = () => {
   const navigate = useNavigate();
@@ -22,7 +23,7 @@ const ProductView = () => {
     const fetchProduct = async () => {
       const { data } = await getProduct(id);
       setProduct(data);
-      setProductView(data)
+      setProductView(data);
       setImage(data.images);
     };
     fetchProduct();
@@ -86,7 +87,7 @@ const ProductView = () => {
     formRef.current.stock.value = initialValues.stock;
     formRef.current.description.value = initialValues.description;
     setImage(initialValues.images);
-    setProductView({...productView, ...initialValues});
+    setProductView({ ...productView, ...initialValues });
   };
 
   return (
@@ -94,7 +95,7 @@ const ProductView = () => {
       <div className={style.productView_container}>
         <div className={style.products}>
           <div className={style.products_img}>
-            <img src={productView.images[0]} alt={product.title} />
+            <img src={image.length?image[0]: noImage} alt={product.title} />
           </div>
           <div className={style.product_info}>
             <div className={style.product_info__title}>
@@ -235,25 +236,37 @@ const ProductView = () => {
               />
             </button>
           </div>
-          <label htmlFor="new-images">
-            <p>Imágenes Actuales</p>
-          </label>
-          <div className={style.productForm__images_list}>
-            <ul>
-              {image.map((img, i) => (
-                <li
-                  key={`${img}${i}`}
-                  className={style.productForm__images_list__image_card}
-                >
-                  <img src={img} alt={img} />
-                  <p>{img.length >30 ? `${img.substring(0,30)}...`: img}</p>
-                  <button onClick={(e) => deleteImgActuales(e, i)}>
-                    Quitar
-                  </button>
-                </li>
-              ))}
-            </ul>
-          </div>
+          {image.length ? (
+            <>
+              <label htmlFor="new-images">
+                <p>Imágenes Actuales</p>
+              </label>
+              <div className={style.productForm__images_list}>
+                <ul>
+                  {image.map((img, i) => (
+                    <li
+                      key={`${img}${i}`}
+                      className={style.productForm__images_list__image_card}
+                    >
+                      <img src={img} alt={img} />
+                      <p>
+                        {img.length > 30 ? `${img.substring(0, 30)}...` : img}
+                      </p>
+                      <button onClick={(e) => deleteImgActuales(e, i)}>
+                        Quitar
+                      </button>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            </>
+          ) : (
+            <>
+              <label htmlFor="new-images">
+                <p>Este producto no contiene imagenes</p>
+              </label>
+            </>
+          )}
           <div className={style.productForm_buttons_container}>
             <button type="submit" className={style.productForm_save_button}>
               Guardar
