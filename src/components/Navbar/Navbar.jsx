@@ -13,7 +13,7 @@ import { useEffect } from "react";
 
 const Navbar = () => {
   const [searchBox, setSearchBox] = useState(false);
-  const { setActiveSidebar, theme } = useContext(AppContext);
+  const { setActiveSidebar, theme, setDeleting } = useContext(AppContext);
   const navegar = useNavigate();
   const location = useLocation().pathname;
   const { width } = useScreen();
@@ -54,20 +54,6 @@ const Navbar = () => {
     );
   }
 
-  //función para borrar un producto
-  const handleDelete = async () => {
-    try {
-      const deletedProduct = await deleteProduct(parseInt(id));
-      if (deletedProduct.status === 200) {
-        navegar("/products");
-      } else {
-        alert("Se produjo un error");
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-
   return (
     <header className={`${style.header} ${theme ? "dark-background" : ""}`}>
       <nav className={style.navbar}>
@@ -95,7 +81,7 @@ const Navbar = () => {
         ) : location.includes("/products/") ? (
           <div style={{ position: "relative", right: 0 }}>
             <button data-testid="custom-element"
-              onClick={handleDelete}
+              onClick={()=>setDeleting((x)=>!x)}
               className={style.navbar_right_button}
             >
               Eliminar
